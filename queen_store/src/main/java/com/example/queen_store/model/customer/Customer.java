@@ -11,13 +11,13 @@ public class Customer {
     private double phoneNumber;
     private String email;
     private String address;
-    private int tocID;
+    private int typeOfCustomerID;
     private String accUserName;
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String dob, boolean gender, String idCard, double phoneNumber, String email, String address, int tocID, String accUserName) {
+    public Customer(int id, String name, String dob, boolean gender, String idCard, double phoneNumber, String email, String address, int typeOfCustomerID, String accUserName) {
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -26,7 +26,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
-        this.tocID = tocID;
+        this.typeOfCustomerID = typeOfCustomerID;
         this.accUserName = accUserName;
     }
 
@@ -94,12 +94,12 @@ public class Customer {
         this.address = address;
     }
 
-    public int getTocID() {
-        return tocID;
+    public int getTypeOfCustomerID() {
+        return typeOfCustomerID;
     }
 
-    public void setTocID(int tocID) {
-        this.tocID = tocID;
+    public void setTypeOfCustomerID(int typeOfCustomerID) {
+        this.typeOfCustomerID = typeOfCustomerID;
     }
 
     public String getAccUserName() {
