@@ -6,16 +6,19 @@ public class Product {
     private double price;
     private String description;
     private String type;
-
+    private int inventory;
+    private String imgPath;
     public Product() {
     }
 
-    public Product(int id, String name, double price, String description, String type) {
+    public Product(int id, String name, double price, String description, String type, int inventory, String imgPath) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.type = type;
+        this.inventory = inventory;
+        this.imgPath = imgPath;
     }
 
     public int getId() {
@@ -56,5 +59,21 @@ public class Product {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(int inventory) {
+        this.inventory = inventory;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }
