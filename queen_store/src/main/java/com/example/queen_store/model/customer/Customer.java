@@ -1,14 +1,15 @@
 package com.example.queen_store.model.customer;
 
+import java.sql.Date;
 import java.util.Objects;
 
 public class Customer {
     private int id;
     private String name;
-    private String dob;
+    private Date dob;
     private boolean gender;
     private String idCard;
-    private double phoneNumber;
+    private String phoneNumber;
     private String email;
     private String address;
     private int typeOfCustomerID;
@@ -17,7 +18,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String name, String dob, boolean gender, String idCard, double phoneNumber, String email, String address, int typeOfCustomerID, String accUserName) {
+    public Customer(int id, String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, int typeOfCustomerID, String accUserName) {
         this.id = id;
         this.name = name;
         this.dob = dob;
@@ -46,11 +47,11 @@ public class Customer {
         this.name = name;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -70,11 +71,11 @@ public class Customer {
         this.idCard = idCard;
     }
 
-    public double getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(double phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
