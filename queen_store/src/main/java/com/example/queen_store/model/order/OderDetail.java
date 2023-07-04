@@ -1,4 +1,4 @@
-package com.example.queen_store.common.order;
+package com.example.queen_store.model.order;
 
 import java.util.Objects;
 
