@@ -2,20 +2,274 @@ package com.example.queen_store.repository.product;
 
 import com.example.queen_store.model.product.Product;
 
+import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProductRepository implements IProductRepository {
-    private static Map<Integer, Product> products;
+    private static final String SELECT_ALL = " SELECT * FROM product ";
+    private static final String SELECT_BY_ID = " SELECT product_name, product_price, product_description, product_type_id, product_inventory,product_img_path FROM product WHERE product_id = ? ";
+    private static final String SELECT_BY_NAME = " SELECT * FROM product WHERE product_name like ? ";
+    private static final String CALL_INSERT_PRODUCT = " call insert_product(?,?,?,?,?,?) ";
+    private static final String UPDATE_PRODUCT = " UPDATE product SET product_name = ?, product_price = ?, product_description = ?, product_type_id = ?, product_inventory = ?, product_img_path = ? WHERE product_id = ? ";
+    private static final String CALL_DELETE_PRODUCT = "call delete_product(?) ";
+    private static final String SORT_UP_BY_PRICE = " SELECT * FROM product ORDER BY product_price asc ";
+    private static final String SORT_DOWN_BY_PRICE = " SELECT * FROM product ORDER BY product_price DESC ";
 
-    static {
-        products = new HashMap<>();
+    //    Chức năng 1: Lấy ra danh sách sản phẩm
+    @Override
+    public List<Product> getAll() {
+        List<Product> productList = new ArrayList<>();
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id;
+            String name;
+            double price;
+            String description;
+            int type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_id");
+                name = resultSet.getString("product_name");
+                price = resultSet.getDouble("product_price");
+                description = resultSet.getString("product_description");
+                type = resultSet.getInt("product_type_id");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                productList.add(new Product(id, name, price, description, type, inventory, imgPath));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productList;
+    }
+
+    // Chức năng 2: Tìm kiếm theo ID
+    @Override
+    public Product searchById(int id) {
+        Product product = null;
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String name;
+            double price;
+            String description;
+            int type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                name = resultSet.getString("product_name");
+                price = resultSet.getDouble("product_price");
+                description = resultSet.getString("product_description");
+                type = resultSet.getInt("product_type_id");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                product = new Product(id, name, price, description, type, inventory, imgPath);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return product;
+    }
+
+    // Chức năng 3: Tìm kiếm theo tên
+    @Override
+    public List<Product> searchByName(String searchName) {
+        List<Product> products = new ArrayList<>();
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_NAME);
+            preparedStatement.setString(1, "%"+searchName+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id;
+            String name;
+            double price;
+            String description;
+            int type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_id");
+                price = resultSet.getDouble("product_price");
+                name = resultSet.getString("product_name");
+                description = resultSet.getString("product_description");
+                type = resultSet.getInt("product_type_id");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                products.add(new Product(id, name, price, description, type, inventory, imgPath));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return products;
+    }
+
+    // Chức năng 4: Thêm mới sản phẩm
+    @Override
+    public void add(Product product) {
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(CALL_INSERT_PRODUCT);
+            callableStatement.setString(1, product.getName());
+            callableStatement.setDouble(2, product.getPrice());
+            callableStatement.setString(3, product.getDescription());
+            callableStatement.setInt(4, product.getType());
+            callableStatement.setInt(5, product.getInventory());
+            callableStatement.setString(6, product.getImgPath());
+            callableStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    // Chức năng 5: Chỉnh sửa thông tin sản phẩm
+    @Override
+    public boolean update(Product product) {
+        boolean rowUpdate = false;
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setInt(4, product.getType());
+            preparedStatement.setInt(5, product.getInventory());
+            preparedStatement.setString(6, product.getImgPath());
+            preparedStatement.setInt(7, product.getId());
+            rowUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rowUpdate;
+    }
+
+    // Chức năng 6: Xóa sản phẩm
+    @Override
+    public boolean remove(int id) {
+        boolean rowDelete = false;
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            CallableStatement callableStatement = connection.prepareCall(CALL_DELETE_PRODUCT);
+            callableStatement.setInt(1, id);
+            rowDelete = callableStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return rowDelete;
+    }
+
+    // Chức năng 7: Sắp xếp sản phẩm theo tên
+    @Override
+    public List<Product> sortUpByPrice() {
+        List<Product> productList = new ArrayList<>();
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SORT_UP_BY_PRICE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id;
+            String name;
+            double price;
+            String description;
+            int type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_id");
+                name = resultSet.getString("product_name");
+                price = resultSet.getDouble("product_price");
+                description = resultSet.getString("product_description");
+                type = resultSet.getInt("product_type_id");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                productList.add(new Product(id, name, price, description, type, inventory, imgPath));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productList;
     }
 
     @Override
-    public List<Product> getAll() {
-        return new ArrayList<>(products.values());
+    public List<Product> sortDownByPrice() {
+        List<Product> productList = new ArrayList<>();
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SORT_DOWN_BY_PRICE);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id;
+            String name;
+            double price;
+            String description;
+            int type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_id");
+                name = resultSet.getString("product_name");
+                price = resultSet.getDouble("product_price");
+                description = resultSet.getString("product_description");
+                type = resultSet.getInt("product_type_id");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                productList.add(new Product(id, name, price, description, type, inventory, imgPath));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productList;
     }
 }

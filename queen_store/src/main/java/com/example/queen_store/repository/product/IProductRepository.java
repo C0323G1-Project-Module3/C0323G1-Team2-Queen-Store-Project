@@ -6,4 +6,14 @@ import java.util.List;
 
 public interface IProductRepository {
     List<Product> getAll();
-}
+
+    Product searchById(int id);
+
+    List<Product> searchByName(String name);
+
+    void add(Product product);
+    boolean update(Product product);
+    boolean remove(int id);
+    List<Product> sortUpByPrice();
+    List<Product> sortDownByPrice();
+ }
