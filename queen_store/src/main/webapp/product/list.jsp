@@ -71,13 +71,14 @@
     <%-- Thanh tìm kiếm"--%>
     <div class="container w-50 m-auto text-center">
 
-        <form class="d-flex">
-            <input class="form-control me-2" type="text" placeholder="Search">
-            <button class="btn btn-primary" type="button">Search</button>
+        <form class="d-flex" action="/ProductServlet?action=search" >
+            <input type="hidden" name="action" value="search">
+            <input class="form-control me-2" type="text" placeholder="Search"name="name">
+            <button class="btn btn-primary" type="submit">Search</button>
         </form>
 
     </div>
-
+    <%--Thanh chức năng--%>
     <div class="row">
         <h2><a class="btn btn-outline-info" href="/ProductServlet">Back list</a></h2>
         <h2><a class="btn btn-outline-primary" href="/ProductServlet?action=sortUp">Sort Up by price</a></h2>
@@ -119,9 +120,11 @@
                        href="/ProductServlet?action=save&id=${product.id}">Edit</a>
                 </td>
                 <td>
-<%--                    <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
+                        <%-- <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
+                            data-mdb-target="#exampleModal"
+                            onclick="sendInfoToDelete('${product.id}','${product.name}')">
                         Delete
                     </button>
                 </td>
@@ -136,31 +139,44 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Modal</h5>
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="input-group">
-                    <input type="text" class="input-group">
-                    <input type="text" class="input-group">
-                    <input type="text" class="input-group">
+                    <span>Are you sure to delete <span id="nameDelete"></span> ?</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" onclick="remove()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+    <form id="formDelete" method="get">
+        <input type="hidden" name="action" value="delete"/>
+        <input type="hidden" name="id" id="id"/>
+    </form>
 </div>
 </div>
+
 <a href="Home/home.jsp">home</a>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function sendInfoToDelete(id, name) {
+        document.getElementById("nameDelete").innerText = name;
+        document.getElementById("id").value = id;
+        console.log(id)
+    }
+
+    function remove() {
+        document.getElementById("formDelete").submit();
+    }
+</script>
 </html>
 <%--<div class="row d-flex container-fluid  ">--%>
 <%--    <div class="col-lg-3 col-md-6 col-sm-12 align-content-center">--%>

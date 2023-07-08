@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td>Type:</td>
-                    <td><input type="number" name="type" id="type" value="${product.getType()}"></td>
+                    <td><input type="text" name="type" id="type" value="${product.getType()}"></td>
                 </tr>
                 <tr>
                     <td>Inventory:</td>

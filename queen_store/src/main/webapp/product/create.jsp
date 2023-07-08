@@ -16,7 +16,7 @@
 <body>
 <div> <a class="btn btn-success" href="/ProductServlet">Comeback List</a></div>
 <div class="container">
-    <form action="/ProductServlet?action=create" method="post">
+    <form method="post">
         <legend>Add new product</legend>
         <table class="table table-striped">
             <tr>
@@ -33,7 +33,14 @@
             </tr>
             <tr>
                 <td> Type of product:  </td>
-                <td><input type="number" name="type" id="type"></td>
+                <td>
+                    <input type="radio" name="type" value="Chăm sóc da mặt" id="skinFaceCare"><label for="skinFaceCare">Chăm sóc da mặt</label> </br>
+                    <input type="radio" name="type" value="Chăm sóc cơ thể" id="skinBodyCare"><label for="skinBodyCare">Chăm sóc cơ thể</label></br>
+                    <input type="radio" name="type" value="Chăm sóc tóc" id="takeHairCare"><label for="takeHairCare">Chăm sóc tóc</label></br>
+                    <input type="radio" name="type" value="Trang điểm" id="makeUp"><label for="makeUp">Trang điểm</label></br>
+                    <input type="radio" name="type" value="Nước hoa" id="perfume"><label for="perfume">Nước hoa</label></br>
+                    <input type="radio" name="type" value="Phụ kiện" id="spareParts"><label for="spareParts">Phụ kiện</label></br>
+                </td>
             </tr>
             <tr>
                 <td>Inventory: </td>

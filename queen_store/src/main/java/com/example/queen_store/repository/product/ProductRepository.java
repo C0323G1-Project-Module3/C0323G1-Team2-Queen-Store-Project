@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository implements IProductRepository {
-    private static final String SELECT_ALL = " SELECT * FROM product ";
-    private static final String SELECT_BY_ID = " SELECT product_name, product_price, product_description, product_type_id, product_inventory,product_img_path FROM product WHERE product_id = ? ";
-    private static final String SELECT_BY_NAME = " SELECT * FROM product WHERE product_name like ? ";
+    private static final String SELECT_ALL = " SELECT product_id, product_name, product_price, product_description, product_type_name, product_inventory,product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ";
+    private static final String SELECT_BY_ID = " SELECT product_name, product_price, product_description, product_type_name, product_inventory,product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id WHERE product_id = ? ";
+    private static final String SELECT_BY_NAME = " SELECT * FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id WHERE product_name like ? ";
     private static final String CALL_INSERT_PRODUCT = " call insert_product(?,?,?,?,?,?) ";
-    private static final String UPDATE_PRODUCT = " UPDATE product SET product_name = ?, product_price = ?, product_description = ?, product_type_id = ?, product_inventory = ?, product_img_path = ? WHERE product_id = ? ";
-    private static final String CALL_DELETE_PRODUCT = "call delete_product(?) ";
-    private static final String SORT_UP_BY_PRICE = " SELECT * FROM product ORDER BY product_price asc ";
-    private static final String SORT_DOWN_BY_PRICE = " SELECT * FROM product ORDER BY product_price DESC ";
+    private static final String CALL_UPDATE_PRODUCT = " call update_product(?,?,?,?,?,?,?) ";
+    private static final String DELETE_PRODUCT = " DELETE FROM product WHERE product_id = ? ";
+    private static final String SORT_UP_BY_PRICE = " SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price asc ";
+    private static final String SORT_DOWN_BY_PRICE = "  SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price desc ";
 
     //    Chức năng 1: Lấy ra danh sách sản phẩm
     @Override
@@ -28,7 +28,7 @@ public class ProductRepository implements IProductRepository {
             String name;
             double price;
             String description;
-            int type;
+            String type;
             int inventory;
             String imgPath;
             while (resultSet.next()) {
@@ -36,7 +36,7 @@ public class ProductRepository implements IProductRepository {
                 name = resultSet.getString("product_name");
                 price = resultSet.getDouble("product_price");
                 description = resultSet.getString("product_description");
-                type = resultSet.getInt("product_type_id");
+                type = resultSet.getString("product_type_name");
                 inventory = resultSet.getInt("product_inventory");
                 imgPath = resultSet.getString("product_img_path");
                 productList.add(new Product(id, name, price, description, type, inventory, imgPath));
@@ -65,14 +65,14 @@ public class ProductRepository implements IProductRepository {
             String name;
             double price;
             String description;
-            int type;
+            String type;
             int inventory;
             String imgPath;
             while (resultSet.next()) {
                 name = resultSet.getString("product_name");
                 price = resultSet.getDouble("product_price");
                 description = resultSet.getString("product_description");
-                type = resultSet.getInt("product_type_id");
+                type = resultSet.getString("product_type_name");
                 inventory = resultSet.getInt("product_inventory");
                 imgPath = resultSet.getString("product_img_path");
                 product = new Product(id, name, price, description, type, inventory, imgPath);
@@ -102,7 +102,7 @@ public class ProductRepository implements IProductRepository {
             String name;
             double price;
             String description;
-            int type;
+            String type;
             int inventory;
             String imgPath;
             while (resultSet.next()) {
@@ -110,7 +110,7 @@ public class ProductRepository implements IProductRepository {
                 price = resultSet.getDouble("product_price");
                 name = resultSet.getString("product_name");
                 description = resultSet.getString("product_description");
-                type = resultSet.getInt("product_type_id");
+                type = resultSet.getString("product_type_name");
                 inventory = resultSet.getInt("product_inventory");
                 imgPath = resultSet.getString("product_img_path");
                 products.add(new Product(id, name, price, description, type, inventory, imgPath));
@@ -136,7 +136,7 @@ public class ProductRepository implements IProductRepository {
             callableStatement.setString(1, product.getName());
             callableStatement.setDouble(2, product.getPrice());
             callableStatement.setString(3, product.getDescription());
-            callableStatement.setInt(4, product.getType());
+            callableStatement.setString(4, product.getType());
             callableStatement.setInt(5, product.getInventory());
             callableStatement.setString(6, product.getImgPath());
             callableStatement.executeUpdate();
@@ -158,15 +158,15 @@ public class ProductRepository implements IProductRepository {
         boolean rowUpdate = false;
         Connection connection = BaseProductRepository.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT);
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setString(3, product.getDescription());
-            preparedStatement.setInt(4, product.getType());
-            preparedStatement.setInt(5, product.getInventory());
-            preparedStatement.setString(6, product.getImgPath());
-            preparedStatement.setInt(7, product.getId());
-            rowUpdate = preparedStatement.executeUpdate() > 0;
+            CallableStatement callableStatement = connection.prepareCall(CALL_UPDATE_PRODUCT);
+            callableStatement.setString(1, product.getName());
+            callableStatement.setDouble(2, product.getPrice());
+            callableStatement.setString(3, product.getDescription());
+            callableStatement.setString(4, product.getType());
+            callableStatement.setInt(5, product.getInventory());
+            callableStatement.setString(6, product.getImgPath());
+            callableStatement.setInt(7, product.getId());
+            rowUpdate = callableStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -185,9 +185,9 @@ public class ProductRepository implements IProductRepository {
         boolean rowDelete = false;
         Connection connection = BaseProductRepository.getConnection();
         try {
-            CallableStatement callableStatement = connection.prepareCall(CALL_DELETE_PRODUCT);
-            callableStatement.setInt(1, id);
-            rowDelete = callableStatement.executeUpdate() > 0;
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -212,7 +212,7 @@ public class ProductRepository implements IProductRepository {
             String name;
             double price;
             String description;
-            int type;
+            String type;
             int inventory;
             String imgPath;
             while (resultSet.next()) {
@@ -220,7 +220,7 @@ public class ProductRepository implements IProductRepository {
                 name = resultSet.getString("product_name");
                 price = resultSet.getDouble("product_price");
                 description = resultSet.getString("product_description");
-                type = resultSet.getInt("product_type_id");
+                type = resultSet.getString("product_type_name");
                 inventory = resultSet.getInt("product_inventory");
                 imgPath = resultSet.getString("product_img_path");
                 productList.add(new Product(id, name, price, description, type, inventory, imgPath));
@@ -248,7 +248,7 @@ public class ProductRepository implements IProductRepository {
             String name;
             double price;
             String description;
-            int type;
+            String type;
             int inventory;
             String imgPath;
             while (resultSet.next()) {
@@ -256,7 +256,7 @@ public class ProductRepository implements IProductRepository {
                 name = resultSet.getString("product_name");
                 price = resultSet.getDouble("product_price");
                 description = resultSet.getString("product_description");
-                type = resultSet.getInt("product_type_id");
+                type = resultSet.getString("product_type_name");
                 inventory = resultSet.getInt("product_inventory");
                 imgPath = resultSet.getString("product_img_path");
                 productList.add(new Product(id, name, price, description, type, inventory, imgPath));

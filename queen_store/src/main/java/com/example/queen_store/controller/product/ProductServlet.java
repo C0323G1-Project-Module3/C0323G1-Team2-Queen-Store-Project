@@ -178,7 +178,7 @@ public class ProductServlet extends HttpServlet {
         String name = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
         String description = request.getParameter("description");
-        int type = Integer.parseInt(request.getParameter("type"));
+        String type = request.getParameter("type");
         int inventory = Integer.parseInt(request.getParameter("inventory"));
         String imgPath = request.getParameter("imgPath");
         Product product = new Product(id, name, price, description, type, inventory, imgPath);
@@ -207,10 +207,10 @@ public class ProductServlet extends HttpServlet {
             String name = request.getParameter("name");
             double price = Double.parseDouble(request.getParameter("price"));
             String description = request.getParameter("description");
-            int type_id = Integer.parseInt(request.getParameter("type"));
+            String type = request.getParameter("type");
             int inventory = Integer.parseInt(request.getParameter("inventory"));
             String imdPath = request.getParameter("imgPath");
-            Product product = new Product(name, price, description, type_id, inventory, imdPath);
+            Product product = new Product(name, price, description, type, inventory, imdPath);
             productService.add(product);
             try {
                 response.sendRedirect("/ProductServlet");

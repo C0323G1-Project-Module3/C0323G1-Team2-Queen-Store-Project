@@ -5,13 +5,13 @@ public class Product {
     private String name;
     private double price;
     private String description;
-    private int type;
+    private String type;
     private int inventory;
     private String imgPath;
     public Product() {
     }
 
-    public Product(String name, double price, String description, int type, int inventory, String imgPath) {
+    public Product(String name, double price, String description, String type, int inventory, String imgPath) {
         this.name = name;
         this.price = price;
         this.description = description;
@@ -20,7 +20,7 @@ public class Product {
         this.imgPath = imgPath;
     }
 
-    public Product(int id, String name, double price, String description, int type, int inventory, String imgPath) {
+    public Product(int id, String name, double price, String description, String type, int inventory, String imgPath) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -62,11 +62,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

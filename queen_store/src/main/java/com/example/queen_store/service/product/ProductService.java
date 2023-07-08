@@ -32,10 +32,10 @@ public class ProductService implements IProductService {
     public Map<String, String> save(Product product) {
         Map<String, String> errMap = new HashMap<>();
 
-        if (product.getName().equals("") || product.getName() == null) {
+        if (product.getName().trim().equals("") || product.getName() == null) {
             errMap.put("errName", "Tên không được để trống");
-        } else if (!ProductCommon.checkInput(product.getName())) {
-            errMap.put("errName","Tên không được chứa ký tự đặc biệt");
+        } else if (product.getName().length() > 255) {
+            errMap.put("errName", "Tên không dài quá 255 ký tự");
         }
         if (errMap.isEmpty()) {
             productRepository.update(product);
