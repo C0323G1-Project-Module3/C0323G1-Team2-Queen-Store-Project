@@ -37,6 +37,9 @@ public class ProductService implements IProductService {
             errMap.put("errName", "Tên không được để trống");
         } else if (product.getName().length() > 255) {
             errMap.put("errName", "Tên không dài quá 255 ký tự");
+        } else if(product.getImgPath().length() > 65535) {
+            errMap.put("errName", "Đường dẫn dài quá 65535 ký tự");
+
         }
         if (errMap.isEmpty()) {
             productRepository.update(product);

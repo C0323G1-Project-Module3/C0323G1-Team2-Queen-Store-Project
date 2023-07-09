@@ -51,6 +51,19 @@ public class ProductServlet extends HttpServlet {
 
     }
 
+//    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
+//        String name = request.getParameter("name");
+//        List<Product> products = productService.searchByName(name);
+//        request.setAttribute("productList", products);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+//        try {
+//            dispatcher.forward(request, response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         List<Product> products = productService.searchByName(name);
