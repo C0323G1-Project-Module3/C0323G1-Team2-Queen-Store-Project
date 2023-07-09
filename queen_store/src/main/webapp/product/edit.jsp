@@ -21,7 +21,7 @@
             <legend>PRODUCT INFORMATION</legend>
             <table>
                 <tr>
-                    <td>*</td>
+                    <td><input type="hidden" name="action" value="save" ></td>
                     <td><input hidden="hidden" type="number" name="id" id="id" value="${product.getId()}"></td>
                 </tr>
                 <tr>
@@ -40,7 +40,17 @@
                 </tr>
                 <tr>
                     <td>Type:</td>
-                    <td><input type="text" name="type" id="type" value="${product.getType()}"></td>
+                    <td>
+                        <select name="type">
+                            <option value="${product.getType()}">${product.getType()}</option>
+                            <c:forEach var="type" items="${productTypes}">
+                                <c:if test="${type.name != product.getType()}">
+                                <option value="${type.name}">${type.name}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+<%--                        <input type="text" name="type" id="type" value="${product.getType()}">--%>
+                    </td>
                 </tr>
                 <tr>
                     <td>Inventory:</td>

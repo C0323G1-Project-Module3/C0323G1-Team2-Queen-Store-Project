@@ -1,6 +1,7 @@
 package com.example.queen_store.repository.product;
 
 import com.example.queen_store.model.product.Product;
+import com.example.queen_store.model.product.ProductType;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ public interface IProductRepository {
     boolean remove(int id);
     List<Product> sortUpByPrice();
     List<Product> sortDownByPrice();
+    List<ProductType> getAllType();
  }

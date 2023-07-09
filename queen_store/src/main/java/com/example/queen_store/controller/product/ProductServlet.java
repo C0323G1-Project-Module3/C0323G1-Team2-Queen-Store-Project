@@ -1,6 +1,7 @@
 package com.example.queen_store.controller.product;
 
 import com.example.queen_store.model.product.Product;
+import com.example.queen_store.model.product.ProductType;
 import com.example.queen_store.service.product.IProductService;
 import com.example.queen_store.service.product.ProductService;
 
@@ -64,6 +65,7 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
+
     private void sortUp(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.sortUpByPrice();
         request.setAttribute("productList", products);
@@ -106,6 +108,8 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
+        List<ProductType> productTypes = productService.showTypeList();
+        request.setAttribute("productTypes", productTypes);
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
         try {
             dispatcher.forward(request, response);
@@ -119,6 +123,8 @@ public class ProductServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = productService.searchById(id);
+        List<ProductType> productTypes = productService.showTypeList();
+        request.setAttribute("productTypes", productTypes);
         request.setAttribute("product", product);
         request.setAttribute("id", id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/edit.jsp");
@@ -158,6 +164,7 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        System.out.println(action);
         if (action == null) {
             action = "";
         }
@@ -182,6 +189,7 @@ public class ProductServlet extends HttpServlet {
         int inventory = Integer.parseInt(request.getParameter("inventory"));
         String imgPath = request.getParameter("imgPath");
         Product product = new Product(id, name, price, description, type, inventory, imgPath);
+        System.out.println(type);
         Map<String, String> errMap = productService.save(product);
         if (errMap.isEmpty()) {
             try {
@@ -203,19 +211,19 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-        private void addProduct (HttpServletRequest request, HttpServletResponse response){
-            String name = request.getParameter("name");
-            double price = Double.parseDouble(request.getParameter("price"));
-            String description = request.getParameter("description");
-            String type = request.getParameter("type");
-            int inventory = Integer.parseInt(request.getParameter("inventory"));
-            String imdPath = request.getParameter("imgPath");
-            Product product = new Product(name, price, description, type, inventory, imdPath);
-            productService.add(product);
-            try {
-                response.sendRedirect("/ProductServlet");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void addProduct(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        double price = Double.parseDouble(request.getParameter("price"));
+        String description = request.getParameter("description");
+        String type = request.getParameter("type");
+        int inventory = Integer.parseInt(request.getParameter("inventory"));
+        String imdPath = request.getParameter("imgPath");
+        Product product = new Product(name, price, description, type, inventory, imdPath);
+        productService.add(product);
+        try {
+            response.sendRedirect("/ProductServlet");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}

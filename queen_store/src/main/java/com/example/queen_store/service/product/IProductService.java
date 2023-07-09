@@ -1,6 +1,7 @@
 package com.example.queen_store.service.product;
 
 import com.example.queen_store.model.product.Product;
+import com.example.queen_store.model.product.ProductType;
 
 import java.util.List;
 import java.util.Map;
@@ -14,5 +15,5 @@ public interface IProductService {
     List<Product> sortDownByPrice();
     Product searchById(int id);
     List<Product> searchByName(String name);
-
+    List<ProductType> showTypeList();
 }

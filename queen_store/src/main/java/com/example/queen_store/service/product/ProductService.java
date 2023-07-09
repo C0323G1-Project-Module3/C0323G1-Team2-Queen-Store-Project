@@ -2,6 +2,7 @@ package com.example.queen_store.service.product;
 
 import com.example.queen_store.common.product.ProductCommon;
 import com.example.queen_store.model.product.Product;
+import com.example.queen_store.model.product.ProductType;
 import com.example.queen_store.repository.product.IProductRepository;
 import com.example.queen_store.repository.product.ProductRepository;
 
@@ -61,5 +62,10 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> searchByName(String name) {
         return productRepository.searchByName(name);
+    }
+
+    @Override
+    public List<ProductType> showTypeList() {
+        return productRepository.getAllType();
     }
 }

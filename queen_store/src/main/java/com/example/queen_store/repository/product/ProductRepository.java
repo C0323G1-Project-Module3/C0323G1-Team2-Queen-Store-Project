@@ -1,6 +1,7 @@
 package com.example.queen_store.repository.product;
 
 import com.example.queen_store.model.product.Product;
+import com.example.queen_store.model.product.ProductType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class ProductRepository implements IProductRepository {
     private static final String DELETE_PRODUCT = " DELETE FROM product WHERE product_id = ? ";
     private static final String SORT_UP_BY_PRICE = " SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price asc ";
     private static final String SORT_DOWN_BY_PRICE = "  SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price desc ";
-
+    private static final String SELECT_ALL_TYPE = " SELECT * FROM product_type ";
     //    Chức năng 1: Lấy ra danh sách sản phẩm
     @Override
     public List<Product> getAll() {
@@ -271,5 +272,32 @@ public class ProductRepository implements IProductRepository {
             }
         }
         return productList;
+    }
+
+    @Override
+    public List<ProductType> getAllType() {
+        Connection connection = BaseProductRepository.getConnection();
+        List<ProductType> productTypeList = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_TYPE);
+            int id;
+            String name;
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_type_id");
+                name = resultSet.getString("product_type_name");
+                productTypeList.add(new ProductType(id,name));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return productTypeList;
     }
 }
