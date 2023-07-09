@@ -9,6 +9,10 @@ public class Account {
 
     public Account() {
     }
+    public Account(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 
     public Account(String userName, String password, String roleName) {
         this.userName = userName;
@@ -52,4 +56,5 @@ public class Account {
     public int hashCode() {
         return Objects.hash(userName);
     }
+
 }
