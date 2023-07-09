@@ -8,7 +8,6 @@ public class CharsetFilter implements Filter {
         encoding = config.getInitParameter("requestEncoding");
         if (encoding == null) encoding = "UTF-8";
     }
-
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
             throws IOException, ServletException {
         // Respect the client-specified character encoding
