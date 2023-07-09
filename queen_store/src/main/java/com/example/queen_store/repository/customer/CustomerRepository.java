@@ -1,4 +1,4 @@
 package com.example.queen_store.repository.customer;
 
-public class Customer {
+public class Customer implements ICustomer {
 }
