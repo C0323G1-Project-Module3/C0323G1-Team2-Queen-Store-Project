@@ -11,6 +11,15 @@ public class Product {
     public Product() {
     }
 
+    public Product(String name, double price, String description, String type, int inventory, String imgPath) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.type = type;
+        this.inventory = inventory;
+        this.imgPath = imgPath;
+    }
+
     public Product(int id, String name, double price, String description, String type, int inventory, String imgPath) {
         this.id = id;
         this.name = name;
@@ -75,5 +84,18 @@ public class Product {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", inventory=" + inventory +
+                ", imgPath='" + imgPath + '\'' +
+                '}';
     }
 }
