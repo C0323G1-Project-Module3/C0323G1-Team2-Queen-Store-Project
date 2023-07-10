@@ -16,6 +16,11 @@ public class Voucher {
         this.rate = rate;
     }
 
+    public Voucher(String name, float rate) {
+        this.name = name;
+        this.rate = rate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
