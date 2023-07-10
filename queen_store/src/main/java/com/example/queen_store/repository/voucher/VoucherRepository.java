@@ -18,10 +18,16 @@ public class VoucherRepository implements IVoucherRepository {
     private static final String SORT_BY_INCREASING_PRICE ="SELECT * FROM voucher ORDER BY voucher_rate ASC;";
     private static final String SORT_BY_DECREASING_PRICE ="SELECT * FROM voucher ORDER BY voucher_rate DESC;";
 
+    //Validate
+    private static final String FIND_VOUCHER_BY_NAME ="SELECT * from voucher WHERE voucher_name = ?;";
+
+
+    private static final String FIND_VOUCHER_BY_RATE = "SELECT * FROM voucher WHERE voucher_rate BETWEEN ? AND ?";
+
     @Override
     public List<Voucher> selectAllVoucher() {
         List<Voucher> vouchers = new ArrayList<>();
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
@@ -39,7 +45,7 @@ public class VoucherRepository implements IVoucherRepository {
 
     @Override
     public void insertVoucher(Voucher voucher) {
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_VOUCHER_SQL);
             preparedStatement.setString(1,voucher.getName());
@@ -53,7 +59,7 @@ public class VoucherRepository implements IVoucherRepository {
     @Override
     public Voucher selectVoucher(int id) {
         Voucher voucher = null;
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_VOUCHER_BY_ID);
             preparedStatement.setInt(1,id);
@@ -71,7 +77,7 @@ public class VoucherRepository implements IVoucherRepository {
 
     @Override
     public void deleteVoucher(int id) {
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_VOUCHER_SQL);
             preparedStatement.setInt(1,id);
@@ -83,7 +89,7 @@ public class VoucherRepository implements IVoucherRepository {
 
     @Override
     public void updateVoucher(Voucher voucher) {
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_VOUCHER_SQL);
             preparedStatement.setString(1,voucher.getName());
@@ -118,7 +124,7 @@ public class VoucherRepository implements IVoucherRepository {
 
     @Override
     public List<Voucher> orderByIncreaseRate() {
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         List<Voucher> voucherList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_INCREASING_PRICE);
@@ -136,7 +142,7 @@ public class VoucherRepository implements IVoucherRepository {
 
     @Override
     public List<Voucher> orderByDecreaseRate() {
-        Connection connection = getConnection();
+        Connection connection = BaseRepository.getConnection();
         List<Voucher> voucherList = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SORT_BY_DECREASING_PRICE);
@@ -150,6 +156,45 @@ public class VoucherRepository implements IVoucherRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }return voucherList;
+    }
+
+
+
+    //Validate
+    @Override
+    public Voucher findVoucherByName(String name) {
+        Connection connection = BaseRepository.getConnection();
+        Voucher voucher = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_VOUCHER_BY_NAME);
+            preparedStatement.setString(1,name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                 voucher = new Voucher(resultSet.getInt("voucher_id"),resultSet.getString("voucher_name"),resultSet.getFloat("voucher_rate"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return voucher;
+    }
+    @Override
+    public Voucher findVoucherByRate(float rate) {
+        Connection connection = BaseRepository.getConnection();
+        Voucher voucher = null;
+        float rate1 = (float) (rate*0.95);
+        float rate2 = (float) (rate*1.05);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_VOUCHER_BY_RATE);
+            preparedStatement.setFloat(1,rate1);
+            preparedStatement.setFloat(2,rate2);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                voucher = new Voucher(resultSet.getInt("voucher_id"),resultSet.getString("voucher_name"),resultSet.getFloat("voucher_rate"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return voucher;
     }
 
     private void printSQLException(SQLException ex) {
@@ -167,4 +212,5 @@ public class VoucherRepository implements IVoucherRepository {
             }
         }
     }
+
 }

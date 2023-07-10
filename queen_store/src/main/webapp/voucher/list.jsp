@@ -18,6 +18,9 @@
     <h2>
         <a href="/vouchers?action=create">Add New User</a>
         <br>
+
+<%--        chuc nang search--%>
+
 <%--            <form action="/vouchers" method="get">--%>
 <%--                <input id="action" name="action" value="search" hidden="hidden" >--%>
 <%--                <br>--%>
@@ -26,6 +29,8 @@
 <%--                <input type="submit" value="Search By name">--%>
 <%--            </form>--%>
 <%--        <br>--%>
+
+
         <a href="/vouchers?action=increase">Order by increase</a>
         <br>
         <a href="/vouchers?action=decrease">Order by decrease</a>
@@ -43,7 +48,7 @@
             <tr>
                 <td>${loop.count}</td>
                 <td>${voucher.getName()}</td>
-                <td>${voucher.getRate()}</td>
+                <td>${Math.round(voucher.getRate()*100)}%</td>
                 <td>
                     <a href="/vouchers?action=update&id=${voucher.getId()}">Update</a>
                     <a href="/vouchers?action=delete&id=${voucher.getId()}">Delete</a>

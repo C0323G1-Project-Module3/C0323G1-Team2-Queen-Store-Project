@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class VoucherService implements IVoucherService{
+public class VoucherService implements IVoucherService {
     private static IVoucherRepository voucherRepository = new VoucherRepository();
 
     @Override
@@ -17,10 +17,10 @@ public class VoucherService implements IVoucherService{
         return voucherRepository.selectAllVoucher();
     }
 
-//    @Override
-//    public void insertVoucher(Voucher voucher) {
-//        voucherRepository.insertVoucher(voucher);
-//    }
+    @Override
+    public void insertVoucher(Voucher voucher) {
+        voucherRepository.insertVoucher(voucher);
+    }
 
     @Override
     public Voucher selectVoucher(int id) {
@@ -40,7 +40,7 @@ public class VoucherService implements IVoucherService{
     @Override
     public List<Voucher> searchByName(String searchName) {
         List<Voucher> voucherList = voucherRepository.searchByName(searchName);
-        if (voucherList.isEmpty()){
+        if (voucherList.isEmpty()) {
             return null;
         }
         return voucherList;
@@ -56,15 +56,32 @@ public class VoucherService implements IVoucherService{
         return voucherRepository.orderByDecreaseRate();
     }
 
+
+
+
+
+
+
+
+
+
+////Validate
     @Override
-    public Map<String, String> save(Voucher voucher) {
-        Map<String, String> errMap = new HashMap<>();
-        if (voucher.getName().equals("") ||voucher.getName()==null){
-            errMap.put("errName","Ten khong duoc de trong");
+    public boolean checkVoucherByName(String name) {
+        Voucher voucher = voucherRepository.findVoucherByName(name);
+        if (voucher == null) {
+            return true;
         }
-        if (errMap.isEmpty()){
-            voucherRepository.insertVoucher(voucher);
-        }
-        return errMap;
+        return false;
     }
+
+    @Override
+    public boolean checkVoucherByRate(float rate) {
+        Voucher voucher = voucherRepository.findVoucherByRate(rate);
+        if (voucher ==null){
+            return true;
+        }
+        return false;
+    }
+
 }

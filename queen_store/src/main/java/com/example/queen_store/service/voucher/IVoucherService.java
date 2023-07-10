@@ -7,7 +7,8 @@ import java.util.Map;
 
 public interface IVoucherService {
     List<Voucher> selectAllVoucher();
-//    void insertVoucher(Voucher voucher);
+    void insertVoucher(Voucher voucher);
+//    Map<String, String> save(Voucher voucher);
     Voucher selectVoucher(int id);
     void deleteVoucher(int id);
     void updateVoucher(Voucher voucher);
@@ -15,5 +16,8 @@ public interface IVoucherService {
     List<Voucher> orderByIncreaseRate();
     List<Voucher> orderByDecreaseRate();
 
-    Map<String, String> save(Voucher voucher);
+    boolean checkVoucherByName(String name);
+    boolean checkVoucherByRate(float rate);
+
+//    Map<String, String> save(Voucher voucher);
 }

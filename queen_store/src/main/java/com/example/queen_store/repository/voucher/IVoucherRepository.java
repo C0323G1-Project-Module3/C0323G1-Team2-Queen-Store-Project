@@ -14,4 +14,10 @@ public interface IVoucherRepository {
     List<Voucher> orderByIncreaseRate();
     List<Voucher> orderByDecreaseRate();
 
+
+
+
+    /////Validate
+    Voucher findVoucherByName(String name);
+    Voucher findVoucherByRate(float rate);
 }
