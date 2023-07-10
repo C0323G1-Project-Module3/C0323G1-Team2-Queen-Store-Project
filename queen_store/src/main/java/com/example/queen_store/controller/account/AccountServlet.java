@@ -266,7 +266,7 @@ public class AccountServlet extends HttpServlet {
         String password = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
         Map<String, String> errMap = accountService.checkValidateLogin(userName, password);
-        System.out.println(rememberMe);
+
         if (errMap.isEmpty()) {
             Account account = accountService.login(userName, password);
             if (account != null) {
@@ -289,7 +289,15 @@ public class AccountServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             } else {
-                request.setAttribute("msg", "user");
+                request.setAttribute("msg", "Sai mật khẩu");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/login.jsp");
+                try {
+                    requestDispatcher.forward(request, response);
+                } catch (ServletException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         } else {
             request.setAttribute("errMap", errMap);

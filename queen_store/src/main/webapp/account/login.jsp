@@ -58,7 +58,7 @@
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
                                             <label>${errMap.errPassword}</label>
-                                        </c:if>
+                                        </c:if><div>${msg}</div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="rememberMe"
@@ -76,7 +76,7 @@
                                         <a href="/accountServlet?action=create" style="color: #393f81;">
                                             Đăng kí ngay!
                                         </a></p>
-                                    <div>${msg}</div>
+
                                 </form>
                             </div>
                         </div>
