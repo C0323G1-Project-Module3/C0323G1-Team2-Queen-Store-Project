@@ -42,7 +42,9 @@ public class AccountRepository implements IAccountRepository {
     @Override
     public Account checkAccount(String userName, String password) {
         Account account = findByUserName(userName);
-
+        if(account == null){
+            return null;
+        }
         if (account.getPassword().equals(password)) {
             return account;
         }
@@ -182,4 +184,5 @@ public class AccountRepository implements IAccountRepository {
         }
         return rowEdit;
     }
+
 }

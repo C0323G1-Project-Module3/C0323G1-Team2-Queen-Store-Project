@@ -97,5 +97,20 @@ public class AccountService implements IAccountService {
         return errEditMap;
     }
 
+    @Override
+    public void forgotPassword(String userName, String password) {
+        accountRepository.editUser(userName,password);
+    }
+
+    @Override
+    public Map<String, String> checkValidateUserName(String userName) {
+        return ValidateAccount.checkValidateUserName(userName);
+    }
+
+    @Override
+    public Map<String, String> checkValidateForgotPassword(String password, String confirmPassword) {
+        return ValidateAccount.checkValidateForgotPassword(password,confirmPassword);
+    }
+
 
 }

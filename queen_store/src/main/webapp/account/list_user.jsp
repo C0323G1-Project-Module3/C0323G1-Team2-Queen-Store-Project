@@ -31,8 +31,10 @@
             <td>${account.password}</td>
             <td>${account.roleName}</td>
             <td>
+                <c:if test="${account.roleName != 'admin'}">
                 <a href="accountServlet?action=deleteAccount&userName=${account.userName}">
                     <input class="btn btn-dark btn-lg btn-block" type="submit" value="DELETE"></a>
+                </c:if>
             </td>
         </tr>
     </c:forEach>

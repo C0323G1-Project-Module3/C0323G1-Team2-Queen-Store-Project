@@ -61,7 +61,7 @@
 <c:if test="${msg != null}">
     <h1>${msg}</h1>
 </c:if>
-<form action="/accountServlet" method="post">
+<form action="/accountServlet" method="get">
     <input hidden="hidden" id="userName" name="userName" value="${account.userName}">
     <input hidden="hidden" name="action" value="deleteUser">
     <input class="btn btn-dark btn-lg btn-block" type="submit" name="submit" id="submit" value="Xoá">

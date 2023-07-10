@@ -31,4 +31,10 @@ public interface IAccountService {
     Map<String, String> checkValidatePassword(String oldPassword, String password, String confirmPassword);
 
     Map<String,String> editUser(String userName,String oldPassword, String password, String confirmPassword);
+
+    void forgotPassword(String userName, String password);
+
+    Map<String, String> checkValidateUserName(String userName);
+
+    Map<String, String> checkValidateForgotPassword(String password, String confirmPassword);
 }
