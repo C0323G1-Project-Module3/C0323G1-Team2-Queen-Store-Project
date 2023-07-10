@@ -56,12 +56,14 @@
                     <div class="nv-1">
                         <c:if test="${sessionScope.account == null}">
                             <a href="accountServlet?action=login" class="text-dark"><i
-                                    class="fa-solid fa-right-to-bracket"></i>Login</a>
+                                    class="fa-solid fa-right-to-bracket"></i>Đăng Nhập</a>
                         </c:if>
                         <c:if test="${sessionScope.account != null}">
                             <div>${sessionScope.account.userName}</div>
                             <a href="accountServlet?action=logout" class="text-dark" style="text-decoration: none"><i
-                                    class="fa-solid fa-right-to-bracket"></i>Logout</a>
+                                    class="fa-solid fa-right-to-bracket"></i>Đăng Xuất</a>
+                            <a href="accountServlet?action=register" class="text-dark" style="text-decoration: none"><i
+                                    class="fa-solid fa-right-to-bracket"></i>Đổi Mật Khẩu</a>
                         </c:if>
 
                     </div>
@@ -74,10 +76,11 @@
 </header>
 <!--End Header-->
 <!--Start Carousel-->
-<c:if test="${msg != null}">
-    <h1>${msg}</h1>
-</c:if>
+
 <div style="height: 100%; padding-top: 132px;">
+    <c:if test="${msg != null}">
+        <h1>${msg}</h1>
+    </c:if>
     <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true" data-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">

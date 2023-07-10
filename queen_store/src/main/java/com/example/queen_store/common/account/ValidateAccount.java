@@ -22,6 +22,8 @@ public class ValidateAccount {
     private static String checkPassword(String password) {
         if (password == null || password.equals("")) {
             return "Mật khẩu không được để trống!";
+        }else if (password.length() < 8) {
+            return "Mật khẩu phải có ít nhất là 8 kí tự!";
         } else if (password.length() > 55) {
             return "Mật khẩu giới hạn 55 kí tự!";
         }
@@ -65,5 +67,21 @@ public class ValidateAccount {
             return "Mật khẩu giới hạn 55 kí tự!";
         }
         return null;
+    }
+
+    public static Map<String, String> checkEditPassword(String oldPassword, String password, String confirmPassword) {
+        Map<String,String> errMap = new HashMap<>();
+        String errOldPassword;
+        if ((errOldPassword = checkPassword(oldPassword)) != null) {
+            errMap.put("errOldPassword", errOldPassword);
+        }
+        String errPassword;
+        if ((errPassword = checkPassword(password)) != null) {
+            errMap.put("errPassword", errPassword);
+        }
+        String errConfirmPassword;
+        if ((errConfirmPassword = checkConfirmPassword(confirmPassword)) != null) {
+            errMap.put("errConfirmPassword", errConfirmPassword);
+        }return errMap;
     }
 }
