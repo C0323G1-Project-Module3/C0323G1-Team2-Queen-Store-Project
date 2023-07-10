@@ -162,8 +162,13 @@ public class ProductServlet extends HttpServlet {
 
     private void showList(HttpServletRequest request, HttpServletResponse response) {
         List<Product> productList = productService.showList();
-        request.setAttribute("productList", productList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+        RequestDispatcher dispatcher;
+        if (productList.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("product/list.jsp");
+        } else {
+            request.setAttribute("productList", productList);
+            dispatcher = request.getRequestDispatcher("product/list.jsp");
+        }
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
