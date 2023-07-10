@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+<jsp:include page="/home/header.jsp"></jsp:include>
 <h1>Thông tin khách hàng</h1>
 <table class="table table-striped">
     <tr>
@@ -67,6 +68,7 @@
     <input class="btn btn-dark btn-lg btn-block" type="submit" name="submit" id="submit" value="Xoá">
 </form>
 <a href="accountServlet?action=userList"><button class="btn btn-dark btn-lg btn-block">Quay lại</button></a>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

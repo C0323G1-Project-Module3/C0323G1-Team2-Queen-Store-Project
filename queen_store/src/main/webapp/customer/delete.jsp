@@ -12,6 +12,8 @@
     <title>Title</title>
 </head>
 <body>
+
+<jsp:include page="/home/header.jsp"></jsp:include>
 <form method="post">
     <h3>Do You Want Delete ?</h3>
     <fieldset>
@@ -58,6 +60,6 @@
         </table>
     </fieldset>
 </form>
-
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

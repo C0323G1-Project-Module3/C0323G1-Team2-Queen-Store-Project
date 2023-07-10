@@ -1,19 +1,26 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 7/7/2023
+  Time: 10:47 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Queen Store</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="home/css/styles.css">
 
 </head>
 <body>
@@ -21,76 +28,24 @@
 
 </div>
 <!--Start Header-->
-<header>
-    <div>
-        <div style="position: fixed; padding-top: 0" class="col-md-12 ">
-            <nav style="padding-left: 4%;" class="navbar navbar-expand-lg bg-light navbar-dark row">
-                <!--Start LOGO-->
-                <div style="padding-right: 5%" class="align-items-center col-lg-3 ">
-                    <a id="logoQueen" class="navbar-brand fs-2 text-dark" href="#"><i class="fa-solid fa-crown"></i>Queen
-                        Store</a>
-                </div>
-                <!--End LOGO-->
-                <!--Start Search-->
-                <div class="col-lg-6 justify-content-center d-flex" style="font-size: 18px">
-
-                    <c:if test="${sessionScope.account.roleName == 'admin'}">
-                        <a href="accountServlet?action=userList">Quản lí người dùng</a>
-                        <a href="account/user_management.jsp">Quản lí sản phẩm</a>
-                        <a href="account/user_management.jsp">Quản lí voucher</a>
-                        <a href="account/user_management.jsp">Quản lí order</a>
-                    </c:if>
-
-                    <label for="search"></label>
-                    <input type="search" class="form-control bg-light" id="search"
-                           style="border-radius: 30px;width: 45%;border-color: black" placeholder="Search">
-                    <button class="btn btn-outline-dark " style="margin-left: 20px" type="submit">Search</button>
-                </div>
-                <!--End Search-->
-                <!--                Start cart & login-->
-                <div class="col-lg-3 d-flex  fs-2">
-                    <div class="cart">
-                        <a href="#"><i class="fa-solid fa-cart-shopping text-dark " style="margin-top: 12px"></i></a>
-                    </div>
-                    <!--                    Start login-->
-                    <div class="nv-1">
-                        <c:if test="${sessionScope.account == null}">
-                            <a href="accountServlet?action=login" class="text-dark"><i
-                                    class="fa-solid fa-right-to-bracket"></i>Đăng Nhập</a>
-                        </c:if>
-                        <c:if test="${sessionScope.account != null}">
-                            <div>${sessionScope.account.userName}</div>
-                            <a href="accountServlet?action=logout" class="text-dark" style="text-decoration: none"><i
-                                    class="fa-solid fa-right-to-bracket"></i>Đăng Xuất</a>
-                            <a href="accountServlet?action=register" class="text-dark" style="text-decoration: none"><i
-                                    class="fa-solid fa-right-to-bracket"></i>Đổi Mật Khẩu</a>
-                        </c:if>
-
-                    </div>
-                    <!--                    End login-->
-                </div>
-                <!--                End cart & login-->
-            </nav>
-        </div>
-    </div>
-</header>
+<jsp:include page="home/header.jsp"/>
 <!--End Header-->
+<c:if test="${msg != null}">
+    <h1>${msg}</h1>
+</c:if>
 <!--Start Carousel-->
+<div style="height: 100%; padding-top: 62px;">
 
-<div style="height: 100%; padding-top: 132px;">
-    <c:if test="${msg != null}">
-        <h1>${msg}</h1>
-    </c:if>
     <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true" data-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img height="500px"
-                     src="https://png.pngtree.com/background/20210714/original/pngtree-green-plant-decoration-halo-effect-cosmetic-banner-picture-image_1209213.jpg"
+                     src="https://jeju.com.vn/wp-content/uploads/2016/10/Banner-Post-851x315.jpg"
                      class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
                 <img height="500px"
-                     src="https://as2.ftcdn.net/v2/jpg/02/07/25/49/1000_F_207254995_0pdVxbemGBmjeChzFPgRYQmF6TAjYqRO.jpg"
+                     src="https://cafebiz.cafebizcdn.vn/162123310254002176/2023/4/27/anh-thoi-can-thiet-cua-nhung-nguoi-tre-luon-ban-ron-cham-chi-va-khong-ngung-co-gang-de-co-duoc-mot-cuoc-song-hanh-phuc-va-tot-dep-1682560233696-1682560234361699800991.png"
                      class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
@@ -110,85 +65,53 @@
     </div>
 </div>
 <!--End Carousel-->
-
-<!--Start footer-->
-<footer class="bg-light" style="margin-bottom: 0;position: relative">
-    <div class="container ">
-        <div class="row ">
-
-            <div class="col-lg-3 my-5">
-                <h5>QUEEN STORE</h5>
-
-                <p><b>CN1</b>: 12 Ngõ 86 Phố Chùa Hà, Cầu Giấy, Hà Nội (hoặc 12/12 Phố Nguyễn Văn Huyên)</p>
-
-                <p><b>CN2</b>: Tháp A1, Rừng Cọ, KĐT Ecopark, Văn Giang, Hưng Yên</p>
-
-                <p><b>E-mail</b>: kyoauthentic@gmail.com</p>
-
-                <p><b>Điện thoại</b>: 024.66.737.999</p>
-
-                <p><b>Hotline</b>: 0986.448.789 / 0975.436.989</p>
-
-                <p><b>Mở cửa</b>: Từ T2 đến CN, 9H - 22H</p>
-
-                <p><b>Kyo Authentic</b> - Hệ thống bán Mỹ phẩm, Quà tặng, Son môi, Nước hoa chính hãng</p>
-            </div>
-            <div class="col-lg-3 my-5">
-                <h5>THÔNG TIN HỖ TRỢ</h5>
-
-
-                <p>Giới thiệu</p>
-
-                <p>Liên hệ</p>
-
-                <p>Hướng dẫn mua hàng</p>
-
-                <p>Theo dõi đơn hàng</p>
-
-                <p> Hướng dẫn đổi trả</p>
-
-                <p>Chính sách vận chuyển</p>
-
-                <p> Chính sách bảo mật</p>
-
-                <p>Bán buôn mỹ phẩm</p>
-            </div>
-            <div class="col-lg-3 my-5">
-                <h5>DANH MỤC CHÍNH</h5>
-
-
-                <p>Son Môi</p>
-
-                <p>Nước Hoa</p>
-
-                <p>Nước Hoa Nam</p>
-
-                <p>Nước Hoa Nữ</p>
-
-                <p>Trang Điểm Mặt</p>
-
-                <p>Trang Điểm Mắt</p>
-
-                <p>Chăm Sóc Da</p>
-
-                <p>Quà Tặng</p>
-
-                <p>Sản Phẩm Khuyến Mãi</p>
-            </div>
-            <div class="col-lg-3 my-5">
-
-                <h5>THEO DÕI CHÚNG TÔI</h5>
-
-
-                <p>Đăng ký email để không bỏ lỡ các chương trình khuyến mãi và những thông tin mới nhất</p>
-
-                <img src="account/quyen_hoang.jpg" height="252" width="252"/>
-            </div>
-        </div>
+<main style="margin-top: 20px" class="container">
+    <div class="my-2">
+        <span>Sắp xếp theo:</span>
+        <a href="/ProductServlet?action=sortUp" class="btn btn-outline-dark">Giá thấp đến cao</a>
+        <a href="/ProductServlet?action=sortDown" class="btn btn-outline-dark">Giá cao đến thấp</a>
     </div>
-</footer>
+    <div class="row d-flex  justify-align-center">
+        <%--@elvariable id="productList" type="java.util.List"--%>
+        <c:forEach var="product" items="${productList}" varStatus="loop">
+            <div class="col-lg-3 col-md-6 col-sm-12 align-content-center">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded " style="width: 18rem;height: 34rem;">
+                    <a href="<c:url value="/ProductServlet?action=view&id=${product.id}"/>">
+                        <img src="<c:out value="${product.imgPath}"/>" class="card-img-top" alt="...">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title"><c:out value="${product.name}"/></h5>
+                        <p class="card-text"><c:out value="${product.type}"/></p>
+                        <p class="card-text"><fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${product.price}" type="currency"/></p>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+            <div class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <a href="?page=${currentPage-1}">&laquo; Previous</a>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${noOfPages}">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <span class="current">${i}</span>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="?page=${i}">${i}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${currentPage < noOfPages}">
+                    <a href="?page=${currentPage+1}">Next &raquo;</a>
+                </c:if>
+            </div>
+    </div>
+</main>
+<!--Start footer-->
+<jsp:include page="home/footer.jsp"/>
 <!--End footer-->
-
+<a href="/ProductServlet?action=listAdmin">admin</a>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>

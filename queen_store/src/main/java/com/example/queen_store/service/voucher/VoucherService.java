@@ -84,4 +84,9 @@ public class VoucherService implements IVoucherService {
         return false;
     }
 
+    @Override
+    public Voucher getByNane(String voucherName) {
+        return voucherRepository.findVoucherByName(voucherName);
+    }
+
 }

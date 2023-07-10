@@ -97,4 +97,13 @@ public class ProductService implements IProductService {
     public List<ProductType> showTypeList() {
         return productRepository.getAllType();
     }
+
+    @Override
+    public List<Product> getAllPaging(int i, int recordsPerPage) {
+        List<Product> products = productRepository.getAllPaging(i,recordsPerPage);
+        if(products.size() ==0){
+            return null;
+        }
+        return products;
+    }
 }

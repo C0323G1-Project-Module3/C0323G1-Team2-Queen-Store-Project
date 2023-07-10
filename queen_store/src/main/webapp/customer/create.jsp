@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-
+<jsp:include page="/home/header.jsp"></jsp:include>
 <form action="/CustomerServlet?action=create" method="post">
     <table border="1">
         <caption>
@@ -90,5 +90,6 @@
         </tr>
     </table>
 </form>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

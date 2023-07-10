@@ -20,4 +20,5 @@ public interface IVoucherRepository {
     /////Validate
     Voucher findVoucherByName(String name);
     Voucher findVoucherByRate(float rate);
+
 }

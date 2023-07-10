@@ -34,7 +34,7 @@ public class Customer {
     public Customer(int id, String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address) {
         this.id = id;
         this.name = name;
-        this.dob = dob;
+        this.dOB = dob;
         this.gender = gender;
         this.idCard = idCard;
         this.phoneNumber = phoneNumber;
@@ -44,7 +44,7 @@ public class Customer {
 
     public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, int typeOfCustomerID, String accUserName) {
         this.name = name;
-        this.dob = dob;
+        this.dOB = dob;
         this.gender = gender;
         this.idCard = idCard;
         this.phoneNumber = phoneNumber;
@@ -59,7 +59,7 @@ public class Customer {
 
     public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, String accUserName) {
         this.name = name;
-        this.dob = dob;
+        this.dOB = dob;
         this.gender = gender;
         this.idCard = idCard;
         this.phoneNumber = phoneNumber;
@@ -73,7 +73,7 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dob=" + dob +
+                ", dob=" + dOB +
                 ", gender=" + gender +
                 ", idCard='" + idCard + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

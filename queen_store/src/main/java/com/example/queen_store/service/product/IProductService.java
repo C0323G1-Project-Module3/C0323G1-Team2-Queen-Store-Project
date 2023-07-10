@@ -17,4 +17,6 @@ public interface IProductService {
     List<Product> searchByName(String name);
     List<Product> searchByPrice(int range);
     List<ProductType> showTypeList();
+
+    List<Product> getAllPaging(int i, int recordsPerPage);
 }

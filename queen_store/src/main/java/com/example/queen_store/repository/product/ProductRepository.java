@@ -18,6 +18,7 @@ public class ProductRepository implements IProductRepository {
     private static final String SORT_DOWN_BY_PRICE = "  SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price desc ";
     private static final String SELECT_ALL_TYPE = " SELECT * FROM product_type ";
     private static final String CALL_SELECT_BY_PRICE = " call select_by_price(?,?) ";
+    private static final String CALL_PAGING = " call paging(?,?); ";
 
     //    Chức năng 1: Lấy ra danh sách sản phẩm
     @Override
@@ -354,6 +355,44 @@ public class ProductRepository implements IProductRepository {
         }
 
         return productTypeList;
+    }
+
+    @Override
+    public List<Product> getAllPaging(int i, int recordsPerPage) {
+        List<Product> productList = new ArrayList<>();
+        Connection connection = BaseProductRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CALL_PAGING);
+            preparedStatement.setInt(1, i);
+            preparedStatement.setInt(2, recordsPerPage);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            int id;
+            String name;
+            double price;
+            String description;
+            String type;
+            int inventory;
+            String imgPath;
+            while (resultSet.next()) {
+                id = resultSet.getInt("product_id");
+                name = resultSet.getString("product_name");
+                price = resultSet.getDouble("product_price");
+                description = resultSet.getString("product_description");
+                type = resultSet.getString("product_type_name");
+                inventory = resultSet.getInt("product_inventory");
+                imgPath = resultSet.getString("product_img_path");
+                productList.add(new Product(id, name, price, description, type, inventory, imgPath));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return productList;
     }
 
 }

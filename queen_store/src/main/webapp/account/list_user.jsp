@@ -12,6 +12,7 @@
 
 </head>
 <body>
+<jsp:include page="/home/header.jsp"></jsp:include>
 <h1>Danh sách account &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <c:if test="${msg != null}">
         <span>${msg}</span>
@@ -39,6 +40,7 @@
         </tr>
     </c:forEach>
 </table>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

@@ -12,6 +12,7 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="/home/header.jsp"></jsp:include>
 <center>
 
 </center>
@@ -63,5 +64,6 @@
 </h2>
 </div>
 </div>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

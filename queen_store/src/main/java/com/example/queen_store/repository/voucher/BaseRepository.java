@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class BaseRepository {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/queen_store_database?useSSL=false";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "codegym";
+    private static final String PASSWORD = "123456";
     public static Connection getConnection() {
         Connection connection = null;
         try {

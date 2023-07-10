@@ -11,9 +11,17 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<center>
+<jsp:include page="/home/header.jsp"/>
+<center style="    margin-top: 120px;">
     <h1>Search by name</h1>
     <h1><a href="/vouchers">Back to list</a></h1>
 </center>
@@ -37,5 +45,6 @@
         <div>${msg}</div>
     </c:if>
 </center>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -19,5 +19,7 @@ public interface IVoucherService {
     boolean checkVoucherByName(String name);
     boolean checkVoucherByRate(float rate);
 
+    Voucher getByNane(String voucherName);
+
 //    Map<String, String> save(Voucher voucher);
 }

@@ -19,4 +19,6 @@ public interface IProductRepository {
     List<Product> sortUpByPrice();
     List<Product> sortDownByPrice();
     List<ProductType> getAllType();
- }
+
+    List<Product> getAllPaging(int i, int recordsPerPage);
+}

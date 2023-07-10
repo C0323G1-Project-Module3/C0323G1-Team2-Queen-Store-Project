@@ -14,7 +14,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h2><a class="btn btn-outline-info" href="/ProductServlet">Back list</a></h2>
+<jsp:include page="/home/header.jsp"/>
+<h2 style="padding-top: 108px"><a class="btn btn-outline-info" href="/ProductServlet">Back list</a></h2>
 <div class="container">
     <div><form action="ProductServlet?action=save" method="post">
         <fieldset>
@@ -88,6 +89,7 @@
     </form>
     </div>
 </div>
+<jsp:include page="/home/footer.jsp"/>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>

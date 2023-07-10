@@ -11,10 +11,18 @@
 <html>
 <head>
     <title>Voucher Management Application</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<jsp:include page="/home/header.jsp"/>
 <center>
-    <h1>User Management</h1>
+    <h1 style="margin-top: 120px;">User Management</h1>
     <h2>
         <a href="/vouchers?action=create">Add New User</a>
         <br>
@@ -37,7 +45,7 @@
     </h2>
 </center>
 <div align="center">
-    <table border="1" cellpadding="5">
+    <table class="table table-striped">
         <tr>
             <td>STT</td>
             <td>Name</td>
@@ -57,5 +65,6 @@
         </c:forEach>
     </table>
 </div>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

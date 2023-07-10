@@ -2,14 +2,20 @@ package com.example.queen_store.controller.product;
 
 import com.example.queen_store.model.product.Product;
 import com.example.queen_store.model.product.ProductType;
+import com.example.queen_store.repository.order.Cart;
 import com.example.queen_store.service.product.IProductService;
 import com.example.queen_store.service.product.ProductService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "ProductServlet", value = "/ProductServlet")
 public class ProductServlet extends HttpServlet {
@@ -22,6 +28,9 @@ public class ProductServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
+            case "productManagerment":
+                showManagementList(request,response);
+                break;
             case "create":
                 showCreateForm(request, response);
                 break;
@@ -68,7 +77,8 @@ public class ProductServlet extends HttpServlet {
             products = productService.searchByPrice(range);
         }
         request.setAttribute("productList", products);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+        request.setAttribute("name", name);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -81,7 +91,7 @@ public class ProductServlet extends HttpServlet {
     private void sortUp(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.sortUpByPrice();
         request.setAttribute("productList", products);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -94,7 +104,7 @@ public class ProductServlet extends HttpServlet {
     private void sortDown(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.sortDownByPrice();
         request.setAttribute("productList", products);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -161,6 +171,35 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void showList(HttpServletRequest request, HttpServletResponse response) {
+        int page = 1;
+        int recordsPerPage = 8;
+        if(request.getParameter("page") != null)
+            page = Integer.parseInt(request.getParameter("page"));
+        List<Product> products = productService.getAllPaging(recordsPerPage,(page-1)*recordsPerPage);
+        List<Product> productList = productService.showList();
+        int noOfRecords = productList.size();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        RequestDispatcher dispatcher;
+        if (productList.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("home.jsp");
+        } else {
+            request.setAttribute("productList", products);
+            request.setAttribute("noOfPages", noOfPages);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalQuantity", Cart.totalQuantity);
+//            request.setAttribute("productList", productList);
+            dispatcher = request.getRequestDispatcher("home.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showManagementList(HttpServletRequest request, HttpServletResponse response) {
         List<Product> productList = productService.showList();
         RequestDispatcher dispatcher;
         if (productList.isEmpty()) {
@@ -177,6 +216,7 @@ public class ProductServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

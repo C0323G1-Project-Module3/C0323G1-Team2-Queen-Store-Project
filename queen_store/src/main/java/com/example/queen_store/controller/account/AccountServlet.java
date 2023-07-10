@@ -378,7 +378,7 @@ public class AccountServlet extends HttpServlet {
                 response.addCookie(passwordCookie);
                 response.addCookie(rememberMeCookie);
                 try {
-                    response.sendRedirect("/home.jsp");
+                    response.sendRedirect("/ProductServlet");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

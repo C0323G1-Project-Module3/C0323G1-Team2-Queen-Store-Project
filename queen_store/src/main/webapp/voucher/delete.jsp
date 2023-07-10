@@ -12,7 +12,14 @@
 <head>
     <title>Title</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--%>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/styles.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -21,7 +28,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<center>
+<jsp:include page="/home/header.jsp"/>
+<center style="padding-top: 100px">
     <h1><a href="/vouchers">Back to list</a></h1>
     <h1>Delete voucher</h1>
     <c:if test='${requestScope["message"] != null}'>
@@ -49,7 +57,7 @@
             </tr>
         </table>
 
-<%--        /////modal--%>
+        <%--        /////modal--%>
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
              aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -72,8 +80,9 @@
                 </div>
             </div>
         </div>
-<%--        /////modal--%>
+        <%--        /////modal--%>
     </form>
 </center>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

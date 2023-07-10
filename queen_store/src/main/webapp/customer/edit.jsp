@@ -12,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-
+<jsp:include page="/home/header.jsp"></jsp:include>
 <form action="/CustomerServlet?action=update" method="post">
     <input hidden="hidden" name="user_id" value="${customer.id}">
     <table border="1">
@@ -90,5 +90,6 @@
         </tr>
     </table>
 </form>
+<jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

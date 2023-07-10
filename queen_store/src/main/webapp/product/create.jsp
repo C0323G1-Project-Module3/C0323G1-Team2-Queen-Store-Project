@@ -16,7 +16,8 @@
 
 </head>
 <body>
-<div><a class="btn btn-success" href="/ProductServlet">Comeback List</a></div>
+<jsp:include page="/home/header.jsp"/>
+<div style="padding-top: 112px"><a class="btn btn-success" href="/ProductServlet">Comeback List</a></div>
 <div class="container">
     <form method="post">
         <legend>Add new product</legend>
@@ -77,6 +78,7 @@
         <div class="row"><input class="btn btn-outline-dander" type="submit" name="submit" value="Add"></div>
     </form>
 </div>
+<jsp:include page="/home/footer.jsp"/>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>

@@ -35,36 +35,37 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
     ></script>
     <style>
-        body {
-            font-size: x-large;
-            margin-left: 20px;
-            font-weight: bolder;
-        }
+        /*body {*/
+        /*    font-size: x-large;*/
+        /*    margin-left: 20px;*/
+        /*    font-weight: bolder;*/
+        /*}*/
 
-        table {
-            margin: 20px;
-        }
+        /*table {*/
+        /*    margin: 20px;*/
+        /*}*/
 
-        table, tr, td, th {
-            border: 2px solid gray;
-            padding: 5px;
-            text-align: center;
-            border-collapse: collapse;
-        }
+        /*table, tr, td, th {*/
+        /*    border: 2px solid gray;*/
+        /*    padding: 5px;*/
+        /*    text-align: center;*/
+        /*    border-collapse: collapse;*/
+        /*}*/
 
-        h1 {
-            text-align: center;
-            color: black;
-        }
+        /*h1 {*/
+        /*    text-align: center;*/
+        /*    color: black;*/
+        /*}*/
 
-        h2 {
-            text-align: left;
-            margin-left: 20px;
-        }
+        /*h2 {*/
+        /*    text-align: left;*/
+        /*    margin-left: 20px;*/
+        /*}*/
     </style>
 </head>
 <body>
-<div class="container">
+<jsp:include page="/home/header.jsp"/>
+<div class="container" style="padding-top: 130px;">
     <div class="row">
         <h1><b>PRODUCT LIST</b></h1>
     </div>
@@ -102,7 +103,7 @@
                 <th>Type</th>
                 <th>Inventory</th>
                 <th>IMG</th>
-                <th colspan="4">Actions</th>
+                <th colspan="2">Actions</th>
             </tr>
             <c:forEach var="product" items="${productList}" varStatus="loop">
 
@@ -119,10 +120,6 @@
                     <img width="100px" src="${product.imgPath}" alt="">
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary btn-sm"
-                       href="/ProductServlet?action=view&id=${product.id}">View</a>
-                </td>
-                <td>
                     <a class="btn btn-outline-warning btn-sm"
                        href="/ProductServlet?action=save&id=${product.id}">Edit</a>
                 </td>
@@ -135,10 +132,6 @@
                         Delete
                     </button>
                 </td>
-                <td>
-                    <a class="btn btn-outline-success btn-sm" href="/ProductServlet?action=addToCard&id=${product.id}">Add
-                        to cart</a>
-                </td>
             </tr>
             </c:forEach>
     </div>
@@ -147,8 +140,8 @@
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog" style="padding-top: 90px;">
+            <div class="modal-content" >
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Delete Modal</h5>
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
@@ -170,7 +163,7 @@
 </div>
 </div>
 
-<a href="Home/home.jsp">home</a>
+<jsp:include page="/home/footer.jsp"/>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
