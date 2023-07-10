@@ -31,6 +31,59 @@ public class Customer {
         this.accUserName = accUserName;
     }
 
+    public Customer(int id, String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address) {
+        this.id = id;
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, int typeOfCustomerID, String accUserName) {
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.typeOfCustomerID = typeOfCustomerID;
+        this.accUserName = accUserName;
+    }
+
+    public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address) {
+    }
+
+    public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, String accUserName) {
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.accUserName = accUserName;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", dob=" + dob +
+                ", gender=" + gender +
+                ", idCard='" + idCard + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", typeOfCustomerID=" + typeOfCustomerID +
+                ", accUserName='" + accUserName + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
