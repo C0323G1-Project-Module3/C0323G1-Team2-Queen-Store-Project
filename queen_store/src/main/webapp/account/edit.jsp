@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +25,8 @@
                 <div class="card" style="border-radius: 1rem;">
                     <div class="row g-0">
                         <div class="col-md-6 col-lg-5 d-none d-md-block">
-                            <img height="100px" src="https://i.vietgiaitri.com/2021/1/19/mv-debut-cua-rose-black-pink-tua-de-la-carol-co-phan-canh-lai-xe-quay-ba-ngay-hai-dem-tai-vung-nong-thon-93f-5525644.jpg"
+                            <img height="100px"
+                                 src="https://i.vietgiaitri.com/2021/1/19/mv-debut-cua-rose-black-pink-tua-de-la-carol-co-phan-canh-lai-xe-quay-ba-ngay-hai-dem-tai-vung-nong-thon-93f-5525644.jpg"
                                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;"/>
                         </div>
                         <div class="col-md-6 col-lg-7 d-flex align-items-center">
@@ -34,50 +34,54 @@
 
                                 <%--                                Thẻ Form--%>
                                 <form action="/accountServlet" method="post">
-                                    <input id="action" name="action" value="createUser" hidden="hidden">
+                                    <input id="action" name="action" value="editUser" hidden="hidden">
                                     <div class="d-flex align-items-center mb-3 pb-1">
                                         <i class="fa-solid fa-crown" style="font-size: 300%;margin-right: 20px"></i>
                                         <span class="h1 fw-bold mb-0">Queen Store</span>
                                     </div>
-
-                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng kí tài khoản</h5>
+                                    <input hidden="hidden" id="userName" name="userName" value="${sessionScope.account.userName}">
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đổi Mật Khẩu</h5>
 
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="userName">Tên đăng nhập</label>
-                                        <input type="email" id="userName" name="userName" value="${userName}"
+
+                                        <label class="form-label" for="oldPassword">Mật khẩu Cũ</label>
+                                        <input type="password" id="oldPassword" name="oldPassword" value="${oldPassword}"
                                                class="form-control form-control-lg"/>
-                                        <div><c:if test="${errMap != null}">
-                                            <label>${errMap.errUserName}</label>
-                                        </c:if></div>
+                                        <c:if test="${errMap != null}">
+                                            <label>${errMap.errOldPassword}</label>
+                                        </c:if>
                                     </div>
 
                                     <div class="form-outline mb-4">
-                                        <label class="form-label" for="password">Mật khẩu</label>
+                                        <label class="form-label" for="password">Mật khẩu mới</label>
                                         <input type="password" id="password" name="password" value="${password}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
                                             <label>${errMap.errPassword}</label>
                                         </c:if>
                                     </div>
+
                                     <div class="form-outline mb-4">
                                         <label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
-                                        <input type="password" id="confirmPassword" name="confirmPassword" value="${confirmPassword}"
+                                        <input type="password" id="confirmPassword" name="confirmPassword"
+                                               value="${confirmPassword}"
                                                class="form-control form-control-lg"/>
-                                        <c:if test="${msg != null}">
-                                            <label>${msg}</label>
-                                        </c:if>
                                         <c:if test="${errMap != null}">
                                             <label>${errMap.errConfirmPassword}</label>
                                         </c:if>
                                     </div>
+
                                     <div class="pt-1 mb-4">
-                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng kí</button>
-                                        <a href="/accountServlet?action=login"><button class="btn btn-dark btn-lg btn-block"
-                                                type="button" style="margin-left: 10px">Quay lại
-                                        </button></a>
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Đổi Mật Khẩu</button>
+                                        <a href="/home.jsp">
+                                            <button class="btn btn-dark btn-lg btn-block"
+                                                    type="button" style="margin-left: 10px">Quay lại
+                                            </button>
+                                        </a>
                                     </div>
                                 </form>
-                                <div>${msgSigin}</div>
+                                <h1>${errMap.msg}</h1>
+
                             </div>
                         </div>
                     </div>

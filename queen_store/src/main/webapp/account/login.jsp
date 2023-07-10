@@ -58,7 +58,7 @@
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
                                             <label>${errMap.errPassword}</label>
-                                        </c:if>
+                                        </c:if><div>${msg}</div>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="rememberMe"
@@ -71,13 +71,14 @@
                                         <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng nhập</button>
                                     </div>
 
-                                    <a class="small text-muted" href="#!">Quên mật khẩu?</a>
+                                    <a class="small text-muted" href="/accountServlet?action=forgotPassword">Quên mật khẩu?</a>
                                     <p class="mb-5 pb-lg-2" style="color: #393f81;">Bạn chưa có tài khoản?
                                         <a href="/accountServlet?action=create" style="color: #393f81;">
                                             Đăng kí ngay!
                                         </a></p>
-                                    <div>${msg}</div>
+                                    <div>${mess}</div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

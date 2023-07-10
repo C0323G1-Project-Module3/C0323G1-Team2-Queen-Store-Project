@@ -1,22 +1,24 @@
 package com.example.queen_store.controller.account;
 
-import com.example.queen_store.common.account.ValidateAccount;
+import com.example.queen_store.common.account.Email;
 import com.example.queen_store.model.account.Account;
+import com.example.queen_store.model.customer.Customer;
 import com.example.queen_store.service.account.AccountService;
 import com.example.queen_store.service.account.IAccountService;
-import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.CHARACTERS;
 
 @WebServlet(name = "AccountServlet", value = "/accountServlet")
 public class AccountServlet extends HttpServlet {
+//        Email.sendEmail("hoangnhat3103@gmail.com", System.currentTimeMillis() + "", "Đây là cường!");
 
     private static IAccountService accountService = new AccountService();
 
@@ -39,11 +41,84 @@ public class AccountServlet extends HttpServlet {
             case "userList":
                 displayUserList(request, response);
                 break;
+            case "deleteAccount":
+                showDeleteAccountForm(request, response);
+                break;
+            case "register":
+                showRegisterForm(request, response);
+                break;
+            case "deleteUser":
+                deleteUser(request, response);
+                break;
+            case "forgotPassword":
+                showCheckUserNameForm(request, response);
+                break;
+            case "checkCode":
+                showCheckCodeForm(request, response);
+                break;
             default:
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/home.jsp");
                 requestDispatcher.forward(request, response);
         }
 
+    }
+
+    private void showCheckCodeForm(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("userName");
+        Map<String, String> errMap = accountService.checkValidateUserName(userName);
+        RequestDispatcher requestDispatcher;
+        if (errMap.isEmpty()) {
+            Account account = accountService.findByUserName(userName);
+            if (account != null) {
+                Random random = new Random();
+                StringBuilder code = new StringBuilder(4);
+                for (int i = 0; i < 4; i++) {
+                    code.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+                }
+                System.out.println(code);
+                Email.sendEmail("hoangnhat3103@gmail.com", System.currentTimeMillis() + "", String.valueOf(code));
+
+                request.setAttribute("code", String.valueOf(code));
+                request.setAttribute("userName", userName);
+                requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
+            } else {
+                request.setAttribute("userName", userName);
+                request.setAttribute("msg", "Tài khoản không tồn tại!");
+                requestDispatcher = request.getRequestDispatcher("/account/check_code.jsp");
+
+            }
+        } else {
+            request.setAttribute("userName", userName);
+            request.setAttribute("errMap", errMap);
+            requestDispatcher = request.getRequestDispatcher("/account/check_code.jsp");
+
+        }
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showCheckUserNameForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("account/check_code.jsp").forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private void showRegisterForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.sendRedirect("/account/edit.jsp");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void displayUserList(HttpServletRequest request, HttpServletResponse response) {
@@ -61,10 +136,10 @@ public class AccountServlet extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("/account/list_user.jsp");
 
             } else {
-                request.setAttribute("msg","Xin lỗi, bạn không có quyền vào mục này!");
+                request.setAttribute("msg", "Xin lỗi, bạn không có quyền vào mục này!");
                 requestDispatcher = request.getRequestDispatcher("/home.jsp");
             }
-        }else {
+        } else {
             requestDispatcher = request.getRequestDispatcher("/home.jsp");
         }
         try {
@@ -117,6 +192,117 @@ public class AccountServlet extends HttpServlet {
             case "createUser":
                 createUser(request, response);
                 break;
+            case "editUser":
+                editPassword(request, response);
+                break;
+            case "checkForgotPassword":
+                checkForgotPassword(request, response);
+                break;
+
+        }
+    }
+
+    private void checkForgotPassword(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("userName");
+        String code = request.getParameter("code");
+        String inputCode = request.getParameter("inputCode");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        Map<String, String> errMap = accountService.checkValidateForgotPassword(password, confirmPassword);
+
+        RequestDispatcher requestDispatcher;
+        if (errMap.isEmpty()) {
+            if (code.equals(inputCode) && password.equals(confirmPassword)) {
+                accountService.forgotPassword(userName, password);
+                request.setAttribute("mess", "Đã đổi mật khẩu thành công, hãy đăng nhập!");
+                requestDispatcher = request.getRequestDispatcher("/account/login.jsp");
+            } else {
+                request.setAttribute("userName", userName);
+                request.setAttribute("msgSigin", "Mật khẩu không khớp hoặc mã chưa đúng!");
+                requestDispatcher = request.getRequestDispatcher("/account/check_code.jsp");
+            }
+        } else {
+            request.setAttribute("errMap", errMap);
+            requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
+        }
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void editPassword(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("userName");
+        String oldPassword = request.getParameter("oldPassword");
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        Map<String, String> errMap = accountService.checkValidatePassword(oldPassword, password, confirmPassword);
+        if (errMap.isEmpty()) {
+            errMap = accountService.editUser(userName, oldPassword, password, confirmPassword);
+        }
+        request.setAttribute("errMap", errMap);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/account/edit.jsp");
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("userName");
+        boolean rowDelete = accountService.deleteUser(userName);
+        RequestDispatcher requestDispatcher;
+
+        if (rowDelete) {
+            request.setAttribute("msg", "Đã xoá tài khoản " + userName);
+            requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
+        } else {
+            request.setAttribute("msg", "Lỗi");
+            requestDispatcher = request.getRequestDispatcher("/account/delete.jsp");
+        }
+
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showDeleteAccountForm(HttpServletRequest request, HttpServletResponse response) {
+        String userName = request.getParameter("userName");
+        Account account = accountService.findByUserName(userName);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/delete.jsp");
+        if (account != null) {
+            Customer user = accountService.findCustomerByUserName(userName);
+            if (user != null) {
+                String typeOfCustomer = accountService.findTypeOfCustomer(user);
+                request.setAttribute("typeOfCustomer", typeOfCustomer.toUpperCase());
+                request.setAttribute("gender", user.isGender() ? "Nam" : "Nữ");
+                request.setAttribute("dOB", user.getDob().toString());
+                request.setAttribute("account", account);
+                request.setAttribute("user", user);
+            } else {
+                request.setAttribute("account", account);
+                request.setAttribute("msg", "Tài khoản này chưa có thông tin gì!");
+            }
+        } else {
+            request.setAttribute("account", account);
+            request.setAttribute("msg", "Lỗi");
+        }
+        try {
+            requestDispatcher.forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -124,8 +310,8 @@ public class AccountServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+        Map<String, String> errMap = accountService.checkValidateAccount(userName, password, confirmPassword);
 
-        Map<String, String> errMap = ValidateAccount.checkRegister(userName, password, confirmPassword);
         RequestDispatcher requestDispatcher;
 
         if (errMap.isEmpty()) {
@@ -173,8 +359,8 @@ public class AccountServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
-        Map<String, String> errMap = ValidateAccount.checkLogin(userName, password);
-        System.out.println(rememberMe);
+        Map<String, String> errMap = accountService.checkValidateLogin(userName, password);
+
         if (errMap.isEmpty()) {
             Account account = accountService.login(userName, password);
             if (account != null) {
@@ -197,7 +383,15 @@ public class AccountServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             } else {
-                request.setAttribute("msg", "user");
+                request.setAttribute("msg", "Sai mật khẩu hoặc tài khoản không tồn tại!");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/login.jsp");
+                try {
+                    requestDispatcher.forward(request, response);
+                } catch (ServletException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         } else {
             request.setAttribute("errMap", errMap);
@@ -212,6 +406,3 @@ public class AccountServlet extends HttpServlet {
         }
     }
 }
-
-
-
