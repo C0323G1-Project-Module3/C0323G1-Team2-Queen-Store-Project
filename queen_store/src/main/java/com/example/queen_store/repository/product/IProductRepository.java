@@ -11,6 +11,7 @@ public interface IProductRepository {
     Product searchById(int id);
 
     List<Product> searchByName(String name);
+    List<Product> searchByPrice(int range);
 
     void add(Product product);
     boolean update(Product product);

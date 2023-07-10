@@ -71,9 +71,16 @@
     <%-- Thanh tìm kiếm"--%>
     <div class="container w-50 m-auto text-center">
 
-        <form class="d-flex" action="/ProductServlet?action=search" >
+        <form class="d-flex">
             <input type="hidden" name="action" value="search">
-            <input class="form-control me-2" type="text" placeholder="Search"name="name">
+            <input class="form-control me-2" type="text" placeholder="Search by name..." name="name">
+            <select class="form-select me-2" name="range">
+                <option value="0">Tất cả</option>
+                <option value="1">Dưới 100.000đ</option>
+                <option value="2">100000 - 500.000đ</option>
+                <option value="3">500000 - 1000.000đ</option>
+                <option value="4">Trên 1000.000đ</option>
+            </select>
             <button class="btn btn-primary" type="submit">Search</button>
         </form>
 

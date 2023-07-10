@@ -1,5 +1,7 @@
 package com.example.queen_store.model.product;
 
+import java.util.Objects;
+
 public class Product {
     private int id;
     private String name;
@@ -8,6 +10,7 @@ public class Product {
     private String type;
     private int inventory;
     private String imgPath;
+
     public Product() {
     }
 
@@ -84,6 +87,19 @@ public class Product {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id == product.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

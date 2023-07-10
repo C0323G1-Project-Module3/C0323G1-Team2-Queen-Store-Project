@@ -17,6 +17,8 @@ public class ProductRepository implements IProductRepository {
     private static final String SORT_UP_BY_PRICE = " SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price asc ";
     private static final String SORT_DOWN_BY_PRICE = "  SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price desc ";
     private static final String SELECT_ALL_TYPE = " SELECT * FROM product_type ";
+    private static final String CALL_SELECT_BY_PRICE = " call select_by_price(?,?) ";
+
     //    Chức năng 1: Lấy ra danh sách sản phẩm
     @Override
     public List<Product> getAll() {
@@ -90,14 +92,14 @@ public class ProductRepository implements IProductRepository {
         return product;
     }
 
-    // Chức năng 3: Tìm kiếm theo tên
+    // Chức năng 3: Tìm kiếm theo tên và giá sp
     @Override
     public List<Product> searchByName(String searchName) {
         List<Product> products = new ArrayList<>();
         Connection connection = BaseProductRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_NAME);
-            preparedStatement.setString(1, "%"+searchName+"%");
+            preparedStatement.setString(1, "%" + searchName + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
             int id;
             String name;
@@ -126,6 +128,59 @@ public class ProductRepository implements IProductRepository {
             }
         }
         return products;
+    }
+
+    @Override
+    public List<Product> searchByPrice(int range) {
+        Connection connection = BaseProductRepository.getConnection();
+        List<Product> products = new ArrayList<>();
+        if (range == 0) {
+            return getAll();
+        } else {
+            try {
+                CallableStatement callableStatement = connection.prepareCall(CALL_SELECT_BY_PRICE);
+                switch (range) {
+                    case 1:
+                        callableStatement.setDouble(1, 0);
+                        callableStatement.setDouble(2, 100000);
+                        break;
+                    case 2:
+                        callableStatement.setDouble(1, 100000);
+                        callableStatement.setDouble(2, 500000);
+                        break;
+                    case 3:
+                        callableStatement.setDouble(1, 500000);
+                        callableStatement.setDouble(2, 1000000);
+                        break;
+                    default:
+                        callableStatement.setDouble(1, 1000000);
+                        callableStatement.setDouble(2, 5000000);
+                        break;
+                }
+                ResultSet resultSet = callableStatement.executeQuery();
+                int id;
+                String name;
+                double price;
+                String description;
+                String type;
+                int inventory;
+                String imgPath;
+                while (resultSet.next()) {
+                    id = resultSet.getInt("product_id");
+                    price = resultSet.getDouble("product_price");
+                    name = resultSet.getString("product_name");
+                    description = resultSet.getString("product_description");
+                    type = resultSet.getString("product_type_name");
+                    inventory = resultSet.getInt("product_inventory");
+                    imgPath = resultSet.getString("product_img_path");
+                    products.add(new Product(id, name, price, description, type, inventory, imgPath));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return products;
+        }
+
     }
 
     // Chức năng 4: Thêm mới sản phẩm
@@ -286,7 +341,7 @@ public class ProductRepository implements IProductRepository {
             while (resultSet.next()) {
                 id = resultSet.getInt("product_type_id");
                 name = resultSet.getString("product_type_name");
-                productTypeList.add(new ProductType(id,name));
+                productTypeList.add(new ProductType(id, name));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -300,4 +355,5 @@ public class ProductRepository implements IProductRepository {
 
         return productTypeList;
     }
+
 }
