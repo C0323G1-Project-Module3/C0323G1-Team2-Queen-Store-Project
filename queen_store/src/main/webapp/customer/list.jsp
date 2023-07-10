@@ -27,7 +27,7 @@
             <th>PhoneNumber</th>
             <th>Email</th>
             <th>Address</th>
-            <th>TypeOfCustomerID</th>
+<%--            <th>TypeOfCustomerID</th>--%>
             <th>AccUserName</th>
             <th>Action</th>
         </tr>
@@ -46,11 +46,11 @@
                 <td>${customer.phoneNumber}</td>
                 <td>${customer.email}</td>
                 <td>${customer.address}</td>
-                <td>${customer.typeOfCustomerID}</td>
+<%--                <td>${customer.typeOfCustomerID}</td>--%>
                 <td>${customer.accUserName}</td>
                 <td>
-                    <a href="CustomerServlet?action=edit&id=${customer.id}">Edit</a>
-                    <a href="CustomerServlet?action=delete&id=${customer.id}">Delete</a>
+                  <button><a href="CustomerServlet?action=edit&id=${customer.id}" style="text-decoration: none">Edit</a></button>
+                   <button><a href="CustomerServlet?action=delete&id=${customer.id} " style="text-decoration: none">Delete</a></button>
                 </td>
             </tr>
         </c:forEach>

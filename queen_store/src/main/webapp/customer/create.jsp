@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/CustomerServlet">Back</a>
+
 <form action="/CustomerServlet?action=create" method="post">
     <table border="1">
         <caption>
@@ -33,7 +33,8 @@
         <tr>
             <th>Date Of Birth</th>
             <td>
-                <input type="date" name="user_dob" id="date" value="2000-01-01" />
+                <input type="date" name="user_dob" id="date" value="2000-01-01"/>
+                <div class="text-danger">${error.errDate}</div>
             </td>
         </tr>
         <tr>
@@ -46,14 +47,14 @@
         <tr>
             <th>User ID Card</th>
             <td>
-                <input type="number" name="user_id_card" id="userIdCard" value="${customer.getIdCard()}"/>
+                <input type="text" name="user_id_card" id="userIdCard" value="${customer.getIdCard()}"/>
                 <div class="text-danger">${error.errIdCard}</div>
             </td>
         </tr>
         <tr>
             <th>Phone Number</th>
             <td>
-                <input type="number" name="user_phone_number" id="phoneNumber" value="${customer.getPhoneNumber()}"/>
+                <input type="text" name="user_phone_number" id="phoneNumber" value="${customer.getPhoneNumber()}"/>
                 <div class="text">${error.errPhoneNumber}</div>
             </td>
         </tr>
@@ -71,20 +72,21 @@
                 <div class="text">${error.errAddress}</div>
             </td>
         </tr>
-        <tr>
-            <th>Type Customer ID</th>
-            <td>
-                <input type="number" name="type_of_customer_id" id="typeOfCustomerId"/>
-            </td>
-        </tr>
+<%--        <tr>--%>
+<%--            <th>Type Customer ID</th>--%>
+<%--            <td>--%>
+<%--                <input type="number" name="type_of_customer_id" id="typeOfCustomerId"/>--%>
+<%--            </td>--%>
+<%--        </tr>--%>
         <tr>
             <th>Account User Name</th>
             <td>
-                <input type="text" name="account_user_name" id="accUserName"/>
+                <input type="text" name="account_user_name" id="accUserName" value="${customer.getAccUserName()}"/>
             </td>
         </tr>
         <tr>
-          <td colspan="2" align="center"><input type="submit" value="Save"></td>
+          <td align="center"><input type="submit" value="Save"></td>
+            <td align="center"><button><a href="/CustomerServlet"style="text-decoration: none">Back</a></button></td>
         </tr>
     </table>
 </form>

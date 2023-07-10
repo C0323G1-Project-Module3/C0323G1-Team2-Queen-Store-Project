@@ -8,8 +8,8 @@ import java.util.List;
 
 public class CustomerRepository implements ICustomerRepository {
     private static final String SELECT_ALL_USERS = "select * from user";
-    private static final String INSERT_USERS = " insert into user(user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address,type_of_customer_id,account_user_name)" +
-            "values(?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_USERS = " insert into user(user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address,account_user_name)" +
+            "values(?,?,?,?,?,?,?,?)";
     private static final String UPDATE_USERS = " update user set user_name = ?,user_dob= ?, user_gender =?, user_id_card=?" +
             ",user_phone_number=?,user_mail=?,user_address=? where user_id = ? ";
     private static final String SELECT_USERS_BY_ID = " select user_id,user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address from user\n" +
@@ -52,8 +52,8 @@ public class CustomerRepository implements ICustomerRepository {
             preparedStatement.setString(5, customer.getPhoneNumber());
             preparedStatement.setString(6, customer.getEmail());
             preparedStatement.setString(7, customer.getAddress());
-            preparedStatement.setInt(8, customer.getTypeOfCustomerID());
-            preparedStatement.setString(9, customer.getAccUserName());
+//            preparedStatement.setInt(8, customer.getTypeOfCustomerID());
+            preparedStatement.setString(8, customer.getAccUserName());
             preparedStatement.executeUpdate();
             connection.close();
         } catch (SQLException e) {
@@ -62,20 +62,25 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public boolean updateUser(Customer customer) throws SQLException {
+    public boolean updateUser(Customer customer)  {
         boolean rowUpdate;
         Connection connection = BaseRepository.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS);
-        preparedStatement.setString(1, customer.getName());
-        preparedStatement.setDate(2, customer.getDob());
-        preparedStatement.setBoolean(3, customer.isGender());
-        preparedStatement.setString(4, customer.getIdCard());
-        preparedStatement.setString(5, customer.getPhoneNumber());
-        preparedStatement.setString(6, customer.getEmail());
-        preparedStatement.setString(7, customer.getAddress());
-        preparedStatement.setInt(8, customer.getId());
-        rowUpdate = preparedStatement.executeUpdate() > 0;
-        connection.close();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_USERS);
+            preparedStatement.setString(1, customer.getName());
+            preparedStatement.setDate(2, customer.getDob());
+            preparedStatement.setBoolean(3, customer.isGender());
+            preparedStatement.setString(4, customer.getIdCard());
+            preparedStatement.setString(5, customer.getPhoneNumber());
+            preparedStatement.setString(6, customer.getEmail());
+            preparedStatement.setString(7, customer.getAddress());
+            preparedStatement.setInt(8, customer.getId());
+            rowUpdate = preparedStatement.executeUpdate() > 0;
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return rowUpdate;
     }
 

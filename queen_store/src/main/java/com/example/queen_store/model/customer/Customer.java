@@ -57,6 +57,17 @@ public class Customer {
     public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address) {
     }
 
+    public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, String accUserName) {
+        this.name = name;
+        this.dob = dob;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.accUserName = accUserName;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
