@@ -9,8 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(name = "ProductServlet", value = "/ProductServlet")
 public class ProductServlet extends HttpServlet {
@@ -51,22 +50,23 @@ public class ProductServlet extends HttpServlet {
 
     }
 
-//    private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
-//        String name = request.getParameter("name");
-//        List<Product> products = productService.searchByName(name);
-//        request.setAttribute("productList", products);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
-//        try {
-//            dispatcher.forward(request, response);
-//        } catch (ServletException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
     private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
-        List<Product> products = productService.searchByName(name);
+        int range = Integer.parseInt(request.getParameter("range"));
+        List<Product> products = new ArrayList<>();
+        if (name != "") {
+            List<Product> product1 = productService.searchByName(name);
+            List<Product> product2 = productService.searchByPrice(range);
+            for (int i = 0; i < product1.size(); i++) {
+                for (int j = 0; j < product2.size(); j++) {
+                    if (product1.get(i).equals(product2.get(j))) {
+                        products.add(product1.get(i));
+                    }
+                }
+            }
+        } else {
+            products = productService.searchByPrice(range);
+        }
         request.setAttribute("productList", products);
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
         try {
@@ -77,7 +77,6 @@ public class ProductServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
 
     private void sortUp(HttpServletRequest request, HttpServletResponse response) {
         List<Product> products = productService.sortUpByPrice();
@@ -196,13 +195,20 @@ public class ProductServlet extends HttpServlet {
     private void saveProduct(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        double price = Double.parseDouble(request.getParameter("price"));
+        double price = 0;
+        if (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) {
+            System.out.println(request.getParameter("price"));
+            price = Double.parseDouble(request.getParameter("price"));
+        }
         String description = request.getParameter("description");
         String type = request.getParameter("type");
-        int inventory = Integer.parseInt(request.getParameter("inventory"));
+        int inventory = 0;
+        if (request.getParameter("inventory") != null && !request.getParameter("inventory").isEmpty()) {
+            inventory = Integer.parseInt(request.getParameter("inventory"));
+        }
+
         String imgPath = request.getParameter("imgPath");
         Product product = new Product(id, name, price, description, type, inventory, imgPath);
-        System.out.println(type);
         Map<String, String> errMap = productService.save(product);
         if (errMap.isEmpty()) {
             try {
@@ -211,6 +217,8 @@ public class ProductServlet extends HttpServlet {
                 e.printStackTrace();
             }
         } else {
+            List<ProductType> productTypes = productService.showTypeList();
+            request.setAttribute("productTypes", productTypes);
             request.setAttribute("product", product);
             request.setAttribute("errors", errMap);
             try {
@@ -226,17 +234,41 @@ public class ProductServlet extends HttpServlet {
 
     private void addProduct(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
-        double price = Double.parseDouble(request.getParameter("price"));
+        double price = 0;
+        if (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) {
+            System.out.println(request.getParameter("price"));
+            price = Double.parseDouble(request.getParameter("price"));
+        }
         String description = request.getParameter("description");
         String type = request.getParameter("type");
-        int inventory = Integer.parseInt(request.getParameter("inventory"));
+        int inventory = 0;
+        if (request.getParameter("inventory") != null && !request.getParameter("inventory").isEmpty()) {
+            inventory = Integer.parseInt(request.getParameter("inventory"));
+        }
+
         String imdPath = request.getParameter("imgPath");
         Product product = new Product(name, price, description, type, inventory, imdPath);
-        productService.add(product);
-        try {
-            response.sendRedirect("/ProductServlet");
-        } catch (IOException e) {
-            e.printStackTrace();
+        Map<String, String> errMap = productService.add(product);
+
+        if (errMap.isEmpty()) {
+            try {
+                response.sendRedirect("/ProductServlet");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            List<ProductType> productTypes = productService.showTypeList();
+            request.setAttribute("productTypes", productTypes);
+            request.setAttribute("product", product);
+            request.setAttribute("errors", errMap);
+            try {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -25,22 +25,43 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void add(Product product) {
-        productRepository.add(product);
+    public Map<String, String> add(Product product) {
+        Map<String, String> errMap = new HashMap<>();
+        errMap = validateInput(product.getName(), product.getPrice(), product.getDescription(), product.getInventory(), product.getImgPath());
+        if (errMap.isEmpty()) {
+            productRepository.add(product);
+        }
+        return errMap;
+    }
+
+    public Map<String, String> validateInput(String name, double price, String description, int inventory, String imgPath) {
+        Map<String, String> errMap = new HashMap<>();
+        if (name.trim().equals("") || name == null) {
+            errMap.put("errName", "Tên không được để trống");
+        } else if (name.length() > 255) {
+            errMap.put("errName", "Tên không dài quá 255 ký tự");
+        }
+        if (imgPath.length() > 65535) {
+            errMap.put("errImg", "Đường dẫn dài quá 65535 ký tự");
+        }
+        if (price == 0) {
+            errMap.put("errPrice", "Giá không được để trống");
+        }
+        if (description.trim().equals("") || description == null) {
+            errMap.put("errDes", "Mô tả không được để trống");
+        } else if (description.length()>255) {
+            errMap.put("errDes", "Mô tả không được dài quá 255 ký tự");
+        }
+        if (inventory == 0) {
+            errMap.put("errInven", "Số lượng không được để trống");
+        }
+        return errMap;
     }
 
     @Override
     public Map<String, String> save(Product product) {
         Map<String, String> errMap = new HashMap<>();
-
-        if (product.getName().trim().equals("") || product.getName() == null) {
-            errMap.put("errName", "Tên không được để trống");
-        } else if (product.getName().length() > 255) {
-            errMap.put("errName", "Tên không dài quá 255 ký tự");
-        } else if(product.getImgPath().length() > 65535) {
-            errMap.put("errName", "Đường dẫn dài quá 65535 ký tự");
-
-        }
+        errMap = validateInput(product.getName(), product.getPrice(), product.getDescription(), product.getInventory(), product.getImgPath());
         if (errMap.isEmpty()) {
             productRepository.update(product);
         }
@@ -65,6 +86,11 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> searchByName(String name) {
         return productRepository.searchByName(name);
+    }
+
+    @Override
+    public List<Product> searchByPrice(int range) {
+        return productRepository.searchByPrice(range);
     }
 
     @Override

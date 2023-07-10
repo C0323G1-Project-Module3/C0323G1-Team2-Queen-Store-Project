@@ -27,16 +27,26 @@
                 <tr>
                     <td>Name:</td>
                     <td><input type="text" name="name" id="name" value="${product.getName()}">
-                        <div class="text-danger">${errors.errName}</div>
+                        <c:if test="${!errors.errName.isEmpty()}">
+                            <div class="text-danger">${errors.errName}</div>
+                        </c:if>
                     </td>
                 </tr>
                 <tr>
                     <td>Price:</td>
-                    <td><input type="number" name="price" id="price" value="${product.getPrice()}"></td>
+                    <td><input type="number" name="price" id="price" value="${product.getPrice()}">
+                        <c:if test="${!errors.errPrice.isEmpty()}">
+                            <div class="text-danger">${errors.errPrice}</div>
+                        </c:if>
+                    </td>
                 </tr>
                 <tr>
                     <td>Description:</td>
-                    <td><input type="text" name="description" id="description" value="${product.getDescription()}"></td>
+                    <td><input type="text" name="description" id="description" value="${product.getDescription()}">
+                        <c:if test="${!errors.errDes.isEmpty()}">
+                            <div class="text-danger">${errors.errDes}</div>
+                        </c:if>
+                    </td>
                 </tr>
                 <tr>
                     <td>Type:</td>
@@ -54,11 +64,18 @@
                 </tr>
                 <tr>
                     <td>Inventory:</td>
-                    <td><input type="text" name="inventory" id="inventory" value="${product.getInventory()}"></td>
+                    <td><input type="text" name="inventory" id="inventory" value="${product.getInventory()}">
+                        <c:if test="${!errors.errInven.isEmpty()}">
+                            <div class="text-danger">${errors.errInven}</div>
+                        </c:if></td>
+                    </td>
                 </tr>
                 <tr>
                     <td>IMG Path:</td>
-                    <td><input type="text" name="imgPath" id="imgPath" value="${product.getImgPath()}"></td>
+                    <td><input type="text" name="imgPath" id="imgPath" value="${product.getImgPath()}">
+                        <c:if test="${!errors.errImg.isEmpty()}">
+                            <div class="text-danger">${errors.errImg}</div>
+                        </c:if></td>
                 </tr>
                 <tr>
                     <td></td>
