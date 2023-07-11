@@ -47,21 +47,21 @@
                     <input type="email" id="userName" name="userName" value="${userName}"
                            class="form-control form-control-lg"/>
                     <div><c:if test="${errMap != null}">
-                      <label>${errMap.errUserName}</label>
+                      <label class="text-danger">${errMap.errUserName}</label>
                     </c:if></div>
                     <div><c:if test="${msg != null}">
-                      <label>${msg}</label>
+                      <label class="text-danger">${msg}</label>
                     </c:if></div>
                   </div>
 
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="submit">Đổi Mật Khẩu</button>
+                    <button class="btn btn-dark btn-lg btn-block" type="submit">Gửi Mã Về Mail</button>
                     <a href="/accountServlet?action=login"><button class="btn btn-dark btn-lg btn-block"
                                                                    type="button" style="margin-left: 10px">Quay lại
                     </button></a>
                   </div>
                 </form>
-                <div>${msgSigin}</div>
+                <div class="text-danger">${msgSigin}</div>
               </div>
             </div>
           </div>

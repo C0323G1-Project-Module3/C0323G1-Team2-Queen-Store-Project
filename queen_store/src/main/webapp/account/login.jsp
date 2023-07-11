@@ -48,7 +48,7 @@
                                         <input type="email" id="userName" name="userName"
                                                class="form-control form-control-lg"/>
                                         <div><c:if test="${errMap != null}">
-                                            <label>${errMap.errUserName}</label>
+                                            <label class="text-danger">${errMap.errUserName}</label>
                                         </c:if></div>
                                     </div>
 
@@ -57,7 +57,7 @@
                                         <input type="password" id="password" name="password"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errPassword}</label>
+                                            <label class="text-danger">${errMap.errPassword}</label>
                                         </c:if><div>${msg}</div>
                                     </div>
                                     <div class="form-check">
