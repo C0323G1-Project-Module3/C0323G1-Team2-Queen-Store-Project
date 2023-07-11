@@ -2,8 +2,7 @@ package com.example.queen_store.repository.order;
 
 import com.example.queen_store.model.product.Product;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Cart {
     private static Map<Product,Integer> items =new HashMap<>();
@@ -19,10 +18,17 @@ public class Cart {
             items.put(product, quantity);
         }
     }
-
+    public static List<Product> getProducts(){
+        Set<Product> keySet = items.keySet();
+        return new ArrayList<>(keySet);
+    }
     // Xóa sản phẩm khỏi giỏ hàng
-    public static void removeItem(String productName) {
-        items.remove(productName);
+    public static void removeItem(Product product) {
+        items.remove(product);
+    }
+    public static void removeAll() {
+        totalQuantity = 0;
+        items.clear();
     }
 
     // Lấy danh sách sản phẩm trong giỏ hàng

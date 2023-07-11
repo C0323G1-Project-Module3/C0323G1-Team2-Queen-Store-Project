@@ -23,21 +23,23 @@
 
 <jsp:include page="/home/header.jsp"/>
 <div class="justify-align-center container" style="padding-top: 66px; height: 400px">
+    <h1>Giỏ hàng</h1>
     <form action="/order" method="get">
 
         <input name="action" value="findVoucherByName" hidden="hidden"/>
         <table class="table">
             <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
+                <th>Tên </th>
+                <th>Giá</th>
+                <th>Số lượng</th>
             </tr>
             <c:forEach var="product" items="${list}">
                 <tr>
                     <td>${product.key.getName()}</td>
                     <td><fmt:setLocale value="vi_VN"/>
                         <fmt:formatNumber value="${product.key.getPrice()}" type="currency"/></td>
-                    <td><input type="number" name="quantity" value="${product.value}"></td>
+                    <td>${product.value}</td>
+<%--                    <td><input type="number" name="quantity" value="${product.value}"></td>--%>
                     <c:set var="sum" value="${sum + product.key.getPrice() * product.value}"/>
                 </tr>
             </c:forEach>
@@ -46,20 +48,23 @@
                 <td colspan="2"><fmt:setLocale value="vi_VN"/>
                     <fmt:formatNumber value="${sum}" type="currency"/></td>
             </tr>
-            <input name="name" value="${product.key.getName()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getPrice()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getId()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getName()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getName()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getName()}" hidden="hidden"/>
-            <input name="name" value="${product.key.getName()}" hidden="hidden"/>
+            <input name="price" value="${product.key.getPrice()}" hidden="hidden"/>
+            <input name="productId" value="${product.key.getId()}" hidden="hidden"/>
+            <input name="voucherId" value="${voucher.getId()}" hidden="hidden"/>
+            <input name="useName" value="${account.getUserName()}" hidden="hidden"/>
         </table>
-        <input type="name" name="voucherName" value="${voucherName}">
+        <label for="voucher">Nhập voucher(nếu có): </label>
+        <input type="text" id="voucher" name="voucherName" value="${voucherName}">
         <c:if test="${msg!=null}">
             <div class="text-danger">${msg}</div>
         </c:if>
-        <input type="submit" value="Đặt hàng" class="btn btn-outline-dark">
+        <c:if test="${!list.isEmpty()}">
+        <DIV class="mx-2">
+        <input type="submit" value="Đặt hàng" class="btn btn-outline-primary">
+        </DIV>
+        </c:if>
     </form>
+
 </div>
 <jsp:include page="/home/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

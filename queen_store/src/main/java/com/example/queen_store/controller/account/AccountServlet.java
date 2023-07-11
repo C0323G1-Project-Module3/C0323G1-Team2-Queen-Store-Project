@@ -381,7 +381,7 @@ public class AccountServlet extends HttpServlet {
                 Customer customer = accountService.findCustomerByUserName(userName);
                 if (customer == null && !account.getRoleName().equals("admin")) {
                     request.setAttribute("userName", userName);
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/create.jsp");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/create.jsp");
                     try {
                         requestDispatcher.forward(request, response);
                     } catch (ServletException e) {
