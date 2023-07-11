@@ -101,10 +101,14 @@
                             <a href="accountServlet?action=logout" class="text-dark d-flex"
                                style="text-decoration: none; margin-left: 20px"><i
                                     class="fa-solid fa-right-to-bracket" style="margin-right: 5px;margin-top: 7px"></i>Logout</a>
-                            <div class="text-dark"
-                                 style="font-size: 80%;margin-top: 5px;margin-left: 20px">${sessionScope.account.userName}</div>
+                            <c:if test="${sessionScope.account.roleName != 'admin'}">
+                            <a href="CustomerServlet?action=customerChangeInfo&userName=${sessionScope.account.userName}"><div class="text-dark"
+                                 style="font-size: 80%;margin-top: 5px;margin-left: 20px">${sessionScope.account.userName}</div></a>
+                            </c:if>
+                            <c:if test="${sessionScope.account.roleName == 'admin'}">
+                                <div class="text-dark" style="font-size: 80%;margin-top: 5px;margin-left: 20px">${sessionScope.account.userName}</div>
+                            </c:if>
                         </c:if>
-
                     </div>
                     <!--                    End login-->
                 </div>
@@ -118,7 +122,7 @@
                             <a href="accountServlet?action=userList" class="position-absolute top-50 start-50 translate-middle">Quản lí tài khoản</a>
                         </div>
                         <div class="col-2 position-relative ">
-                            <a href="accountServlet?action=userList" class="position-absolute top-50 start-50 translate-middle">Quản lí khách hàng</a>
+                            <a href="CustomerServlet" class="position-absolute top-50 start-50 translate-middle">Quản lí khách hàng</a>
                         </div>
                         <div class="col-2 position-relative">
                             <a href="/ProductServlet?action=productManagerment" class="position-absolute top-50 start-50 translate-middle">Quản lí sản phẩm</a>
@@ -127,14 +131,12 @@
                             <a href="/vouchers" class="position-absolute top-50 start-50 translate-middle">Quản lí voucher</a>
                         </div>
                         <div class="col-2 position-relative">
-                            <a href="account/user_management.jsp" class="position-absolute top-50 start-50 translate-middle">Quản lí order</a>
+                            <a href="order" class="position-absolute top-50 start-50 translate-middle">Quản lí order</a>
                         </div>
                         <div class="col-1"></div>
                     </div>
                 </c:if>
             </div>
         </div>
-
     </div>
-
 </header>

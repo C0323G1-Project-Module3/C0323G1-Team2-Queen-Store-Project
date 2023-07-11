@@ -38,7 +38,7 @@
 
     <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true" data-interval="2000">
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div class="carousel-item active ">
                 <img height="500px"
                      src="https://jeju.com.vn/wp-content/uploads/2016/10/Banner-Post-851x315.jpg"
                      class="d-block w-100" alt="...">
@@ -88,22 +88,26 @@
                 </div>
             </div>
         </c:forEach>
-            <div class="pagination">
+            <div class="pagination container d-flex justify-content-center align-items-center">
                 <c:if test="${currentPage > 1}">
-                    <a href="?page=${currentPage-1}">&laquo; Previous</a>
+                    <a class="fs-5" href="?page=${currentPage-1}">&laquo; Previous</a>
                 </c:if>
+                &nbsp;
                 <c:forEach var="i" begin="1" end="${noOfPages}">
                     <c:choose>
                         <c:when test="${currentPage eq i}">
-                            <span class="current">${i}</span>
+                            <span class="fs-5" class="current">${i}</span>
+                            &nbsp;
                         </c:when>
                         <c:otherwise>
-                            <a href="?page=${i}">${i}</a>
+                            <a class="fs-5" href="?page=${i}">${i}</a>
+                            &nbsp;
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
+                &nbsp;
                 <c:if test="${currentPage < noOfPages}">
-                    <a href="?page=${currentPage+1}">Next &raquo;</a>
+                    <a class="fs-5" href="?page=${currentPage+1}">Next &raquo;</a>
                 </c:if>
             </div>
     </div>
@@ -115,6 +119,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-
 </body>
 </html>

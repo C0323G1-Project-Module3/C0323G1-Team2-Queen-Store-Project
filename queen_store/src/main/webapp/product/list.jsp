@@ -64,6 +64,7 @@
     </style>
 </head>
 <body>
+
 <jsp:include page="/home/header.jsp"/>
 <div class="container" style="padding-top: 130px;">
     <div class="row">
