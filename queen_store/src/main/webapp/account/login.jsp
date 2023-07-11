@@ -48,7 +48,7 @@
                                         <input type="email" id="userName" name="userName"
                                                class="form-control form-control-lg"/>
                                         <div><c:if test="${errMap != null}">
-                                            <label>${errMap.errUserName}</label>
+                                            <label class="text-danger">${errMap.errUserName}</label>
                                         </c:if></div>
                                     </div>
 
@@ -57,7 +57,7 @@
                                         <input type="password" id="password" name="password"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errPassword}</label>
+                                            <label class="text-danger">${errMap.errPassword}</label>
                                         </c:if><div>${msg}</div>
                                     </div>
                                     <div class="form-check">
@@ -70,7 +70,7 @@
                                     <div class="pt-1 mb-4">
                                         <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng nhập</button>
                                   &nbsp;&nbsp;
-                                        <a href="ProductServlet"><button class="btn btn-dark btn-lg btn-block">Quay lại</button></a>
+
                                     </div>
 
                                     <a class="small text-muted" href="/accountServlet?action=forgotPassword">Quên mật khẩu?</a>
@@ -80,7 +80,9 @@
                                         </a></p>
                                     <div>${mess}</div>
                                 </form>
-
+                                    <form action="ProductServlet" method="get">
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Quay lại</button>
+                                    </form>
                             </div>
                         </div>
                     </div>

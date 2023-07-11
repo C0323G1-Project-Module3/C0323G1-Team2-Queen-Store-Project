@@ -40,53 +40,53 @@
                     <span class="h1 fw-bold mb-0">Queen Store</span>
                   </div>
 
-                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đăng kí tài khoản</h5>
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Đổi Mật Khẩu</h5>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="userName">Tên đăng nhập</label>
+                    <label class="fw-normal mb-3 pb-3" for="userName">Tên Đăng Nhập:&nbsp;</label>
+                    <label class="fw-normal mb-3 pb-3">${userName}</label>
                     <input type="email" id="userName" name="userName" hidden="hidden" value="${userName}"
                            class="form-control form-control-lg"/>
-                    <div>${userName}</div>
+
                   </div>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="password">Mật khẩu</label>
+                    <label class="form-label" for="password">Mật Khẩu</label>
                     <input type="password" id="password" name="password" value="${password}"
                            class="form-control form-control-lg"/>
                     <c:if test="${errMap != null}">
-                      <label>${errMap.errPassword}</label>
+                      <label class="text-danger">${errMap.errPassword}</label>
                     </c:if>
                   </div>
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="confirmPassword">Xác nhận mật khẩu</label>
+                    <label class="form-label" for="confirmPassword">Xác Nhận Mật Khẩu</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" value="${confirmPassword}"
                            class="form-control form-control-lg"/>
                     <c:if test="${msg != null}">
-                      <label>${msg}</label>
+                      <label class="text-danger">${msg}</label>
                     </c:if>
                     <c:if test="${errMap != null}">
-                      <label>${errMap.errConfirmPassword}</label>
+                      <label class="text-danger">${errMap.errConfirmPassword}</label>
                     </c:if>
                   </div>
 
                   <div class="form-outline mb-4">
                     <input hidden="hidden" id="code" name="code" value="${code}">
-                    <label class="form-label" for="inputCode">Mã đã được gửi về mail</label>
+                    <label class="form-label" for="inputCode">Mã Đã Được Gửi Về Mail</label>
                     <input type="text" id="inputCode" name="inputCode"
-                           class="form-control form-control-lg"/>
-                    <c:if test="${mess != null}">
-                      <label>${mess }</label>
-                    </c:if>
+                           class="form-control form-control-lg" value="${inputCode}"/>
+                      <label class="text-danger">${mess}</label>
+
 
                   </div>
                   <div class="pt-1 mb-4">
-                    <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng kí</button>
+                    <button class="btn btn-dark btn-lg btn-block" type="submit">Đổi Mật Khẩu</button>
                     <a href="/accountServlet?action=login"><button class="btn btn-dark btn-lg btn-block"
-                                                                   type="button" style="margin-left: 10px">Quay lại
+                                                                   type="button" style="margin-left: 10px">Quay Lại
                     </button></a>
                   </div>
                 </form>
-                <div>${msgSigin}</div>
+                <div class="text-danger">${msgSigin}</div>
               </div>
             </div>
           </div>
