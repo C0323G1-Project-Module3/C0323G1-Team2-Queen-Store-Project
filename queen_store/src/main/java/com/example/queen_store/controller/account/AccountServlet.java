@@ -67,17 +67,23 @@ public class AccountServlet extends HttpServlet {
         if (errMap.isEmpty()) {
             Account account = accountService.findByUserName(userName);
             if (account != null) {
+                Customer customer = accountService.findCustomerByUserName(userName);
+                if(customer != null){
                 Random random = new Random();
                 StringBuilder code = new StringBuilder(4);
                 for (int i = 0; i < 4; i++) {
                     code.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
                 }
-                System.out.println(code);
-                Email.sendEmail("hoangnhat3103@gmail.com", System.currentTimeMillis() + "", String.valueOf(code));
+                Email.sendEmail(customer.getEmail(), System.currentTimeMillis() + "", String.valueOf(code));
 
                 request.setAttribute("code", String.valueOf(code));
                 request.setAttribute("userName", userName);
                 requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
+                }else {
+                    request.setAttribute("userName", userName);
+                    request.setAttribute("msg", "Tài khoản chưa đăng kí mail!");
+                    requestDispatcher = request.getRequestDispatcher("/account/check_code.jsp");
+                }
             } else {
                 request.setAttribute("userName", userName);
                 request.setAttribute("msg", "Tài khoản không tồn tại!");
@@ -134,10 +140,10 @@ public class AccountServlet extends HttpServlet {
 
             } else {
                 request.setAttribute("msg", "Xin lỗi, bạn không có quyền vào mục này!");
-                requestDispatcher = request.getRequestDispatcher("/home.jsp");
+                requestDispatcher = request.getRequestDispatcher("/account/error.jsp");
             }
         } else {
-            requestDispatcher = request.getRequestDispatcher("/home.jsp");
+            requestDispatcher = request.getRequestDispatcher("/ProductServlet");
         }
         try {
             requestDispatcher.forward(request, response);
@@ -157,8 +163,11 @@ public class AccountServlet extends HttpServlet {
     }
 
     private void showLoginForm(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/account/login.jsp");
         try {
-            response.sendRedirect("account/login.jsp");
+            requestDispatcher.forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -269,7 +278,7 @@ public class AccountServlet extends HttpServlet {
         boolean rowDelete = accountService.deleteUser(userName);
         RequestDispatcher requestDispatcher;
 
-        if (rowDelete) {
+        if (rowDelete && rowCustomerDelete) {
             request.setAttribute("msg", "Đã xoá tài khoản " + userName);
             requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
         } else {
@@ -347,6 +356,7 @@ public class AccountServlet extends HttpServlet {
 
         if (errMap.isEmpty()) {
             Account account = accountService.login(userName, password);
+            System.out.println(account);
             if (account != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("account", account);

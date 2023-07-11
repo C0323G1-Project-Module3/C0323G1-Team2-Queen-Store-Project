@@ -13,7 +13,7 @@
 </head>
 <body>
 <jsp:include page="/home/header.jsp"></jsp:include>
-<h1 class="container" style="margin-top: 150px;text-align: center">Danh sách tài khoản</h1>
+<h1 class="container" style="padding-top: 120px;text-align: center">Danh sách tài khoản</h1>
 <c:if test="${msg != null}">
 <div class="container alert alert-success">
     <div style="text-align: center">${msg}</div>

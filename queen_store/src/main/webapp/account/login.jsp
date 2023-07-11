@@ -70,7 +70,7 @@
                                     <div class="pt-1 mb-4">
                                         <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng nhập</button>
                                   &nbsp;&nbsp;
-                                        <a href="ProductServlet"><button class="btn btn-dark btn-lg btn-block">Quay lại</button></a>
+
                                     </div>
 
                                     <a class="small text-muted" href="/accountServlet?action=forgotPassword">Quên mật khẩu?</a>
@@ -80,7 +80,9 @@
                                         </a></p>
                                     <div>${mess}</div>
                                 </form>
-
+                                    <form action="ProductServlet" method="get">
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">Quay lại</button>
+                                    </form>
                             </div>
                         </div>
                     </div>
