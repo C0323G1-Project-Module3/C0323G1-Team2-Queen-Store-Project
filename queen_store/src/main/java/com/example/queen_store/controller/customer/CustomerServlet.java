@@ -101,6 +101,7 @@ public class CustomerServlet extends HttpServlet {
                     break;
                 case "delete":
                     deleteUser(request, response);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -109,6 +110,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(id);
         customerService.removeUser(id);
         List<Customer> customerList = customerService.selectAllCustomer();
         request.setAttribute("customerList", customerList);
