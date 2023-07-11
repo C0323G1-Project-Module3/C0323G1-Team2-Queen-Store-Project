@@ -21,4 +21,6 @@ public interface ICustomerService {
     Map<String, String> save(Customer customer);
 
     Map<String, String> updateUser(Customer customer);
+
+    Customer selectCustomerByAccUser(String accUserName) throws SQLException;
 }

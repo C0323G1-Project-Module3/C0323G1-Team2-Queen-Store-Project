@@ -123,5 +123,10 @@ public class CustomerService implements ICustomerService {
         return errMapEdit;
     }
 
+    @Override
+    public Customer selectCustomerByAccUser(String accUserName) throws SQLException {
+        return customerRepository.selectCustomerByAccUser(accUserName);
+    }
+
 
 }

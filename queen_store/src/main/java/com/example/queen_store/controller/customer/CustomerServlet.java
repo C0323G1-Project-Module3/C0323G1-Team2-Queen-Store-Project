@@ -30,10 +30,16 @@ public class CustomerServlet extends HttpServlet {
                 case "create":
                     showCreateForm(request, response);
 //                   response.sendRedirect("customer/create.jsp");
+                    break;
                 case "edit":
                     showEditForm(request, response);
+                    break;
+                case "customerChangeInfo":
+                    customerChangeInfo(request,response);
                 case "delete":
                     showDeleteForm(request, response);
+                    break;
+
                 default:
                     listUser(request, response);
                     break;
@@ -43,7 +49,13 @@ public class CustomerServlet extends HttpServlet {
         }
 
     }
-
+    private void customerChangeInfo(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+        String accUserName = request.getParameter("userName");
+        Customer customer = customerService.selectCustomerByAccUser(accUserName);
+        request.setAttribute("customer",customer);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("customer/edit.jsp");
+        requestDispatcher.forward(request,response);
+    }
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         Customer customer = customerService.selectCustomer(id);
@@ -118,7 +130,7 @@ public class CustomerServlet extends HttpServlet {
         Customer customer = new Customer(id, name, dateOfBirth, gender, userIdCard, phoneNumber, email, address);
        Map<String, String> errMapEdit = this.customerService.updateUser(customer);
        if (errMapEdit.isEmpty()){
-           response.sendRedirect("/CustomerServlet");
+           response.sendRedirect("/ProductServlet");
        }else {
            request.setAttribute("customer",customer);
            request.setAttribute("error",errMapEdit);
