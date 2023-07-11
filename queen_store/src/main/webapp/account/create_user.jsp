@@ -47,7 +47,7 @@
                                         <input type="email" id="userName" name="userName" value="${userName}"
                                                class="form-control form-control-lg"/>
                                         <div><c:if test="${errMap != null}">
-                                            <label>${errMap.errUserName}</label>
+                                            <label class="text-danger">${errMap.errUserName}</label>
                                         </c:if></div>
                                     </div>
 
@@ -56,7 +56,7 @@
                                         <input type="password" id="password" name="password" value="${password}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errPassword}</label>
+                                            <label class="text-danger">${errMap.errPassword}</label>
                                         </c:if>
                                     </div>
                                     <div class="form-outline mb-4">
@@ -64,10 +64,10 @@
                                         <input type="password" id="confirmPassword" name="confirmPassword" value="${confirmPassword}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${msg != null}">
-                                            <label>${msg}</label>
+                                            <label class="text-danger">${msg}</label>
                                         </c:if>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errConfirmPassword}</label>
+                                            <label class="text-danger">${errMap.errConfirmPassword}</label>
                                         </c:if>
                                     </div>
                                     <div class="pt-1 mb-4">
@@ -77,7 +77,7 @@
                                         </button></a>
                                     </div>
                                 </form>
-                                <div>${msgSigin}</div>
+                                <div class="text-danger">${msgSigin}</div>
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,6 @@
 </section>
 </div>
 <!--Start footer-->
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

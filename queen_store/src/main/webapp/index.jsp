@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>JSP - Hello World</title>
 </head>
 <body>
-<c:redirect url="accountServlet"></c:redirect>
+<c:redirect url="/ProductServlet"></c:redirect>
 </body>
 </html>
