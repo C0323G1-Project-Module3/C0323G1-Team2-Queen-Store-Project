@@ -18,53 +18,60 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/home/header.jsp"/>
+<div style="height: 150px"></div>
 <center>
-    <h1 style="margin-top: 120px;">User Management</h1>
-    <h2>
-        <a href="/vouchers?action=create">Add New User</a>
-        <br>
-
-<%--        chuc nang search--%>
-
-<%--            <form action="/vouchers" method="get">--%>
-<%--                <input id="action" name="action" value="search" hidden="hidden" >--%>
-<%--                <br>--%>
-<%--                <input type="text" name="searchName" id="searchName" placeholder="Search By Name">--%>
-<%--                <br>--%>
-<%--                <input type="submit" value="Search By name">--%>
-<%--            </form>--%>
-<%--        <br>--%>
-
-
-        <a href="/vouchers?action=increase">Order by increase</a>
-        <br>
-        <a href="/vouchers?action=decrease">Order by decrease</a>
-    </h2>
+    <h1>Danh sách quản lý voucher</h1>
+    <nav class="navbar bg-body-tertiary" style="width: 70%">
+        <div class="container ">
+            <form action="/vouchers" method="get" style="margin-top: 18px">
+                <input id="action" name="action" value="search" hidden="hidden">
+                <input type="text" name="searchName" id="searchName" placeholder="Tìm kiếm theo tên">
+                <input type="submit" value="Tìm kiếm theo tên">
+            </form>
+            <button type="button" class="btn btn-dark"><a href="/vouchers?action=create">Thêm mã giảm giá mới</a>
+            </button>
+            <button type="button" class="btn btn-dark"><a href="/vouchers?action=increase">Tỷ lệ tăng dần</a></button>
+            <button type="button" class="btn btn-dark"><a href="/vouchers?action=decrease">Tỷ lệ giảm dần</a></button>
+        </div>
+    </nav>
 </center>
-<div align="center">
-    <table class="table table-striped">
-        <tr>
+<div style="height: 10px"></div>
+<div align="center" style="width: 70%; margin-left: 15%">
+    <table class="table table-bordered" width="70%">
+        <tr class="table-dark">
             <td>STT</td>
-            <td>Name</td>
-            <td>Rate</td>
-            <td>Action</td>
+            <td>Tên mã khuyến mãi</td>
+            <td>Tỷ lệ</td>
+            <td>Chức năng</td>
         </tr>
         <c:forEach var="voucher" items="${voucherList}" varStatus="loop">
             <tr>
                 <td>${loop.count}</td>
                 <td>${voucher.getName()}</td>
-                <td>${Math.round(voucher.getRate()*100)}%</td>
-                <td>
-                    <a href="/vouchers?action=update&id=${voucher.getId()}">Update</a>
-                    <a href="/vouchers?action=delete&id=${voucher.getId()}">Delete</a>
+                <td>${voucher.getRate()}%</td>
+                <td class="justify-content-center">
+                    <button class="btn btn-dark "><a href="/vouchers?action=update&id=${voucher.getId()}">Cập nhật</a></button>
+                    <button class="btn btn-dark"><a href="/vouchers?action=delete&id=${voucher.getId()}">Xóa</a></button>
                 </td>
             </tr>
         </c:forEach>
     </table>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+<div style="height: 150px"></div>
+
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

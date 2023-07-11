@@ -21,65 +21,46 @@
 </head>
 <body>
 <jsp:include page="/home/header.jsp"/>
-<center style="    margin-top: 120px;">
-    <h1><a href="/vouchers">Back to list</a></h1>
-</center>
+<div style="height: 150px"></div>
+
+<button type="button" style="background-color: #212529;width: 100px;height: 50px">
+    <a href="/vouchers?action=vouchers">Quay lại</a>
+</button>
 <c:if test='${requestScope["message"] !=null}'>
     <span>${requestScope["message"]}</span>
 </c:if>
 <center>
-    <h1>Update Voucher</h1>
-    <form method="post" >
-        <table class="table">
+    <h1>Cập nhật thông tin voucher</h1>
+    <form method="post">
+        <table border="1" cellpadding="5">
             <tr>
-                <th>voucher Name:</th>
+                <th>Tên mã giảm giá</th>
                 <td>
-                    <input type="text" name="name" size="45"
+                    <input type="text" name="name"
                            value="<c:out value='${voucher.getName()}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <th>voucher Rate:</th>
+                <th>Tỷ lệ</th>
                 <td>
-                    <input type="text" name="rate" size="45"
-                           value="<c:out value='${Math.round(voucher.getRate()*100)}' />"
+                    <input type="text" name="rate"
+                           value="<c:out value='${voucher.getRate()}' />"
                     />
                 </td>
             </tr>
             <tr>
-                <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal"
-                        data-target="#confirmDeleteModal">Update
-                </button>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-dark" id="deleteButton" data-toggle="modal"
+                            data-target="#confirmDeleteModal">Cập nhật
+                    </button>
+                </td>
             </tr>
         </table>
-
-<%--        /////modal--%>
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-             aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Update</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to update this voucher?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger" id="deleteButtonn" data-toggle="modal"
-                                data-target="#confirmDeleteModal">Update
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-<%--        /////modal--%>
     </form>
 </center>
+<div style="height: 150px"></div>
+
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

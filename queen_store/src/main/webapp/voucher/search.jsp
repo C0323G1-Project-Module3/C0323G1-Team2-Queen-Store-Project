@@ -18,19 +18,62 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/home/header.jsp"/>
-<center style="    margin-top: 120px;">
-    <h1>Search by name</h1>
-    <h1><a href="/vouchers">Back to list</a></h1>
-</center>
+<%--<center>--%>
+<%--    <h1>Tìm kiếm voucher</h1>--%>
+<%--    <h1><a href="/vouchers">Back to list</a></h1>--%>
+<%--</center>--%>
+<%--<center>--%>
+<%--    <table border="1" cellpadding="5">--%>
+<%--        <tr>--%>
+<%--            <th>STT</th>--%>
+<%--            <th>Name</th>--%>
+<%--            <th>Rate</th>--%>
+<%--        </tr>--%>
+<%--        <c:forEach var="voucher" items="${voucherList}" varStatus="loop">--%>
+<%--            <tr>--%>
+<%--                <td>${loop.count}</td>--%>
+<%--                <td>${voucher.getName()}</td>--%>
+<%--                <td>${voucher.getRate()}</td>--%>
+<%--            </tr>--%>
+<%--        </c:forEach>--%>
+<%--    </table>--%>
+<%--    <c:if test="${msg != null}">--%>
+<%--        <div>${msg}</div>--%>
+<%--    </c:if>--%>
+<%--</center>--%>
+<div style="height: 150px"></div>
+
+<button type="button" style="background-color: #212529;width: 100px;height: 50px">
+    <a href="/vouchers?action=vouchers">Quay lại</a>
+</button>
 <center>
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>STT</th>
-            <th>Name</th>
-            <th>Rate</th>
+    <h1>Tìm kiếm voucher</h1>
+    <nav class="navbar bg-body-tertiary" style="width: 70%">
+        <div class="container justify-content-center">
+            <form action="/vouchers" method="get" style="margin-top: 18px;width: auto">
+                <input id="action" name="action" value="search" hidden="hidden">
+                <input type="text" name="searchName" id="searchName" placeholder="Tìm kiếm theo tên">
+                <input type="submit" value="Tìm kiếm theo tên">
+            </form>
+        </div>
+    </nav>
+</center>
+<div style="height: 10px"></div>
+<div align="center" style="width: 70%; margin-left: 15%">
+    <table class="table table-bordered" width="70%">
+        <tr class="table-dark">
+            <td>STT</td>
+            <td>Tên mã khuyến mãi</td>
+            <td>Tỷ lệ</td>
         </tr>
         <c:forEach var="voucher" items="${voucherList}" varStatus="loop">
             <tr>
@@ -39,12 +82,18 @@
                 <td>${voucher.getRate()}</td>
             </tr>
         </c:forEach>
-
     </table>
     <c:if test="${msg != null}">
         <div>${msg}</div>
     </c:if>
-</center>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+<div style="height: 150px"></div>
+
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>
