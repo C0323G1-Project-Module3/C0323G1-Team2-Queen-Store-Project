@@ -112,10 +112,5 @@ public class AccountService implements IAccountService {
         return ValidateAccount.checkValidateForgotPassword(password,confirmPassword);
     }
 
-    @Override
-    public boolean deleteCustomer(String userName) {
-        return accountRepository.deleteCustomer(userName);
-    }
-
 
 }
