@@ -76,10 +76,10 @@
     <div class="row container justify-content-center mb-2 mt-2">
         <div class="col-md-auto"><h2><a class="btn btn-primary" href="/ProductServlet">Quay lại menu chính</a></h2>
         </div>
-        <div class="col-md-auto"><h2><a class="btn btn-danger" href="/ProductServlet?action=create">Thêm sản phẩm
+        <div class="col-md-auto"><h2><a class="btn btn-primary" href="/ProductServlet?action=create">Thêm sản phẩm
             mới</a></h2></div>
         <div class="container w-50 justify-content-right">
-            <form class="d-flex">
+            <form class="d-flex mt-0" >
                 <input type="hidden" name="action" value="search">
                 <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." name="name"
                        value="${name}">
@@ -100,17 +100,15 @@
                 <span class="message">${message}</span>
             </c:if>
         </p>
-        <c:if test="${productList != null}">
+        <c:if test="${productList.size() > 0}">
             <table class="table table-striped text-center">
                 <thead>
                 <tr>
                     <th>STT</th>
                     <th>TÊN SẢN PHẨM</th>
                     <th>GIÁ</th>
-                    <th>MÔ TẢ</th>
                     <th>LOẠI SẢN PHẨM</th>
                     <th>SỐ LƯỢNG</th>
-                    <th>ẢNH</th>
                     <th colspan="2">THAO TÁC</th>
                 </tr>
                 </thead>
@@ -122,23 +120,19 @@
                         <td>
                             <fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${product.price}" type="currency"/></td>
-                        <td><c:out value="${product.description}"/></td>
                         <td><c:out value="${product.type}"/></td>
                         <td><c:out value="${product.inventory}"/></td>
                         <td>
-                            <img width="100px" src="${product.imgPath}" alt="">
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-warning btn-sm"
-                               href="/ProductServlet?action=save&id=${product.id}">Edit</a>
+                            <a class="btn btn-primary btn-sm"
+                               href="/ProductServlet?action=view&id=${product.id}">Chi tiết</a>
                         </td>
                         <td>
                                 <%-- <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
+                            <button type="button" class="btn btn-primary btn-sm" data-mdb-toggle="modal"
                                     data-mdb-target="#exampleModal"
                                     onclick="sendInfoToDelete('${product.id}','${product.name}')">
-                                Delete
+                                Xóa
                             </button>
                         </td>
                     </tr>
@@ -160,7 +154,7 @@
                     <span>Bạn muốn xóa sản phẩm <span id="nameDelete"></span> ?</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary" onclick="remove()">Có</button>
                 </div>
             </div>
