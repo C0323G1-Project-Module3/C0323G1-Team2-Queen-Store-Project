@@ -44,7 +44,7 @@ public class AccountServlet extends HttpServlet {
             case "register":
                 showRegisterForm(request, response);
                 break;
-            case "deleteUser":
+            case "delete":
                 deleteUser(request, response);
                 break;
             case "forgotPassword":
@@ -98,6 +98,7 @@ public class AccountServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
     private void showCheckUserNameForm(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("account/check_code.jsp").forward(request, response);
@@ -212,22 +213,22 @@ public class AccountServlet extends HttpServlet {
                 request.setAttribute("mess", "Đã đổi mật khẩu thành công, hãy đăng nhập!");
                 requestDispatcher = request.getRequestDispatcher("/account/login.jsp");
             } else {
-                request.setAttribute("password",password);
-                request.setAttribute("confirmPassword",confirmPassword);
-                request.setAttribute("inputCode",inputCode);
-                if(!code.equals(inputCode) || inputCode == null){
-                request.setAttribute("mess","Mã không chính xác!");
+                request.setAttribute("password", password);
+                request.setAttribute("confirmPassword", confirmPassword);
+                request.setAttribute("inputCode", inputCode);
+                if (!code.equals(inputCode) || inputCode == null) {
+                    request.setAttribute("mess", "Mã không chính xác!");
                 }
-                if(!password.equals(confirmPassword)){
-                request.setAttribute("msg","Mật khẩu không khớp");
+                if (!password.equals(confirmPassword)) {
+                    request.setAttribute("msg", "Mật khẩu không khớp");
                 }
-                request.setAttribute("userName",userName);
-                request.setAttribute("code",code);
+                request.setAttribute("userName", userName);
+                request.setAttribute("code", code);
                 request.setAttribute("userName", userName);
                 requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
             }
         } else {
-            request.setAttribute("userName",userName);
+            request.setAttribute("userName", userName);
             request.setAttribute("errMap", errMap);
             requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
         }
@@ -262,6 +263,9 @@ public class AccountServlet extends HttpServlet {
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         String userName = request.getParameter("userName");
+
+        boolean rowCustomerDelete = accountService.deleteCustomer(userName);
+
         boolean rowDelete = accountService.deleteUser(userName);
         RequestDispatcher requestDispatcher;
 
@@ -270,7 +274,7 @@ public class AccountServlet extends HttpServlet {
             requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
         } else {
             request.setAttribute("msg", "Lỗi");
-            requestDispatcher = request.getRequestDispatcher("/account/delete.jsp");
+            requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
         }
 
         try {
@@ -297,8 +301,8 @@ public class AccountServlet extends HttpServlet {
                 if (password.equals(confirmPassword)) {
                     rowUpdate = accountService.addUser(new Account(userName, password, "user"));
                     if (rowUpdate) {
-                        msgSigin = "Đã đăng kí thành công, hãy đăng nhập!";
-                        requestDispatcher = request.getRequestDispatcher("/account/login.jsp");
+                        request.setAttribute("userName",userName);
+                        requestDispatcher = request.getRequestDispatcher("/CustomerServlet?action=create");
                     } else {
                         msgSigin = "Đăng kí thất bại, vui lòng thử lại!";
                         requestDispatcher = request.getRequestDispatcher("/account/create_user.jsp");
@@ -309,7 +313,7 @@ public class AccountServlet extends HttpServlet {
                 }
 
             } else {
-                errMap.put("errUserName","Tên tài khoản trùng lặp, vui lòng chọn tên khác!");
+                errMap.put("errUserName", "Tên tài khoản trùng lặp, vui lòng chọn tên khác!");
                 request.setAttribute("errMap", errMap);
                 requestDispatcher = request.getRequestDispatcher("/account/create_user.jsp");
             }
