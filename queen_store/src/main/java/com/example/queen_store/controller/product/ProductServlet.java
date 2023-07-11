@@ -1,5 +1,6 @@
 package com.example.queen_store.controller.product;
 
+import com.example.queen_store.model.account.Account;
 import com.example.queen_store.model.product.Product;
 import com.example.queen_store.model.product.ProductType;
 import com.example.queen_store.repository.order.Cart;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,10 @@ public class ProductServlet extends HttpServlet {
     private void searchProduct(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         int range = Integer.parseInt(request.getParameter("range"));
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
         List<Product> products = new ArrayList<>();
+        RequestDispatcher dispatcher;
         if (name != "") {
             List<Product> product1 = productService.searchByName(name);
             List<Product> product2 = productService.searchByPrice(range);
@@ -76,9 +81,16 @@ public class ProductServlet extends HttpServlet {
         } else {
             products = productService.searchByPrice(range);
         }
-        request.setAttribute("productList", products);
-        request.setAttribute("name", name);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+        if (products.isEmpty()) {
+            request.setAttribute("message", "Sản phẩm bạn tìm kiếm không tồn tại!");
+        } else {
+            request.setAttribute("productList", products);
+        }
+        if (account.getRoleName().equals("admin")) {
+            dispatcher = request.getRequestDispatcher("/product/list.jsp");
+        } else {
+             dispatcher = request.getRequestDispatcher("home.jsp");
+        }
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -164,7 +176,7 @@ public class ProductServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         productService.remove(id);
         try {
-            response.sendRedirect("/ProductServlet");
+            response.sendRedirect("ProductServlet?action=productManagerment");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -257,7 +269,7 @@ public class ProductServlet extends HttpServlet {
         Map<String, String> errMap = productService.save(product);
         if (errMap.isEmpty()) {
             try {
-                response.sendRedirect("/ProductServlet");
+                response.sendRedirect("/ProductServlet?action=productManagerment");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -297,7 +309,7 @@ public class ProductServlet extends HttpServlet {
 
         if (errMap.isEmpty()) {
             try {
-                response.sendRedirect("/ProductServlet");
+                response.sendRedirect("/ProductServlet?action=productManagerment");
             } catch (IOException e) {
                 e.printStackTrace();
             }

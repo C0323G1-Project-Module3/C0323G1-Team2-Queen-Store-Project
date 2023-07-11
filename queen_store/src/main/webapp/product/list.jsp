@@ -10,9 +10,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>PRODUCT LIST</title>
-    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">--%>
-    <%--    <link rel="stylesheet" href="style.css">--%>
+    <title>DANH SÁCH SẢN PHẨM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/7f6d2012d0.js"></script>
     <!-- Font Awesome -->
     <link
@@ -64,94 +65,101 @@
     </style>
 </head>
 <body>
-<jsp:include page="/home/header.jsp"/>
-<div class="container" style="padding-top: 130px;">
-    <div class="row">
-        <h1><b>PRODUCT LIST</b></h1>
-    </div>
-    <%-- Thanh tìm kiếm"--%>
-    <div class="container w-50 m-auto text-center">
-
-        <form class="d-flex">
-            <input type="hidden" name="action" value="search">
-            <input class="form-control me-2" type="text" placeholder="Search by name..." name="name">
-            <select class="form-select me-2" name="range">
-                <option value="0">Tất cả</option>
-                <option value="1">Dưới 100.000đ</option>
-                <option value="2">100000 - 500.000đ</option>
-                <option value="3">500000 - 1000.000đ</option>
-                <option value="4">Trên 1000.000đ</option>
-            </select>
-            <button class="btn btn-primary" type="submit">Search</button>
-        </form>
-
+<%--<jsp:include page="/home/header.jsp"/>--%>
+<div class="container" style="padding-top: 30px;">
+    <div class="row text-center m-3">
+        <h1><b>DANH SÁCH SẢN PHẨM</b> <hr>
+        </h1>
     </div>
     <%--Thanh chức năng--%>
-    <div class="row">
-        <h2><a class="btn btn-outline-info" href="/ProductServlet">Back list</a></h2>
-        <h2><a class="btn btn-outline-primary" href="/ProductServlet?action=sortUp">Sort Up by price</a></h2>
-        <h2><a class="btn btn-outline-info" href="/ProductServlet?action=sortDown">Sort Down by price</a></h2>
-        <h2><a class="btn btn-outline-danger" href="/ProductServlet?action=create">Add new product</a></h2>
+    <div class="row container justify-content-center mb-2 mt-2">
+        <div class="col-md-auto"><h2><a class="btn btn-primary" href="/ProductServlet">Quay lại menu chính</a></h2>
+        </div>
+        <div class="col-md-auto"><h2><a class="btn btn-danger" href="/ProductServlet?action=create">Thêm sản phẩm
+            mới</a></h2></div>
+        <div class="container w-50 justify-content-right">
+            <form class="d-flex">
+                <input type="hidden" name="action" value="search">
+                <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." name="name">
+                <select class="form-select me-2" name="range">
+                    <option value="0">Tất cả</option>
+                    <option value="1">Dưới 100.000đ</option>
+                    <option value="2">100.000đ - 500.000đ</option>
+                    <option value="3">500.000đ - 1000.000đ</option>
+                    <option value="4">Trên 1000.000đ</option>
+                </select>
+                <button class="btn btn-primary" style="width: 200px" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
     </div>
-    <div class="row" style="align-content: center">
-        <table class="table table-striped">
-            <tr>
-                <th>STT</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Inventory</th>
-                <th>IMG</th>
-                <th colspan="2">Actions</th>
-            </tr>
-            <c:forEach var="product" items="${productList}" varStatus="loop">
-
-            <tr>
-                <td><c:out value="${loop.count}"/></td>
-                <td><c:out value="${product.name}"/></td>
-                <td>
-                    <fmt:setLocale value="vi_VN"/>
-                    <fmt:formatNumber value="${product.price}" type="currency"/></td>
-                <td><c:out value="${product.description}"/></td>
-                <td><c:out value="${product.type}"/></td>
-                <td><c:out value="${product.inventory}"/></td>
-                <td>
-                    <img width="100px" src="${product.imgPath}" alt="">
-                </td>
-                <td>
-                    <a class="btn btn-outline-warning btn-sm"
-                       href="/ProductServlet?action=save&id=${product.id}">Edit</a>
-                </td>
-                <td>
-                        <%-- <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
-                            data-mdb-target="#exampleModal"
-                            onclick="sendInfoToDelete('${product.id}','${product.name}')">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            </c:forEach>
+    <div class="row justify-content-center" style="align-content: center">
+        <p>
+            <c:if test="${message !=null}">
+                <span class="message">${message}</span>
+            </c:if>
+        </p>
+        <c:if test="${productList != null}">
+            <table class="table table-striped text-center" id="tableProduct">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>TÊN SẢN PHẨM</th>
+                    <th>GIÁ</th>
+                    <th>MÔ TẢ</th>
+                    <th>LOẠI SẢN PHẨM</th>
+                    <th>SỐ LƯỢNG</th>
+                    <th>ẢNH</th>
+                    <th colspan="2">THAO TÁC</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="product" items="${productList}" varStatus="loop">
+                    <tr>
+                        <td><c:out value="${loop.count}"/></td>
+                        <td><c:out value="${product.name}"/></td>
+                        <td>
+                            <fmt:setLocale value="vi_VN"/>
+                            <fmt:formatNumber value="${product.price}" type="currency"/></td>
+                        <td><c:out value="${product.description}"/></td>
+                        <td><c:out value="${product.type}"/></td>
+                        <td><c:out value="${product.inventory}"/></td>
+                        <td>
+                            <img width="100px" src="${product.imgPath}" alt="">
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-warning btn-sm"
+                               href="/ProductServlet?action=save&id=${product.id}">Edit</a>
+                        </td>
+                        <td>
+                                <%-- <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
+                                    data-mdb-target="#exampleModal"
+                                    onclick="sendInfoToDelete('${product.id}','${product.name}')">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
     </div>
-    </table>
-
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" style="padding-top: 90px;">
-            <div class="modal-content" >
+            <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Modal</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span>Are you sure to delete <span id="nameDelete"></span> ?</span>
+                    <span>Bạn muốn xóa sản phẩm <span id="nameDelete"></span> ?</span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="remove()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="remove()">Có</button>
                 </div>
             </div>
         </div>

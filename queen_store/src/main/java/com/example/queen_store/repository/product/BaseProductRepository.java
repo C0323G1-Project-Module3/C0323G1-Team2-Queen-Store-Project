@@ -12,7 +12,7 @@ public class BaseProductRepository {
     public static Connection getConnection() {
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
             System.out.println("connect");
         } catch (SQLException e) {
@@ -21,5 +21,9 @@ public class BaseProductRepository {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(BaseProductRepository.getConnection());
     }
 }
