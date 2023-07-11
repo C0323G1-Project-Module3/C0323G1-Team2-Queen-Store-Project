@@ -4,7 +4,7 @@
         <div class="row ">
 
             <div class="col-lg-3 my-5">
-                <h5>KYO AUTHENTIC</h5>
+                <h5>QUEEN STORE</h5>
 
                 <p><b>CN1</b>: 12 Ngõ 86 Phố Chùa Hà, Cầu Giấy, Hà Nội (hoặc 12/12 Phố Nguyễn Văn Huyên)</p>
 
@@ -18,7 +18,7 @@
 
                 <p><b>Mở cửa</b>: Từ T2 đến CN, 9H - 22H</p>
 
-                <p><b>Kyo Authentic</b> - Hệ thống bán Mỹ phẩm, Quà tặng, Son môi, Nước hoa chính hãng</p>
+                <p><b>QUEEN STORE</b> - Hệ thống bán Mỹ phẩm, Quà tặng, Son môi, Nước hoa chính hãng</p>
             </div>
             <div class="col-lg-3 my-5">
                 <h5>THÔNG TIN HỖ TRỢ</h5>

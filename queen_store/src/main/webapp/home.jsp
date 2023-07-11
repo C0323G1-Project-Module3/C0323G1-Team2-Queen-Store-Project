@@ -40,17 +40,17 @@
         <div class="carousel-inner">
             <div class="carousel-item active ">
                 <img height="500px"
-                     src="https://jeju.com.vn/wp-content/uploads/2016/10/Banner-Post-851x315.jpg"
+                     src="https://static.comem.vn/uploads/June2023/serum-destop.jpg"
                      class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
                 <img height="500px"
-                     src="https://cafebiz.cafebizcdn.vn/162123310254002176/2023/4/27/anh-thoi-can-thiet-cua-nhung-nguoi-tre-luon-ban-ron-cham-chi-va-khong-ngung-co-gang-de-co-duoc-mot-cuoc-song-hanh-phuc-va-tot-dep-1682560233696-1682560234361699800991.png"
+                     src="https://nmbrandingco.com/cdn/shop/files/Header-Natural_Skincare.png?v=1681920931&width=3840"
                      class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
                 <img height="500px"
-                     src="https://jeju.com.vn/wp-content/uploads/2017/10/banner-b%C3%A0i-vi%E1%BA%BFt-jeju-cosmetics-ctkmt11-jeju-cosmetics.jpg"
+                     src="https://static.comem.vn/uploads/June2023/serum-destop.jpg"
                      class="d-block w-100" alt="...">
             </div>
         </div>

@@ -79,7 +79,7 @@ public class OrderServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         System.out.println(userName);
         if (userName != null && !userName.equals("")) {
-            Customer customer ;
+            Customer customer;
             try {
                 customer = customerService.selectCustomerByAccUser(userName);
             } catch (SQLException e) {
@@ -106,9 +106,9 @@ public class OrderServlet extends HttpServlet {
         } else {
             try {
 
-                request.setAttribute("msg","Vui lòng đăng nhập trước khi thanh toán");
+                request.setAttribute("msg", "Vui lòng đăng nhập trước khi thanh toán");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("account/login.jsp");
-                requestDispatcher.forward(request,response);
+                requestDispatcher.forward(request, response);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ServletException e) {
@@ -183,10 +183,29 @@ public class OrderServlet extends HttpServlet {
 
     private static void showListOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<CustomerOrders> list = orderService.getAll();
-        request.setAttribute("list", list);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/order/list_order.jsp");
-        dispatcher.forward(request, response);
+//        HttpSession session = request.getSession();
+        RequestDispatcher dispatcher;
+//        if (!session.isNew()) {
+//            Account account = (Account) session.getAttribute("account");
+//            if (account.getRoleName().equals("admin")) {
+                List<CustomerOrders> list = orderService.getAll();
+                request.setAttribute("list", list);
+                dispatcher = request.getRequestDispatcher("/order/list_order.jsp");
+                dispatcher.forward(request, response);
+//            } else {
+//                request.setAttribute("msg", "Xin lỗi, bạn không có quyền vào mục này!");
+//                dispatcher = request.getRequestDispatcher("/account/error.jsp");
+//            }
+//        } else {
+//            dispatcher = request.getRequestDispatcher("/ProductServlet");
+//        }
+//        try {
+//            dispatcher.forward(request, response);
+//        } catch (ServletException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     @Override
