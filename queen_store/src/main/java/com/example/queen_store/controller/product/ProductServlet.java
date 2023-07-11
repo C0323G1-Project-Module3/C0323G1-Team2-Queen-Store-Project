@@ -81,6 +81,8 @@ public class ProductServlet extends HttpServlet {
         } else {
             products = productService.searchByPrice(range);
         }
+        request.setAttribute("productList", products);
+        request.setAttribute("name", name);
         if (products.isEmpty()) {
             request.setAttribute("message", "Sản phẩm bạn tìm kiếm không tồn tại!");
         } else {

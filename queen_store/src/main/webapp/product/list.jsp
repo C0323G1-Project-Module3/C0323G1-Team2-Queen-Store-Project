@@ -12,8 +12,8 @@
 <head>
     <title>DANH SÁCH SẢN PHẨM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/7f6d2012d0.js"></script>
     <!-- Font Awesome -->
     <link
@@ -68,7 +68,8 @@
 <%--<jsp:include page="/home/header.jsp"/>--%>
 <div class="container" style="padding-top: 30px;">
     <div class="row text-center m-3">
-        <h1><b>DANH SÁCH SẢN PHẨM</b> <hr>
+        <h1><b>DANH SÁCH SẢN PHẨM</b>
+            <hr>
         </h1>
     </div>
     <%--Thanh chức năng--%>
@@ -80,7 +81,8 @@
         <div class="container w-50 justify-content-right">
             <form class="d-flex">
                 <input type="hidden" name="action" value="search">
-                <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." name="name">
+                <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." name="name"
+                       value="${name}">
                 <select class="form-select me-2" name="range">
                     <option value="0">Tất cả</option>
                     <option value="1">Dưới 100.000đ</option>
@@ -99,7 +101,7 @@
             </c:if>
         </p>
         <c:if test="${productList != null}">
-            <table class="table table-striped text-center" id="tableProduct">
+            <table class="table table-striped text-center">
                 <thead>
                 <tr>
                     <th>STT</th>
