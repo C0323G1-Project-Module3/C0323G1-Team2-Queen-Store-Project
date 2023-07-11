@@ -13,20 +13,19 @@
 </head>
 <body>
 <jsp:include page="/home/header.jsp"></jsp:include>
-<h1 class="container" style="margin-top: 150px;text-align: center">Danh sách tài khoản
-    <c:if test="${msg != null}">
-        <span>${msg}</span>
-    </c:if>
-</h1>
-
+<h1 class="container" style="margin-top: 150px;text-align: center">Danh sách tài khoản</h1>
+<c:if test="${msg != null}">
+<div class="container alert alert-success">
+    <div style="text-align: center">${msg}</div>
+</div>
+</c:if>
 <div class="container" style="width:30%;margin-top: 50px">
     <div class="row">
         <div class="col-lg-12">
-            <table id="tableStudent" class="table table-striped table-bordered" style="width:100%">
+            <table class="table table-striped text-center" style="width:100%">
                 <thead>
                 <th>Tài Khoản</th>
                 <th>Vị Trí</th>
-
                 </thead>
                 <tbody>
                 <c:forEach var="account" items="${accountList}">
@@ -36,7 +35,8 @@
                             <td>${account.roleName}</td>
                             <td>
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal">
+                                        data-bs-target="#exampleModal"
+                                        onclick="sendInfoToDelete('${account.userName}')">
                                     Xoá
                                 </button>
                             </td>
@@ -60,23 +60,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Bạn có muốn xoá tài khoản ${account.userName}?
+                Bạn có muốn xoá tài khoản <span id="nameDelete"></span>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                <a href="accountServlet?action=deleteAccount&userName=${account.userName}">
-                    <input class="btn btn-primary" type="submit" value="Xoá"></a>
+                <button class="btn btn-primary" type="button" onclick="remove()" >Xoá</button>
             </div>
         </div>
     </div>
 </div>
 
-
+<form id="formDelete" method="get">
+    <input type="hidden" name="action" value="delete"/>
+    <input type="hidden" name="userName" id="delete"/>
+</form>
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 
+<script>
+    function sendInfoToDelete(name) {
+        document.getElementById("nameDelete").innerText = name;
+        document.getElementById("delete").value = name;
+       console.log(name)
+    }
 
+    function remove() {
+        document.getElementById("formDelete").submit();
+    }
+</script>
 </html>

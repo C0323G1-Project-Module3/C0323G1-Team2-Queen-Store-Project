@@ -23,5 +23,5 @@ public interface IAccountRepository {
 
     boolean editUser(String userName, String password);
 
-
+    boolean deleteCustomer(String userName);
 }
