@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>PRODUCT DESCRIPTION</title>
+    <title>CHI TIẾT SẢN PHẨM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -18,44 +18,65 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .input {
+            border: 0px;
+        }
 
+        th {
+            width: 200px;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
 <jsp:include page="/home/header.jsp"/>
-<div class="container" style="padding-top: 66px">
+<div class="container" style="padding-top: 120px">
     <div class="row">
-        <div class="col-12 bg-success mg-2"><h1>PRODUCT DETAIL</h1></div>
+        <div class="col-12 mg-2" style="text-align: center"><h1>CHI TIẾT SẢN PHẨM</h1><hr></div>
         <form action="/order" method="get">
             <input hidden="hidden" name="action" value="addToCart">
             <input hidden="hidden" name="id" value="${product.id}">
-            <div class="d-flex mx-2">
+            <div class="d-flex mx-2 justify-content-center">
                 <img style=" width: 27rem;margin-right: 40px;margin-left: -12px;" src="${product.imgPath}" alt="">
-                <table class="table">
+                <table class="table table-hover ms-3">
                     <tr>
-                        <th>Name of Product</th>
+                        <th>Tên sản phẩm</th>
                         <td><c:out value="${product.name}"/></td>
                     </tr>
                     <tr>
-                        <th>Price</th>
+                        <th>Giá</th>
                         <td><fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${product.price}" type="currency"/></td>
                     </tr>
                     <tr>
-                        <th>Description</th>
+                        <th>Mô tả</th>
                         <td><c:out value="${product.description}"/></td>
                     </tr>
                     <tr>
-                        <th>Type</th>
+                        <th>Loại sản phẩm</th>
                         <td><c:out value="${product.type}"/></td>
                     </tr>
                     <tr>
-                        <th>Inventory</th>
-                        <td><input min="1" max="${product.inventory}" name="quantity" type="number" value="1"></td>
+                        <th>Số lượng</th>
+                        <td><input class="input" min="1" max="${product.inventory}" name="quantity" type="number"
+                                   value="1"></td>
                     </tr>
                 </table>
             </div>
-            <input type="submit" value="Thêm vào giỏ hàng" class="btn btn-outline-primary">
+            <div style="text-align: center">
+                <c:if test="${sessionScope.account.roleName != 'admin'}">
+                    <input type="submit" value="Thêm vào giỏ hàng" class="btn btn-primary">
+                </c:if>
+                <c:if test="${sessionScope.account.roleName == 'admin'}">
+                    <a class="btn btn-primary"
+                    href="/ProductServlet?action=save&id=${product.id}">Chỉnh sửa</a>
+                </c:if>
+            </div>
         </form>
     </div>
 </div>
