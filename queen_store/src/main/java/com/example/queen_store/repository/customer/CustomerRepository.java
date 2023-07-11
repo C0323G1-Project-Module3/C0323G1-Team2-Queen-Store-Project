@@ -16,9 +16,7 @@ public class CustomerRepository implements ICustomerRepository {
             " where user_id =?; ";
     private static final String DELETE_USERS_BY_ID = "  delete from user \n" +
             " where user_id = ?; ";
-    private static final String SELECT_USERS_BY_ACC_USER_NAME = " select user_id,user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address,account_user_name from user\n" +
-            " where account_user_name = ?; ";
-
+    private static final String SELECT_USER_ID_BY_USERNAME = " call select_id_by_user_name(?); ";
     @Override
     public List<Customer> selectAllUser() throws SQLException {
         List<Customer> customerList = new ArrayList<>();
@@ -119,25 +117,20 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer selectCustomerByAccUser(String accUserName) throws SQLException {
-        Customer customer = null;
+    public int getUserIdByUserName(String userName) {
         Connection connection = BaseRepository.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERS_BY_ACC_USER_NAME);
-        preparedStatement.setString(1,accUserName);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            int id = resultSet.getInt("user_id");
-            String name = resultSet.getString("user_name");
-            Date dob = resultSet.getDate("user_dob");
-            boolean gender = resultSet.getBoolean("user_gender");
-            String idCard = resultSet.getString("user_id_card");
-            String phoneNumber = resultSet.getString("user_phone_number");
-            String email = resultSet.getString("user_mail");
-            String address = resultSet.getString("user_address");
-            customer = new Customer(id,name,dob,gender,idCard,phoneNumber,email,address,accUserName);
+        System.out.println(userName);
+        try {
+            CallableStatement callableStatement = connection.prepareCall(SELECT_USER_ID_BY_USERNAME);
+            callableStatement.setString(1,userName);
+            ResultSet resultSet = callableStatement.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getInt("user_id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        connection.close();
-        return customer;
+        return 0;
     }
 
 }

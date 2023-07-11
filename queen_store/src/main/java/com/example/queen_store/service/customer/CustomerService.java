@@ -124,8 +124,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer selectCustomerByAccUser(String accUserName) throws SQLException {
-        return customerRepository.selectCustomerByAccUser(accUserName);
+    public int getUserIdByUserName(String userName) {
+        return customerRepository.getUserIdByUserName(userName);
     }
 
 
