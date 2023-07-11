@@ -14,8 +14,7 @@ public class CustomerRepository implements ICustomerRepository {
             ",user_phone_number=?,user_mail=?,user_address=? where user_id = ? ";
     private static final String SELECT_USERS_BY_ID = " select user_id,user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address from user\n" +
             " where user_id =?; ";
-    private static final String DELETE_USERS_BY_ID = "  delete from user \n" +
-            " where user_id = ?; ";
+    private static final String DELETE_USERS_BY_ID =  " call delete_user(?); ";
     private static final String SELECT_USERS_BY_ACC_USER_NAME = " select user_id,user_name,user_dob,user_gender,user_id_card,user_phone_number,user_mail,user_address,account_user_name from user\n" +
             " where account_user_name = ?; ";
 
@@ -111,9 +110,9 @@ public class CustomerRepository implements ICustomerRepository {
     public boolean removeUser(int id) throws SQLException {
         boolean rowDelete;
         Connection connection = BaseRepository.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_BY_ID);
-        preparedStatement.setInt(1,id);
-        rowDelete = preparedStatement.executeUpdate() > 0;
+        CallableStatement callableStatement = connection.prepareCall(DELETE_USERS_BY_ID);
+        callableStatement.setInt(1,id);
+        rowDelete = callableStatement.executeUpdate() > 0;
         connection.close();
         return rowDelete;
     }

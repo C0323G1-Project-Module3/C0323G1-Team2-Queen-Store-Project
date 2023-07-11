@@ -20,13 +20,13 @@
 </head>
 <body>
 <jsp:include page="/home/header.jsp"></jsp:include>
-<form action="/CustomerServlet?action=update" method="post">
+<form action="/CustomerServlet?action=update" style="padding-top: 120px" method="post">
     <input hidden="hidden" name="user_id" value="${customer.id}">
-    <div style="padding-left: 570px" class="container mt-3 pt-5">
+    <div style="text-align: center" class="container ">
         <h2>Chỉnh Sửa Thông Tin</h2>
         <div>${customer.accUserName}</div>
     </div>
-    <div class="container mt-5 pt-5">
+    <div class="container ">
         <table class="table table-striped mx-auto" style="width: 30%;margin: 0" >
             <tr>
                 <th>Tên</th>
@@ -91,7 +91,7 @@
             </tr>
             <tr>
                 <td align="center" colspan="2">
-                   <button class="btn btn-outline-danger" type="submit" name="save">Save</button>
+                   <button class="btn btn-outline-primary" type="submit" name="save">Save</button>
                 </td>
                 <%--            <td align="center">--%>
                 <%--               <button><a href="/ProductServlet" style="text-decoration: none">Back</a></button>--%>
