@@ -12,12 +12,13 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="/home/header.jsp"></jsp:include>
+<%--<jsp:include page="/home/header.jsp"></jsp:include>--%>
 <form action="/CustomerServlet?action=update" method="post">
     <input hidden="hidden" name="user_id" value="${customer.id}">
     <table border="1">
         <caption>
             <h2>Edit User</h2>
+            <div>${customer.accUserName}</div>
         </caption>
         <tr>
             <th>User Name</th>
@@ -85,11 +86,11 @@
                 <input type="submit" name="save" value="Save">
             </td>
             <td align="center">
-               <button><a href="/CustomerServlet" style="text-decoration: none">Back</a></button>
+               <button><a href="home.jsp" style="text-decoration: none">Back</a></button>
             </td>
         </tr>
     </table>
 </form>
-<jsp:include page="/home/footer.jsp"></jsp:include>
+<%--<jsp:include page="/home/footer.jsp"></jsp:include>--%>
 </body>
 </html>

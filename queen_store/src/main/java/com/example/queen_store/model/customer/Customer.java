@@ -54,7 +54,16 @@ public class Customer {
         this.accUserName = accUserName;
     }
 
-    public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address) {
+    public Customer(int id, String name, Date dOB, boolean gender, String idCard, String phoneNumber, String email, String address, String accUserName) {
+        this.id = id;
+        this.name = name;
+        this.dOB = dOB;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.accUserName = accUserName;
     }
 
     public Customer(String name, Date dob, boolean gender, String idCard, String phoneNumber, String email, String address, String accUserName) {

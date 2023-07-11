@@ -16,4 +16,6 @@ public interface ICustomerRepository {
     Customer selectCustomer(int id) throws SQLException;
 
     boolean removeUser(int id) throws SQLException;
+
+    Customer selectCustomerByAccUser(String accUserName) throws SQLException;
 }
