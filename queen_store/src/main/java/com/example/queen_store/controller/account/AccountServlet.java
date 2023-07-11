@@ -68,18 +68,18 @@ public class AccountServlet extends HttpServlet {
             Account account = accountService.findByUserName(userName);
             if (account != null) {
                 Customer customer = accountService.findCustomerByUserName(userName);
-                if(customer != null){
-                Random random = new Random();
-                StringBuilder code = new StringBuilder(4);
-                for (int i = 0; i < 4; i++) {
-                    code.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-                }
-                Email.sendEmail(customer.getEmail(), System.currentTimeMillis() + "", String.valueOf(code));
+                if (customer != null) {
+                    Random random = new Random();
+                    StringBuilder code = new StringBuilder(4);
+                    for (int i = 0; i < 4; i++) {
+                        code.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
+                    }
+                    Email.sendEmail(customer.getEmail(), System.currentTimeMillis() + "", String.valueOf(code));
 
-                request.setAttribute("code", String.valueOf(code));
-                request.setAttribute("userName", userName);
-                requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
-                }else {
+                    request.setAttribute("code", String.valueOf(code));
+                    request.setAttribute("userName", userName);
+                    requestDispatcher = request.getRequestDispatcher("/account/change_password.jsp");
+                } else {
                     request.setAttribute("userName", userName);
                     request.setAttribute("msg", "Tài khoản chưa đăng kí mail!");
                     requestDispatcher = request.getRequestDispatcher("/account/check_code.jsp");
@@ -165,7 +165,7 @@ public class AccountServlet extends HttpServlet {
     private void showLoginForm(HttpServletRequest request, HttpServletResponse response) {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/account/login.jsp");
         try {
-            requestDispatcher.forward(request,response);
+            requestDispatcher.forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -273,18 +273,11 @@ public class AccountServlet extends HttpServlet {
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         String userName = request.getParameter("userName");
 
-        boolean rowCustomerDelete = accountService.deleteCustomer(userName);
-
-        boolean rowDelete = accountService.deleteUser(userName);
+        accountService.deleteUser(userName);
         RequestDispatcher requestDispatcher;
 
-        if (rowDelete && rowCustomerDelete) {
-            request.setAttribute("msg", "Đã xoá tài khoản " + userName);
-            requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
-        } else {
-            request.setAttribute("msg", "Lỗi");
-            requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
-        }
+        request.setAttribute("msg", "Đã xoá tài khoản " + userName);
+        requestDispatcher = request.getRequestDispatcher("/accountServlet?action=userList");
 
         try {
             requestDispatcher.forward(request, response);
@@ -310,7 +303,7 @@ public class AccountServlet extends HttpServlet {
                 if (password.equals(confirmPassword)) {
                     rowUpdate = accountService.addUser(new Account(userName, password, "user"));
                     if (rowUpdate) {
-                        request.setAttribute("userName",userName);
+                        request.setAttribute("userName", userName);
                         requestDispatcher = request.getRequestDispatcher("/CustomerServlet?action=create");
                     } else {
                         msgSigin = "Đăng kí thất bại, vui lòng thử lại!";

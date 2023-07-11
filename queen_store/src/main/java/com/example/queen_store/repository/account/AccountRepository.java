@@ -15,11 +15,10 @@ public class AccountRepository implements IAccountRepository {
     private static final String FIND_BY_USER_NAME = " call find_by_user_name(?) ";
     private static final String SELECT_ALL_ACCOUNT = " call select_all_account() ";
     private static final String INSERT_ACCOUNT = " insert into account values (?,?,?) ";
-    private static final String DELETE_ACCOUNT = " delete from account where account.account_user_name = ? ";
+    private static final String DELETE_ACCOUNT = " call delete_account(?); ";
     private static final String DISPLAY_INFO_OF_CUSTOMER = " select * from `user` u where u.account_user_name = ? ";
     private static final String FIND_TYPE_OF_CUSTOMER = " select t_o_c.type_of_customer_name from type_of_customer t_o_c where t_o_c.type_of_customer_id = ? ";
     private static final String UPDATE_PASSWORD = " update `account` set account_password = ? where account_user_name = ? ";
-    private static final String DELETE_CUSTOMER = " delete from `user` u where u.account_user_name = ?; ";
 
     @Override
     public Account findByUserName(String userName) {
@@ -150,9 +149,10 @@ public class AccountRepository implements IAccountRepository {
         Connection connection = BaseRepository.getConnection();
         boolean rowDelete;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ACCOUNT);
-            preparedStatement.setString(1, userName);
-            rowDelete = preparedStatement.executeUpdate() > 0;
+            CallableStatement callableStatement = connection.prepareCall(DELETE_ACCOUNT);
+            callableStatement.setString(1, userName);
+            rowDelete = callableStatement.executeUpdate() > 0;
+            System.out.println(rowDelete);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -186,24 +186,5 @@ public class AccountRepository implements IAccountRepository {
         return rowEdit;
     }
 
-    @Override
-    public boolean deleteCustomer(String userName) {
-        Connection connection = BaseRepository.getConnection();
-        boolean rowDeleteCustomer;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CUSTOMER);
-            preparedStatement.setString(1, userName);
-            rowDeleteCustomer = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return rowDeleteCustomer;
-    }
 
 }

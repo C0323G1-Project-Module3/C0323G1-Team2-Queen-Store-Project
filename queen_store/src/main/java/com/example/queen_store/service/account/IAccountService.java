@@ -38,5 +38,5 @@ public interface IAccountService {
 
     Map<String, String> checkValidateForgotPassword(String password, String confirmPassword);
 
-    boolean deleteCustomer(String userName);
+
 }
