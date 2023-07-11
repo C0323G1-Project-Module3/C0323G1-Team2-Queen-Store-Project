@@ -129,7 +129,7 @@
                         <td>
                                 <%-- <a class="btn btn-outline-danger btn-sm" href="/ProductServlet?action=delete&id=${product.id}">Delete</a>--%>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-sm" data-mdb-toggle="modal"
+                            <button type="button" class="btn btn-danger btn-sm" data-mdb-toggle="modal"
                                     data-mdb-target="#exampleModal"
                                     onclick="sendInfoToDelete('${product.id}','${product.name}')">
                                 Xóa
