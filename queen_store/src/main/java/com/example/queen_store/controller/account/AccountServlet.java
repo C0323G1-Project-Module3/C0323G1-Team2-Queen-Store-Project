@@ -173,7 +173,7 @@ public class AccountServlet extends HttpServlet {
             session.invalidate();
         }
         try {
-            response.sendRedirect("/home.jsp");
+            response.sendRedirect("/ProductServlet");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -377,10 +377,24 @@ public class AccountServlet extends HttpServlet {
                 response.addCookie(userNameCookie);
                 response.addCookie(passwordCookie);
                 response.addCookie(rememberMeCookie);
-                try {
-                    response.sendRedirect("/ProductServlet");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+
+                Customer customer = accountService.findCustomerByUserName(userName);
+                if (customer == null && !account.getRoleName().equals("admin")) {
+                    request.setAttribute("userName", userName);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("product/create.jsp");
+                    try {
+                        requestDispatcher.forward(request, response);
+                    } catch (ServletException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    try {
+                        response.sendRedirect("/ProductServlet");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             } else {
                 request.setAttribute("msg", "Sai mật khẩu hoặc tài khoản không tồn tại!");
