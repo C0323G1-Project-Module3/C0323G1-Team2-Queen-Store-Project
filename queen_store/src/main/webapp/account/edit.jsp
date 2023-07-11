@@ -50,7 +50,7 @@
                                         <input type="password" id="oldPassword" name="oldPassword" value="${oldPassword}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errOldPassword}</label>
+                                            <label class="text-danger">${errMap.errOldPassword}</label>
                                         </c:if>
                                     </div>
 
@@ -59,7 +59,7 @@
                                         <input type="password" id="password" name="password" value="${password}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errPassword}</label>
+                                            <label class="text-danger">${errMap.errPassword}</label>
                                         </c:if>
                                     </div>
 
@@ -69,7 +69,7 @@
                                                value="${confirmPassword}"
                                                class="form-control form-control-lg"/>
                                         <c:if test="${errMap != null}">
-                                            <label>${errMap.errConfirmPassword}</label>
+                                            <label class="text-danger">${errMap.errConfirmPassword}</label>
                                         </c:if>
                                     </div>
 
@@ -82,7 +82,7 @@
                                         </a>
                                     </div>
                                 </form>
-                                <h1>${errMap.msg}</h1>
+                                <h1 class="text-danger">${errMap.msg}</h1>
 
                             </div>
                         </div>
