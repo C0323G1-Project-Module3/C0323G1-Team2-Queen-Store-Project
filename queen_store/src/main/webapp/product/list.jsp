@@ -73,16 +73,24 @@
         </h1>
     </div>
     <%--Thanh chức năng--%>
-    <div class="row container justify-content-center mb-2 mt-2">
-        <div class="col-md-auto"><h2><a class="btn btn-primary" href="/ProductServlet">Quay lại menu chính</a></h2>
+    <div class="row container-fluid justify-content-center mb-2 mt-2">
+        <div class="float-start d-inline-block w-50">
+            <div class="col-md-auto d-inline-block float-start me-2"><h2><a class="btn btn-primary"
+                                                                            href="/ProductServlet">Quay lại menu
+                chính</a></h2>
+            </div>
+            <div class="col-md-auto d-inline-block float-start"><h2><a class="btn btn-primary"
+                                                                       href="/ProductServlet?action=create">Thêm sản
+                phẩm
+                mới</a></h2></div>
         </div>
-        <div class="col-md-auto"><h2><a class="btn btn-primary" href="/ProductServlet?action=create">Thêm sản phẩm
-            mới</a></h2></div>
-        <div class="container w-50 justify-content-right">
-            <form class="d-flex mt-0" >
-                <input type="hidden" name="action" value="search">
-                <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." name="name"
-                       value="${name}">
+
+        <div class="w-50 float-end d-inline-block">
+            <form class="d-flex mt-0">
+                <input type="hidden" name="action" value="search" >
+                <input class="form-control me-2" type="text" placeholder="Nhập tên sản phẩm..." id="searchProductId"
+                       name="name"
+                       value="${name}" style="width: auto">
                 <select class="form-select me-2" name="range">
                     <option value="0">Tất cả</option>
                     <option value="1">Dưới 100.000đ</option>
@@ -90,15 +98,22 @@
                     <option value="3">500.000đ - 1000.000đ</option>
                     <option value="4">Trên 1000.000đ</option>
                 </select>
-                <button class="btn btn-primary" style="width: 200px" type="submit">Tìm kiếm</button>
+                <div class="col-md-auto d-inline-block float-end me-2">
+                    <button class="btn btn-primary" style="width: auto" type="submit">Tìm kiếm</button>
+                </div >
+                <div class="col-md-auto d-inline-block float-end me-2" style="width: auto">
+                    <a href="/ProductServlet?action=productManagerment" class="btn btn-primary">Hủy</a>
+                </div>
             </form>
         </div>
     </div>
     <div class="row justify-content-center" style="align-content: center">
         <p>
             <c:if test="${message !=null}">
-                <span class="message">${message}</span>
-            </c:if>
+        <div class="text-danger " style="text-align: center">
+            <span class="message">${message}</span>
+        </div>
+        </c:if>
         </p>
         <c:if test="${productList.size() > 0}">
             <table class="table table-striped text-center">
@@ -151,7 +166,7 @@
                     <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <span>Bạn muốn xóa sản phẩm <span id="nameDelete"></span> ?</span>
+                    <span>Bạn muốn xóa sản phẩm <span id="nameDelete"></span>?</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-mdb-dismiss="modal">Đóng</button>
@@ -174,11 +189,17 @@
     function sendInfoToDelete(id, name) {
         document.getElementById("nameDelete").innerText = name;
         document.getElementById("id").value = id;
-        console.log(id)
     }
 
     function remove() {
         document.getElementById("formDelete").submit();
+    }
+
+    function backToMenu() {
+        if (document.getElementById("searchProductId").value == "") {
+
+        }
+        ;
     }
 </script>
 </html>
