@@ -157,7 +157,7 @@ public class CustomerServlet extends HttpServlet {
         Customer customer = new Customer(name, dateOfBirth, gender, userIdCard, phoneNumber, email, address, accountUserName);
         Map<String,String> errMap  = this.customerService.save(customer);
         if (errMap.isEmpty()){
-            response.sendRedirect("CustomerServlet");
+            response.sendRedirect("/accountServlet?action=login");
         }else {
             request.setAttribute("customer",customer);
             request.setAttribute("error",errMap);

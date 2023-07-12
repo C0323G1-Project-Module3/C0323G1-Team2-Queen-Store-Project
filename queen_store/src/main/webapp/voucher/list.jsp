@@ -84,7 +84,7 @@
                 <form action="/vouchers" method="get" style="margin-top: 18px">
                     <input id="action" name="action" value="search" hidden="hidden">
                     <input type="text" name="searchName" id="searchName" placeholder="TÌM KIẾM THEO TÊN">
-                    <input type="submit" value="TÌM KIẾM THEO TÊN">
+                    <input type="submit" class="btn btn-primary" value="TÌM KIẾM">
                 </form>
             </div>
         </nav>
