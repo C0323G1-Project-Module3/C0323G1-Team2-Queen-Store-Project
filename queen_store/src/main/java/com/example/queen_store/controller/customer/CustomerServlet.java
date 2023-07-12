@@ -144,7 +144,8 @@ public class CustomerServlet extends HttpServlet {
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("user_name");
         Date dateOfBirth = Date.valueOf(LocalDate.now());
-        if (!request.getParameter("user_dob").isEmpty()){
+
+        if (request.getParameter("user_dob")!=null){
             dateOfBirth = Date.valueOf((request.getParameter("user_dob")));
         }
         boolean gender = request.getParameter("user_gender").equals("nam");
