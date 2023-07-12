@@ -118,24 +118,36 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public Customer selectCustomerByAccUser(String accUserName) throws SQLException {
+    public Customer selectCustomerByAccUser(String accUserName) {
         Customer customer = null;
         Connection connection = BaseRepository.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERS_BY_ACC_USER_NAME);
-        preparedStatement.setString(1,accUserName);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            int id = resultSet.getInt("user_id");
-            String name = resultSet.getString("user_name");
-            Date dob = resultSet.getDate("user_dob");
-            boolean gender = resultSet.getBoolean("user_gender");
-            String idCard = resultSet.getString("user_id_card");
-            String phoneNumber = resultSet.getString("user_phone_number");
-            String email = resultSet.getString("user_mail");
-            String address = resultSet.getString("user_address");
-            customer = new Customer(id,name,dob,gender,idCard,phoneNumber,email,address,accUserName);
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_USERS_BY_ACC_USER_NAME);
+            preparedStatement.setString(1,accUserName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                int id = resultSet.getInt("user_id");
+                String name = resultSet.getString("user_name");
+                Date dob = resultSet.getDate("user_dob");
+                boolean gender = resultSet.getBoolean("user_gender");
+                String idCard = resultSet.getString("user_id_card");
+                String phoneNumber = resultSet.getString("user_phone_number");
+                String email = resultSet.getString("user_mail");
+                String address = resultSet.getString("user_address");
+                customer = new Customer(id,name,dob,gender,idCard,phoneNumber,email,address,accUserName);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
-        connection.close();
+
         return customer;
     }
 
