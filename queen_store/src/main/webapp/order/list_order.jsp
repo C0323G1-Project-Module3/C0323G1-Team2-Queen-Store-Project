@@ -72,7 +72,7 @@
             <td>
                 <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
                         data-mdb-target="#exampleModal"
-                        onclick="sendInfoToDelete('${p.id}','${p.productName}')">
+                        onclick="sendInfoToDelete('${p.getId()}','${p.getProductName()}')">
                     Xoá
                 </button>
             </td>
@@ -113,19 +113,7 @@
     function remove() {
         document.getElementById("formDelete").submit();
     }
+</script>
 
-    <script src="js/jquery-3.5.1.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap5.min.js"></script>
-</script>
-<script>
-    $(document).ready(function () {
-        $('#tableOrder').dataTable({
-            "dom": 'lrtip',
-            "lengthChange": false,
-            "pageLength": 5
-        });
-    });
-</script>
 </body>
 </html>
