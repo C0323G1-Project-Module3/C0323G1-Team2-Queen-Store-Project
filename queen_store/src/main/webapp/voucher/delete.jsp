@@ -10,9 +10,7 @@
 
 <html>
 <head>
-    <title>Title</title>
-    <!-- Latest compiled and minified CSS -->
-<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--%>
+    <title>DELETE</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -21,68 +19,57 @@
 
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+            color: white;
+        }
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        .form {
+            width: 40%;
+        }
+
+    </style>
 </head>
 <body>
 <jsp:include page="/home/header.jsp"/>
-<center style="padding-top: 100px">
-    <h1><a href="/vouchers">Back to list</a></h1>
-    <h1>Delete voucher</h1>
-    <c:if test='${requestScope["message"] != null}'>
-        <span>${requestScope["message"]}</span>
-    </c:if>
-    <form method="post">
-        <table>
-            <tr>
-                <th>Voucher name:</th>
-                <td>
-                    ${voucher.getName()}
-                </td>
-            </tr>
-            <tr>
-                <th>Voucher rate:</th>
-                <td>
-                    ${Math.round(voucher.getRate()*100)}
-                </td>
-            </tr>
-            <tr>
+<div style="height: 150px"></div>
 
-                <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal"
-                        data-target="#confirmDeleteModal">Delete
-                </button>
-            </tr>
-        </table>
+<div class="container" style="padding-top: 30px;">
 
-        <%--        /////modal--%>
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-             aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+    <center>
+        <h1>XÓA MÃ GIẢM GIÁ</h1>
+        <c:if test='${requestScope["message"] != null}'>
+            <span>${requestScope["message"]}</span>
+        </c:if>
+        <form method="post" class="form">
+            <table border="1" cellpadding="5" width="350px" class="table table-hover" >
+                <tr>
+                    <th>Voucher name:</th>
+                    <td>
+                        ${voucher.getName()}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Voucher rate:</th>
+                    <td>
+                        ${Math.round(voucher.getRate()*100)}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="button" class="btn btn-primary" id="back" >
+                            <a href="/vouchers?action=vouchers">Quay lại</a>
                         </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to delete this voucher?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger" id="deleteButtonn" data-toggle="modal"
-                                data-target="#confirmDeleteModal">Delete
+                        <button type="submit" class="btn btn-danger" id="deleteButton" >Xóa
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <%--        /////modal--%>
-    </form>
-</center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+    <div style="height: 150px"></div>
+</div>
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>
