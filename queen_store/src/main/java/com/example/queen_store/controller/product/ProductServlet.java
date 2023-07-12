@@ -31,7 +31,7 @@ public class ProductServlet extends HttpServlet {
         }
         switch (action) {
             case "productManagerment":
-                showManagementList(request,response);
+                showManagementList(request, response);
                 break;
             case "create":
                 showCreateForm(request, response);
@@ -88,10 +88,12 @@ public class ProductServlet extends HttpServlet {
         } else {
             request.setAttribute("productList", products);
         }
-        if (account.getRoleName().equals("admin")) {
+        if (account == null) {
+            dispatcher = request.getRequestDispatcher("home.jsp");
+        } else if (account.getRoleName().equals("admin")){
             dispatcher = request.getRequestDispatcher("/product/list.jsp");
-        } else {
-             dispatcher = request.getRequestDispatcher("home.jsp");
+        } else{
+            dispatcher = request.getRequestDispatcher("home.jsp");
         }
         try {
             dispatcher.forward(request, response);
@@ -187,10 +189,11 @@ public class ProductServlet extends HttpServlet {
     private void showList(HttpServletRequest request, HttpServletResponse response) {
         int page = 1;
         int recordsPerPage = 8;
-        if(request.getParameter("page") != null)
+        if (request.getParameter("page") != null)
             page = Integer.parseInt(request.getParameter("page"));
-        List<Product> products = productService.getAllPaging(recordsPerPage,(page-1)*recordsPerPage);
+        List<Product> products = productService.getAllPaging(recordsPerPage, (page - 1) * recordsPerPage);
         List<Product> productList = productService.showList();
+
         int noOfRecords = productList.size();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
         RequestDispatcher dispatcher;

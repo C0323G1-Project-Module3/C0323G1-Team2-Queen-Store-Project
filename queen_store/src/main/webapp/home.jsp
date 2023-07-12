@@ -71,6 +71,11 @@
         <a href="/ProductServlet?action=sortUp" class="btn btn-outline-dark">Giá thấp đến cao</a>
         <a href="/ProductServlet?action=sortDown" class="btn btn-outline-dark">Giá cao đến thấp</a>
     </div>
+    <c:if test="${!message.isEmpty()}">
+        <div class="text-danger " style="text-align: center">
+        <c:out value="${message}"/>
+        </div>
+    </c:if>
     <div class="row d-flex  justify-align-center">
         <%--@elvariable id="productList" type="java.util.List"--%>
         <c:forEach var="product" items="${productList}" varStatus="loop">
