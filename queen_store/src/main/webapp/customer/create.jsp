@@ -23,7 +23,7 @@
     <table border="1">
         <caption>
             <h2>Thêm Thông Tin Tài Khoản</h2>
-            <input type="text"  name="account_user_name" id="accountUserName" value="${customer.accountUserName}"/>${customer.accountUserName}
+            <input type="text"  name="account_user_name" id="accountUserName" value="${userName}"/>${userName}
         </caption>
 <%--        <tr>--%>
 <%--            <th>User Id:</th>--%>
