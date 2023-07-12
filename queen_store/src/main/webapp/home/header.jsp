@@ -98,7 +98,6 @@
                             <a href="<c:url value="/order?action=cart"/>" style="text-decoration: none"><i
                                     class="fa-solid fa-cart-shopping text-dark "
                                     style="margin-top: 8px">
-
                             </i>
                                 <c:if test="${totalQuantity >0}">
                             <span class=" translate-middle badge rounded-pill bg-danger"
@@ -139,10 +138,8 @@
                 </div>
                 <!--                End cart & login-->
                 <div class="row bg-light col-12">
-
                 </div>
             </nav>
-
         </div>
     </div>
 </header>
