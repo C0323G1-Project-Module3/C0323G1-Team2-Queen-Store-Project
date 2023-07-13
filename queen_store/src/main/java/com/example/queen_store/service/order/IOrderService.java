@@ -5,7 +5,7 @@ package com.example.queen_store.service.order;
 
 
 import com.example.queen_store.model.product.Product;
-import com.example.queen_store.repository.order.CustomerOrders;
+import com.example.queen_store.model.order.CustomerOrders;
 
 import java.util.List;
 import java.util.Map;

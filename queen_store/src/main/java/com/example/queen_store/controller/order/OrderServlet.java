@@ -6,7 +6,7 @@ import com.example.queen_store.model.customer.Customer;
 import com.example.queen_store.model.product.Product;
 import com.example.queen_store.model.voucher.Voucher;
 import com.example.queen_store.repository.order.Cart;
-import com.example.queen_store.repository.order.CustomerOrders;
+import com.example.queen_store.model.order.CustomerOrders;
 import com.example.queen_store.service.customer.CustomerService;
 import com.example.queen_store.service.customer.ICustomerService;
 import com.example.queen_store.service.order.IOrderService;
