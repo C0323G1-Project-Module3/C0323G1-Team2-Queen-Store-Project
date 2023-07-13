@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Danh Sách Người Dùng</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
@@ -81,8 +81,8 @@
                             <%--                        <a href="CustomerServlet?action=delete&id=${customer.id} " style="text-decoration: none">--%>
                             <%--                            <button class="btn btn-outline-danger">Delete</button>--%>
                             <%--                        </a>--%>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-mdb-toggle="modal"
-                                data-mdb-target="#deleteModal"
+                        <button type="button" class="btn btn-danger btn-sm" data-mdb-toggle="modal"
+                                data-mdb-target="#exampleModal "
                                 onclick="sendInfoToDelete('${customer.id}','${customer.name}')">
                             Xóa
                         </button>
@@ -91,30 +91,29 @@
                 </tr>
             </c:forEach>
         </table>
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Bạn có chắc chắn muốn xóa <span id="nameDelete"></span>?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="button" class="btn btn-danger" onclick="remove()">Xóa</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <%--<div align="center">--%>
         <%--<h2>--%>
         <%--    <a href="CustomerServlet?action=create"><input type="submit" name="Add NewUser" value="Add NewUser"></a>--%>
         <%--</h2>--%>
         <%--</div>--%>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="padding-top: 90px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>Bạn muốn xóa sản phẩm <span id="nameDelete"></span> ?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" onclick="remove()">Có</button>
+            </div>
+        </div>
     </div>
 </div>
 <form id="formDelete" method="post">

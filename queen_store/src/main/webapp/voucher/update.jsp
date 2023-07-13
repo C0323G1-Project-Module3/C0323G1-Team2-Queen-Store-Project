@@ -10,76 +10,75 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>CẬP NHẬP VOUCHER</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        .form {
+            width: 40%;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/home/header.jsp"/>
-<center style="    margin-top: 120px;">
-    <h1><a href="/vouchers">Back to list</a></h1>
-</center>
-<c:if test='${requestScope["message"] !=null}'>
-    <span>${requestScope["message"]}</span>
-</c:if>
-<center>
-    <h1>Update Voucher</h1>
-    <form method="post" >
-        <table class="table">
-            <tr>
-                <th>voucher Name:</th>
-                <td>
-                    <input type="text" name="name" size="45"
-                           value="<c:out value='${voucher.getName()}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>voucher Rate:</th>
-                <td>
-                    <input type="text" name="rate" size="45"
-                           value="<c:out value='${Math.round(voucher.getRate()*100)}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <button type="button" class="btn btn-danger" id="deleteButton" data-toggle="modal"
-                        data-target="#confirmDeleteModal">Update
-                </button>
-            </tr>
-        </table>
+<div style="height: 150px"></div>
 
-<%--        /////modal--%>
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
-             aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Update</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+<div class="container" style="padding-top: 30px;">
+
+    <c:if test='${requestScope["message"] !=null}'>
+        <span>${requestScope["message"]}</span>
+    </c:if>
+    <center>
+        <h1>CẬP NHẬT THÔNG TIN VOUCHER</h1>
+        <form method="post" class="form">
+            <table border="1" cellpadding="5" class="table table-hover" width="40%">
+                <tr>
+                    <th>Tên mã giảm giá</th>
+                    <td>
+                        <input required type="text" name="name"
+                               value="<c:out value='${voucher.getName()}' />"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tỷ lệ</th>
+                    <td>
+                        <input required type="text" name="rate"
+                               value="<c:out value='${Math.round(voucher.getRate()*100)}' />"
+                        />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="button" class="btn btn-primary">
+                            <a href="/vouchers?action=vouchers">Quay lại</a>
                         </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you want to update this voucher?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger" id="deleteButtonn" data-toggle="modal"
-                                data-target="#confirmDeleteModal">Update
+                        <button type="submit" class="btn btn-primary">Cập nhật
                         </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-<%--        /////modal--%>
-    </form>
-</center>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+    <div style="height: 150px"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <jsp:include page="/home/footer.jsp"></jsp:include>
 </body>
 </html>

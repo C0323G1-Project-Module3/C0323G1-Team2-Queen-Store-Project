@@ -49,12 +49,12 @@
             <c:if test="${rate !=0}">
                 <tr>
                     <td>Voucher</td>
-                    <td colspan="2">${voucher.getRate()}%</td>
+                    <td colspan="2">${voucher.getRate()*100}%</td>
                 </tr>
                 <tr>
                     <td>Tổng tiền sau khi trừ voucher</td>
                     <td colspan="2"><fmt:setLocale value="vi_VN"/>
-                        <fmt:formatNumber value="${sum - sum*voucher.getRate()/100}" type="currency"/></td>
+                        <fmt:formatNumber value="${sum - sum*voucher.getRate()}" type="currency"/></td>
                 </tr>
             </c:if>
             <input name="price" value="${product.key.getPrice()}" hidden="hidden"/>

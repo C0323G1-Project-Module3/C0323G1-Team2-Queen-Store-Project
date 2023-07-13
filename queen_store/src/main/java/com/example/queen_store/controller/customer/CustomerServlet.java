@@ -144,7 +144,8 @@ public class CustomerServlet extends HttpServlet {
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("user_name");
         Date dateOfBirth = Date.valueOf(LocalDate.now());
-        if (!request.getParameter("user_dob").isEmpty()){
+
+        if (request.getParameter("user_dob")!=null){
             dateOfBirth = Date.valueOf((request.getParameter("user_dob")));
         }
         boolean gender = request.getParameter("user_gender").equals("nam");
@@ -156,7 +157,7 @@ public class CustomerServlet extends HttpServlet {
         Customer customer = new Customer(name, dateOfBirth, gender, userIdCard, phoneNumber, email, address, accountUserName);
         Map<String,String> errMap  = this.customerService.save(customer);
         if (errMap.isEmpty()){
-            response.sendRedirect("CustomerServlet");
+            response.sendRedirect("/accountServlet?action=login");
         }else {
             request.setAttribute("customer",customer);
             request.setAttribute("error",errMap);

@@ -27,7 +27,7 @@ public class VoucherServlet extends HttpServlet {
                 showNewForm(request, response);
                 break;
             case "delete":
-                deleteById(request, response);
+                deleteVoucher(request, response);
                 break;
             case "update":
                 updateVoucherById(request, response);
@@ -90,13 +90,13 @@ public class VoucherServlet extends HttpServlet {
         }
     }
 
-    private void deleteById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Voucher voucher = voucherService.selectVoucher(id);
-        request.setAttribute("voucher", voucher);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("voucher/delete.jsp");
-        requestDispatcher.forward(request, response);
-    }
+//    private void deleteById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        int id = Integer.parseInt(request.getParameter("id"));
+//        Voucher voucher = voucherService.selectVoucher(id);
+//        request.setAttribute("voucher", voucher);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("voucher/delete.jsp");
+//        requestDispatcher.forward(request, response);
+//    }
 
     private void searchByName(HttpServletRequest request, HttpServletResponse response) {
         String searchName = request.getParameter("searchName");
@@ -113,7 +113,7 @@ public class VoucherServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         } else {
-            String msg = "khong co";
+            String msg = "Không tìm thấy";
             request.setAttribute("msg", msg);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("voucher/search.jsp");
             try {
@@ -124,7 +124,6 @@ public class VoucherServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -152,9 +151,9 @@ public class VoucherServlet extends HttpServlet {
             case "update":
                 updateVoucher(request, response);
                 break;
-            case "delete":
-                deleteVoucher(request, response);
-                break;
+//            case "delete":
+//                deleteVoucher(request, response);
+//                break;
         }
     }
 
@@ -199,6 +198,5 @@ public class VoucherServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

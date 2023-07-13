@@ -304,7 +304,7 @@ public class AccountServlet extends HttpServlet {
                     rowUpdate = accountService.addUser(new Account(userName, password, "user"));
                     if (rowUpdate) {
                         request.setAttribute("userName", userName);
-                        requestDispatcher = request.getRequestDispatcher("/CustomerServlet?action=create");
+                        requestDispatcher = request.getRequestDispatcher("customer/create.jsp");
                     } else {
                         msgSigin = "Đăng kí thất bại, vui lòng thử lại!";
                         requestDispatcher = request.getRequestDispatcher("/account/create_user.jsp");
