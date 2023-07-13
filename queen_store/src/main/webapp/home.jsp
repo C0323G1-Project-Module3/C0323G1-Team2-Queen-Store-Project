@@ -73,48 +73,50 @@
     </div>
     <c:if test="${!message.isEmpty()}">
         <div class="text-danger " style="text-align: center">
-        <c:out value="${message}"/>
+            <c:out value="${message}"/>
         </div>
     </c:if>
     <div class="row d-flex  justify-align-center">
         <%--@elvariable id="productList" type="java.util.List"--%>
         <c:forEach var="product" items="${productList}" varStatus="loop">
             <div class="col-lg-3 col-md-6 col-sm-12 align-content-center">
-                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded " style="width: 18rem;height: 34rem;">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded " style="width: 18rem;height: 25rem;">
                     <a href="<c:url value="/ProductServlet?action=view&id=${product.id}"/>">
-                        <img src="<c:out value="${product.imgPath}"/>" class="card-img-top" alt="...">
+                        <div style="height: 254.22px ;width: 100%">
+                        <img style="max-height: 100% " src="<c:out value="${product.imgPath}"/>" class="card-img-top" alt="...">
+                        </div>
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title"><c:out value="${product.name}"/></h5>
+                        <h5 style=" overflow: hidden;text-overflow: ellipsis; white-space: nowrap; max-width: 17rem;" class="card-title"><c:out value="${product.name}"/></h5>
                         <p class="card-text"><c:out value="${product.type}"/></p>
-                        <p class="card-text"><fmt:setLocale value="vi_VN"/>
+                        <p style="font-weight: bold; color: darkred " class="card-text"><fmt:setLocale value="vi_VN"/>
                             <fmt:formatNumber value="${product.price}" type="currency"/></p>
                     </div>
                 </div>
             </div>
         </c:forEach>
-            <div class="pagination container d-flex justify-content-center align-items-center">
-                <c:if test="${currentPage > 1}">
-                    <a class="fs-5" href="?page=${currentPage-1}">&laquo; Previous</a>
-                </c:if>
-                &nbsp;
-                <c:forEach var="i" begin="1" end="${noOfPages}">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <span class="fs-5" class="current">${i}</span>
-                            &nbsp;
-                        </c:when>
-                        <c:otherwise>
-                            <a class="fs-5" href="?page=${i}">${i}</a>
-                            &nbsp;
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-                &nbsp;
-                <c:if test="${currentPage < noOfPages}">
-                    <a class="fs-5" href="?page=${currentPage+1}">Next &raquo;</a>
-                </c:if>
-            </div>
+        <div class="pagination container d-flex justify-content-center align-items-center">
+            <c:if test="${currentPage > 1}">
+                <a class="fs-5" href="?page=${currentPage-1}">&laquo; Previous</a>
+            </c:if>
+            &nbsp;
+            <c:forEach var="i" begin="1" end="${noOfPages}">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <span class="fs-5" class="current">${i}</span>
+                        &nbsp;
+                    </c:when>
+                    <c:otherwise>
+                        <a class="fs-5" href="?page=${i}">${i}</a>
+                        &nbsp;
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            &nbsp;
+            <c:if test="${currentPage < noOfPages}">
+                <a class="fs-5" href="?page=${currentPage+1}">Next &raquo;</a>
+            </c:if>
+        </div>
     </div>
 </main>
 <!--Start footer-->
