@@ -90,9 +90,9 @@ public class ProductServlet extends HttpServlet {
         }
         if (account == null) {
             dispatcher = request.getRequestDispatcher("home.jsp");
-        } else if (account.getRoleName().equals("admin")){
+        } else if (account.getRoleName().equals("admin")) {
             dispatcher = request.getRequestDispatcher("/product/list.jsp");
-        } else{
+        } else {
             dispatcher = request.getRequestDispatcher("home.jsp");
         }
         try {
@@ -179,8 +179,13 @@ public class ProductServlet extends HttpServlet {
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         productService.remove(id);
+        request.setAttribute("message", "Xóa thành công!");
+        request.setAttribute("productList",productService.showList());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/product/list.jsp");
         try {
-            response.sendRedirect("ProductServlet?action=productManagerment");
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -272,6 +277,7 @@ public class ProductServlet extends HttpServlet {
         String imgPath = request.getParameter("imgPath");
         Product product = new Product(id, name, price, description, type, inventory, imgPath);
         Map<String, String> errMap = productService.save(product);
+//        request.setAttribute("message", "Cập nhật sản phẩm thành công");
         if (errMap.isEmpty()) {
             try {
                 response.sendRedirect("/ProductServlet?action=productManagerment");
