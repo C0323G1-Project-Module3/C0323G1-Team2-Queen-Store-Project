@@ -242,9 +242,9 @@ public class ProductRepository implements IProductRepository {
         boolean rowDelete = false;
         Connection connection = BaseProductRepository.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
-            preparedStatement.setInt(1, id);
-            rowDelete = preparedStatement.executeUpdate() > 0;
+            CallableStatement callableStatement = connection.prepareCall(DELETE_PRODUCT);
+            callableStatement.setInt(1, id);
+            rowDelete = callableStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
