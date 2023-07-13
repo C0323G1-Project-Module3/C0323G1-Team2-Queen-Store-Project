@@ -97,7 +97,7 @@
         </c:forEach>
         <div class="pagination container d-flex justify-content-center align-items-center">
             <c:if test="${currentPage > 1}">
-                <a class="fs-5" href="?page=${currentPage-1}">&laquo; Previous</a>
+                <a class="fs-5" href="?page=${currentPage-1}">&laquo; Trước</a>
             </c:if>
             &nbsp;
             <c:forEach var="i" begin="1" end="${noOfPages}">
@@ -114,7 +114,7 @@
             </c:forEach>
             &nbsp;
             <c:if test="${currentPage < noOfPages}">
-                <a class="fs-5" href="?page=${currentPage+1}">Next &raquo;</a>
+                <a class="fs-5" href="?page=${currentPage+1}">Sau &raquo;</a>
             </c:if>
         </div>
     </div>
