@@ -110,7 +110,7 @@
     <div class="row justify-content-center" style="align-content: center">
         <p>
             <c:if test="${message !=null}">
-        <div class="text-danger " style="text-align: center">
+        <div class="text-danger" style="text-align: center">
             <span class="message">${message}</span>
         </div>
         </c:if>
