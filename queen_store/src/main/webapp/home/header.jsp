@@ -99,8 +99,8 @@
                         <!--                Start cart & loin-->
                         <div class="col-lg-3 d-flex  fs-4">
                             <c:if test="${sessionScope.account.roleName != 'admin'}">
-                                <div class="cart d-flex">
-                                    <a href="<c:url value="/order?action=cart"/>" style="text-decoration: none; width: 50px"><i
+                                <div class="cart d-flex justify-align-center">
+                                    <a href="<c:url value="/order?action=cart"/>" style="text-decoration: none; width: 55px"><i
                                             class="fa-solid fa-cart-shopping text-dark "
                                             style="margin-top: 8px">
                                     </i>
@@ -120,7 +120,7 @@
                                     <a href="accountServlet?action=login" class="text-dark d-flex"
                                        style="text-decoration: none;"><i
                                             class="fa-solid fa-right-to-bracket"
-                                            style="margin-left: 20px;margin-right: 5px;margin-top: 7px"></i></a>
+                                            style="margin-left: 5px;margin-right: 5px;margin-top: 7px"></i></a>
                                 </c:if>
                                 <c:if test="${sessionScope.account != null}">
                                     <a href="accountServlet?action=logout" class="text-dark d-flex"
