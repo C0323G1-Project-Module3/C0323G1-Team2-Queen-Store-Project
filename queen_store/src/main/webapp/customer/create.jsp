@@ -27,7 +27,7 @@
 </head>
 <body>
 <jsp:include page="/home/header.jsp"></jsp:include>
-<form action="/CustomerServlet?action=create" method="post">
+<form action="CustomerServlet?action=create" method="post">
     <table class="table table-striped mx-auto" style="width: 30%;margin: 0" >
         <div style="padding-top: 120px;text-align: center">
             <h2>Thêm Thông Tin Tài Khoản</h2>
@@ -98,7 +98,7 @@
           <td align="center">
              <button class="btn btn-primary" type="submit" name="save">Xác Nhận</button>
           </td>
-            <td align="center"><a href="/ProductServlet"style="text-decoration: none"><button class="btn btn-primary">Quay Lại</button></a></td>
+            <td align="center"><a href="/ProductServlet" style="text-decoration: none"><button type="button" class="btn btn-primary">Quay Lại</button></a></td>
         </tr>
     </table>
 </form>
