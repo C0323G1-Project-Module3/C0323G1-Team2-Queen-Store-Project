@@ -22,7 +22,7 @@
 <body>
 
 <jsp:include page="/home/header.jsp"/>
-<div class="justify-align-center container" style="padding-top: 66px; height: 400px">
+<div class="justify-align-center container" style="padding-top: 66px;">
     <h1>Giỏ hàng</h1>
     <form action="/order" method="get">
 

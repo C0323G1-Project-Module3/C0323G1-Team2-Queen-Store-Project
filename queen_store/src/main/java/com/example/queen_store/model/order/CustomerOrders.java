@@ -1,4 +1,4 @@
-package com.example.queen_store.repository.order;
+package com.example.queen_store.model.order;
 
 import java.sql.Date;
 
