@@ -13,7 +13,7 @@ public class ProductRepository implements IProductRepository {
     private static final String SELECT_BY_NAME = " SELECT * FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id WHERE product_name like ? ";
     private static final String CALL_INSERT_PRODUCT = " call insert_product(?,?,?,?,?,?) ";
     private static final String CALL_UPDATE_PRODUCT = " call update_product(?,?,?,?,?,?,?) ";
-    private static final String DELETE_PRODUCT = " DELETE FROM product WHERE product_id = ? ";
+    private static final String DELETE_PRODUCT = " call delete_product(?); ";
     private static final String SORT_UP_BY_PRICE = " SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price asc ";
     private static final String SORT_DOWN_BY_PRICE = "  SELECT p.product_id, p.product_name, p.product_price, p.product_description, pt.product_type_name, p.product_inventory,p.product_img_path FROM product p JOIN  product_type pt ON p.product_type_id = pt.product_type_id ORDER BY p.product_price desc ";
     private static final String SELECT_ALL_TYPE = " SELECT * FROM product_type ";
