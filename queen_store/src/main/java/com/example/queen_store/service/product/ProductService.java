@@ -46,6 +46,8 @@ public class ProductService implements IProductService {
         }
         if (price == 0) {
             errMap.put("errPrice", "Giá không được để trống");
+        } else if (price <0) {
+            errMap.put("errPrice","Giá không được âm!");
         }
         if (description.trim().equals("") || description == null) {
             errMap.put("errDes", "Mô tả không được để trống");
@@ -54,6 +56,8 @@ public class ProductService implements IProductService {
         }
         if (inventory == 0) {
             errMap.put("errInven", "Số lượng không được để trống");
+        } else if (inventory < 0 ) {
+            errMap.put("errInven", "Số lượng không được giá trị âm");
         }
         return errMap;
     }
