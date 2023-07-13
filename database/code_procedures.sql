@@ -128,7 +128,7 @@ delimiter ;
 delimiter //
 create procedure delete_order(id int)
 begin
-delete from order_detail od
+delete from order_detail
 where order_id = id;
 delete from `order`
 where order_id = id;
